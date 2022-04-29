@@ -1,3 +1,4 @@
+#pragma once
 #define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 #include <stdlib.h>
@@ -5,8 +6,6 @@
 #include <string.h>
 #include <math.h>
 
-#define MALLOC 1
-#define REALLOC 2
 typedef struct treeNode
 {
 	char* instrument;
@@ -80,10 +79,7 @@ typedef struct
 	CIList instruments;
 } Concert;
 
-void CheckMem(void* mem);
-void FileToArray(FILE* file, char* InstrumentsArr);
-char** DynamicAllocation1(char** ptr_ptr, int NewSize, int Format);
-//TreeNode* createNewTreeNode(char* instrument, unsigned short insId, TreeNode* left, TreeNode* right);
-//int findInsId(InstrumentTree tree, char* instrument);
-//void checkMemoryAllocation(void* p);
-//void checkFile(FILE* f);
+TreeNode* createNewTreeNode(char* instrument, unsigned short insId, TreeNode* left, TreeNode* right);
+int findInsId(InstrumentTree tree, char* instrument);
+void checkMemoryAllocation(void* p);
+void checkFile(FILE* f);
