@@ -68,8 +68,8 @@ typedef struct CIlistNode
 
 typedef struct
 {
-	CILListNode* head;
-	CILListNode* tail;
+	CIListNode* head;
+	CIListNode* tail;
 } CIList;
 
 typedef struct
