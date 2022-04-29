@@ -80,9 +80,6 @@ typedef struct
 } Concert;
 
 TreeNode* createNewTreeNode(char* instrument, unsigned short insId, TreeNode* left, TreeNode* right);
-void mergeSortInstrumentsArr(char*** instrumentsArr, int size);
-void mergeInstrumentsArr(char*** instrumentsArr, char*** arrA, int sizeA, char*** arrB, int sizeB);
-void swapStrings(char** stringA, char** stringB);
 int findInsId(InstrumentTree tree, char* instrument);
 void checkMemoryAllocation(void* p);
 void checkFile(FILE* f);
