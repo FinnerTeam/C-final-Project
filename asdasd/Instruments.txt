@@ -6,5 +6,8 @@ Drums
 Cello
 Guitar
 Cymbals
+Harp
 Clarinet
 Flute
+Guitar
+Guitar
