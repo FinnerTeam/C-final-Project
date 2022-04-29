@@ -6,6 +6,10 @@
 #include <string.h>
 #include <math.h>
 
+#define START_SIZE 1
+#define MALLOC 1
+#define REALLOC 2
+#define DEFAULT_BUFFER 150
 typedef struct treeNode
 {
 	char* instrument;
@@ -83,3 +87,8 @@ TreeNode* createNewTreeNode(char* instrument, unsigned short insId, TreeNode* le
 int findInsId(InstrumentTree tree, char* instrument);
 void checkMemoryAllocation(void* p);
 void checkFile(FILE* f);
+char** DynamicAllocation2(char** ptr_ptr, int NewSize, int Format);
+void CheckMem(void* mem);
+int FileLinesLen(FILE* InstrumentsData);
+void FileToArr(FILE* InstrumentsData, char** InstrumentsArr);
+char* DynamicAllocation1(char* Ptr, int NewSize, int Format);

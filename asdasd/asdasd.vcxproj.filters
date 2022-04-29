@@ -18,5 +18,21 @@
     <ClCompile Include="ProjectMain.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ProjectFunction.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Musicians.txt">
+      <Filter>Source Files</Filter>
+    </Text>
+    <Text Include="Instruments.txt">
+      <Filter>Source Files</Filter>
+    </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ProjectHeader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
