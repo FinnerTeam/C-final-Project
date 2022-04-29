@@ -1,6 +1,20 @@
 #include "ProjectHeader.h"
 
-void main()
+
+int main()
 {
-	printf("Fuck this world");
+	FILE* InstrumentsData = fopen("Instruments.txt", "r");
+	if (InstrumentsData == NULL) 
+	{
+		perror("Unable to open file!");
+		exit(1);
+	};
+
+
+
+
+	char** InstrumentsArr = NULL;
+	InstrumentsArr  = DynamicAllocation1(InstrumentsArr,1,MALLOC);
+
+	return 0;
 }
