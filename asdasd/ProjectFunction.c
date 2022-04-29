@@ -21,19 +21,17 @@ void FileToArr(FILE* InstrumentsData, char** InstrumentsArr)
     CheckMem(InstrumentsData);
     InstrumentsArr = DynamicAllocation2(InstrumentsArr, lines_in_file, REALLOC);
     InstrumentsArr[0] = DynamicAllocation1(InstrumentsArr[0],DEFAULT_BUFFER,MALLOC);
-    
-    while (fgets(InstrumentsArr[i], DEFAULT_BUFFER, InstrumentsData)) 
+
+    while (fscanf(InstrumentsData, "%s", InstrumentsArr[i]) && i < lines_in_file)
     {
-        int Position = strlen(InstrumentsArr[i]) - 1;
-        InstrumentsArr[i] = DynamicAllocation1(InstrumentsArr[i], Position, REALLOC);
-        InstrumentsArr[i][Position] = '\0';
+        InstrumentsArr[i] = DynamicAllocation1(InstrumentsArr[i], strlen(InstrumentsArr[i])+1, REALLOC);
+  
         i++;
         InstrumentsArr[i] = DynamicAllocation1(InstrumentsArr[i], DEFAULT_BUFFER , MALLOC);
     }
     fclose(InstrumentsData);
 
 }
-
 //Dynamic allocation function  for char*
 char* DynamicAllocation1(char* Ptr, int NewSize, int Format)
 {
