@@ -3,6 +3,8 @@ void main()
 {
 	FILE* InstrumentsData = NULL;
 	char** InstrumentsArr = NULL;
-    InstrumentsArr= DynamicAllocation2(InstrumentsArr, START_SIZE, MALLOC);
-	FileToArr(InstrumentsData, InstrumentsArr);
+
+	InstrumentsArr = FileToArr(InstrumentsData, InstrumentsArr);
+	heapSort(&InstrumentsArr, 13);
+	DeleteDuplication(InstrumentsArr, 13);
 }

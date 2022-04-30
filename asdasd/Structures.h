@@ -72,3 +72,9 @@ typedef struct
 	char* name;
 	CIList instruments;
 } Concert;
+
+typedef struct
+{
+	int size;
+	char** arr;
+} MaxHeap;

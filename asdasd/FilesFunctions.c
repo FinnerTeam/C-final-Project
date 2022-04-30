@@ -11,13 +11,13 @@ int FileLinesLen(FILE* InstrumentsData)
     fclose(InstrumentsData);
     return count_lines;
 }
-void FileToArr(FILE* InstrumentsData, char** InstrumentsArr)
+char** FileToArr(FILE* InstrumentsData, char** InstrumentsArr)
 {
     int i = 0;
     int lines_in_file = FileLinesLen(InstrumentsData);
     InstrumentsData = fopen("Instruments.txt", "r");
     CheckFile(InstrumentsData);
-    InstrumentsArr = DynamicAllocation2(InstrumentsArr, lines_in_file, REALLOC);
+    InstrumentsArr = DynamicAllocation2(InstrumentsArr, lines_in_file, MALLOC);
     InstrumentsArr[0] = DynamicAllocation1(InstrumentsArr[0], DEFAULT_BUFFER, MALLOC);
 
     while (fscanf(InstrumentsData, "%s", InstrumentsArr[i]) && i < lines_in_file)
@@ -27,5 +27,6 @@ void FileToArr(FILE* InstrumentsData, char** InstrumentsArr)
         InstrumentsArr[i] = DynamicAllocation1(InstrumentsArr[i], DEFAULT_BUFFER, MALLOC);
     }
     fclose(InstrumentsData);
+    return InstrumentsArr;
 
 }
