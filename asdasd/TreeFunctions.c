@@ -10,6 +10,8 @@ TreeNode* createNewTreeNode(char* instrument, unsigned short insId, TreeNode* le
     node->instrument = (char*)malloc(sizeof(char) * len);
     CheckMem(node->instrument);
 
+    strcpy(node->instrument, instrument);
+
     node->insId = insId;
     node->left = left;
     node->right = right;
@@ -33,13 +35,10 @@ InstrumentTree RecBuildTreeFromArray(char** instrumentArr, int size, int* insId)
 
     else if (size == 1)
     {
-        TreeNode* root = NULL, * leftNode = NULL, * rightNode = NULL;
+        TreeNode* root = NULL;
+        root = createNewTreeNode(*instrumentArr, *insId, NULL, NULL);
 
-        leftNode = createNewTreeNode(*(instrumentArr - 1), (*insId) + 1, NULL, NULL);
-        rightNode = createNewTreeNode(*(instrumentArr + 1), (*insId) + 2, NULL, NULL);
-        root = createNewTreeNode(*instrumentArr, *insId, leftNode, rightNode);
-
-        *insId = *insId + 3;
+        *insId = (*insId) + 1;
 
         output.root = root;
         return output;
@@ -48,6 +47,16 @@ InstrumentTree RecBuildTreeFromArray(char** instrumentArr, int size, int* insId)
     else
     {
         InstrumentTree leftTree, rightTree, output;
-        int i = 0;
+        output.root = createNewTreeNode(*instrumentArr, *insId, NULL, NULL);
+
+        *insId = *insId + 1;
+
+        leftTree = RecBuildTreeFromArray(instrumentArr - (size + 1) / 4, size / 2, insId);
+        rightTree = RecBuildTreeFromArray(instrumentArr + (size + 1) / 4, size / 2, insId);
+
+        output.root->left = leftTree.root;
+        output.root->right = rightTree.root;
+
+        return output;
     }
 }

@@ -2,6 +2,8 @@
 #include "ProjectHeader.h"
 //*********************PROTOTYPES***************************************************
 TreeNode* createNewTreeNode(char* instrument, unsigned short insId, TreeNode* left, TreeNode* right);
+InstrumentTree BuildTreeFromArray(char** instrumentArr, int size);
+InstrumentTree RecBuildTreeFromArray(char** instrumentArr, int size, int* insId);
 int findInsId(InstrumentTree tree, char* instrument);
 void checkMemoryAllocation(void* p);
 void checkFile(FILE* f);

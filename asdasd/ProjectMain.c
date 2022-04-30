@@ -3,11 +3,8 @@ void main()
 {
 	FILE* InstrumentsData = NULL;
 	char** InstrumentsArr = NULL;
-	int mas;
-	int bla;
-	int lab;
-	int kas;
 	InstrumentsArr = FileToArr(InstrumentsData, InstrumentsArr);
 	heapSort(&InstrumentsArr, 13);
 	DeleteDuplication(InstrumentsArr, 13);
+	InstrumentTree insTree = BuildTreeFromArray(InstrumentsArr, 10);
 }
