@@ -13,25 +13,61 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Utilities Files">
+      <UniqueIdentifier>{3eb538fe-365c-4a73-a927-afcd7f14f4ca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Data Files">
+      <UniqueIdentifier>{fd1e76b1-d9ca-4977-8d66-fc8d6041fd45}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Controllers">
+      <UniqueIdentifier>{a2f36157-fef1-423a-9e3a-01aa64b07a3a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Helpers">
+      <UniqueIdentifier>{948a2609-d23f-4eaf-8261-495a7cd46e72}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ProjectMain.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ProjectFunction.c">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="TreeFunctions.c">
+      <Filter>Utilities Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ListFunctions.c">
+      <Filter>Utilities Files</Filter>
+    </ClCompile>
+    <ClCompile Include="FreeFunctions.c">
+      <Filter>Helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="SortFunctions.c">
+      <Filter>Controllers</Filter>
+    </ClCompile>
+    <ClCompile Include="Allocations.c">
+      <Filter>Helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="Validatiors.c">
+      <Filter>Controllers</Filter>
+    </ClCompile>
+    <ClCompile Include="FilesFunctions.c">
+      <Filter>Utilities Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="Musicians.txt">
-      <Filter>Source Files</Filter>
-    </Text>
     <Text Include="Instruments.txt">
-      <Filter>Source Files</Filter>
+      <Filter>Data Files</Filter>
+    </Text>
+    <Text Include="Musicians.txt">
+      <Filter>Data Files</Filter>
     </Text>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ProjectHeader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Prototypes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Structures.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

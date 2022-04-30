@@ -19,11 +19,19 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ProjectFunction.c" />
+    <ClCompile Include="Allocations.c" />
+    <ClCompile Include="FilesFunctions.c" />
+    <ClCompile Include="FreeFunctions.c" />
+    <ClCompile Include="ListFunctions.c" />
+    <ClCompile Include="SortFunctions.c" />
+    <ClCompile Include="TreeFunctions.c" />
+    <ClCompile Include="Validatiors.c" />
     <ClCompile Include="ProjectMain.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ProjectHeader.h" />
+    <ClInclude Include="Prototypes.h" />
+    <ClInclude Include="Structures.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Instruments.txt" />

@@ -1,5 +1,4 @@
 #include "ProjectHeader.h"
-
 void main()
 {
 	FILE* InstrumentsData = NULL;
