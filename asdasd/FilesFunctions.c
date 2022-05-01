@@ -11,10 +11,11 @@ int FileLinesLen(FILE* InstrumentsData)
     fclose(InstrumentsData);
     return count_lines;
 }
-char** FileToArr(FILE* InstrumentsData, char** InstrumentsArr)
+char** FileToArr(FILE* InstrumentsData, char** InstrumentsArr, int* sizeOfFile)
 {
     int i = 0;
     int lines_in_file = FileLinesLen(InstrumentsData);
+    *sizeOfFile = lines_in_file;
     InstrumentsData = fopen("Instruments.txt", "r");
     CheckFile(InstrumentsData);
     InstrumentsArr = DynamicAllocation2(InstrumentsArr, lines_in_file, MALLOC);

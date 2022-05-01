@@ -1,12 +1,12 @@
 #include "ProjectHeader.h"
 
-void DeleteDuplication(char** InstrumentsArr, int size)
+void DeleteDuplication(char** InstrumentsArr, int* size)
 {
     int i, j = 1, k = 1;
-    int OldSize = size;
-    for (i = 0; i < size; i++)
+    int OldSize = *size;
+    for (i = 0; i < *size; i++)
     {
-        for (j = i + 1, k = j; j < size; j++)
+        for (j = i + 1, k = j; j < *size; j++)
         {
             /* If strings don't match... */
             if (strcmp(InstrumentsArr[i], InstrumentsArr[j]))
@@ -15,9 +15,9 @@ void DeleteDuplication(char** InstrumentsArr, int size)
                 k++;
             }
         }
-        size -= j - k;
+        (*size) -= j - k;
     }
-    InstrumentsArr = DynamicAllocation2(InstrumentsArr, size, REALLOC);
+    InstrumentsArr = DynamicAllocation2(InstrumentsArr, *size, REALLOC);
   
 }
 void swapStrings(char** stringA, char** stringB) //Swaps stringA & stringB.

@@ -12,5 +12,5 @@
 #define MALLOC 1
 #define REALLOC 2
 #define DEFAULT_BUFFER 150
-
-
+#define LEFT 0
+#define RIGHT 1

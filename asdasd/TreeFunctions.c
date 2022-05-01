@@ -19,11 +19,11 @@ TreeNode* createNewTreeNode(char* instrument, unsigned short insId, TreeNode* le
 
 InstrumentTree BuildTreeFromArray(char** instrumentArr, int size)
 {
-    int i = 0;
-    return RecBuildTreeFromArray(instrumentArr + size / 2, size, &i);
+    int i = 0, direction;
+    return RecBuildTreeFromArray(instrumentArr + size / 2, size, &i, &direction);
 }
 
-InstrumentTree RecBuildTreeFromArray(char** instrumentArr, int size, int* insId)
+InstrumentTree RecBuildTreeFromArray(char** instrumentArr, int size, int* insId, int* dir)
 {
     InstrumentTree output;
 
@@ -33,14 +33,42 @@ InstrumentTree RecBuildTreeFromArray(char** instrumentArr, int size, int* insId)
         return output;
     }
 
-    else if (size == 1)
+    else if (size <= 3)
     {
-        TreeNode* root = NULL;
+        TreeNode* root = NULL, * leftNode = NULL, * rightNode = NULL;
         root = createNewTreeNode(*instrumentArr, *insId, NULL, NULL);
-
         *insId = (*insId) + 1;
 
         output.root = root;
+        
+        if (size == 2)
+        {
+            if (!(*dir))
+            {
+                leftNode = createNewTreeNode(*(instrumentArr - 1), *insId, NULL, NULL);
+                output.root->left = leftNode;
+            }
+
+            else if (*dir)
+            {
+                rightNode = createNewTreeNode(*(instrumentArr + 1), *insId, NULL, NULL);
+                output.root->right = rightNode;
+            }
+
+            *insId = (*insId) + 1;
+        }
+
+        else if (size == 3)
+        {
+            leftNode = createNewTreeNode(*(instrumentArr - 1), *insId, NULL, NULL);
+            rightNode = createNewTreeNode(*(instrumentArr + 1), *insId, NULL, NULL);
+
+            output.root->left = leftNode;
+            output.root->right = rightNode;
+
+            *insId = (*insId) + 2;
+        }
+
         return output;
     }
 
@@ -51,8 +79,11 @@ InstrumentTree RecBuildTreeFromArray(char** instrumentArr, int size, int* insId)
 
         *insId = *insId + 1;
 
-        leftTree = RecBuildTreeFromArray(instrumentArr - (size + 1) / 4, size / 2, insId);
-        rightTree = RecBuildTreeFromArray(instrumentArr + (size + 1) / 4, size / 2, insId);
+        *dir = LEFT;
+        leftTree = RecBuildTreeFromArray(instrumentArr - size / 3, size / 2, insId, dir);
+
+        *dir = RIGHT;
+        rightTree = RecBuildTreeFromArray(instrumentArr + size / 3, (size - 1) / 2, insId, dir);
 
         output.root->left = leftTree.root;
         output.root->right = rightTree.root;

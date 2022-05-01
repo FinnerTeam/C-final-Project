@@ -1,10 +1,11 @@
 #include "ProjectHeader.h"
 void main()
 {
+	int arrSize;
 	FILE* InstrumentsData = NULL;
 	char** InstrumentsArr = NULL;
-	InstrumentsArr = FileToArr(InstrumentsData, InstrumentsArr);
-	heapSort(&InstrumentsArr, 13);
-	DeleteDuplication(InstrumentsArr, 13);
-	InstrumentTree insTree = BuildTreeFromArray(InstrumentsArr, 10);
+	InstrumentsArr = FileToArr(InstrumentsData, InstrumentsArr, &arrSize);
+	heapSort(&InstrumentsArr, arrSize);
+	DeleteDuplication(InstrumentsArr, &arrSize);
+	InstrumentTree insTree = BuildTreeFromArray(InstrumentsArr, arrSize);
 }

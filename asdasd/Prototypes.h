@@ -3,17 +3,15 @@
 //*********************PROTOTYPES***************************************************
 TreeNode* createNewTreeNode(char* instrument, unsigned short insId, TreeNode* left, TreeNode* right);
 InstrumentTree BuildTreeFromArray(char** instrumentArr, int size);
-InstrumentTree RecBuildTreeFromArray(char** instrumentArr, int size, int* insId);
+InstrumentTree RecBuildTreeFromArray(char** instrumentArr, int size, int* insId, int* dir);
 int findInsId(InstrumentTree tree, char* instrument);
-void checkMemoryAllocation(void* p);
-void checkFile(FILE* f);
 char** DynamicAllocation2(char** ptr_ptr, int NewSize, int Format);
 void CheckMem(void* mem);
 int FileLinesLen(FILE* InstrumentsData);
-char** FileToArr(FILE* InstrumentsData, char** InstrumentsArr);
+char** FileToArr(FILE* InstrumentsData, char** InstrumentsArr, int* sizeOfFile);
 char* DynamicAllocation1(char* Ptr, int NewSize, int Format);
 void CheckFile(FILE* file);
-void DeleteDuplication(char** InstrumentsArr, int size);
+void DeleteDuplication(char** InstrumentsArr, int* size);
 void maxHeapify(MaxHeap* maxHeap, int index);
 MaxHeap* createAndBuildHeap(char** arr, int size);
 void heapSort(char*** arr, int size);
