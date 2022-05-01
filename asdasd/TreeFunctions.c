@@ -19,7 +19,7 @@ TreeNode* createNewTreeNode(char* instrument, unsigned short insId, TreeNode* le
 
 InstrumentTree BuildTreeFromArray(char** instrumentArr, int size)
 {
-    int i = 0, direction;
+    int i = 0, direction = LEFT;
     return RecBuildTreeFromArray(instrumentArr + size / 2, size, &i, &direction);
 }
 
