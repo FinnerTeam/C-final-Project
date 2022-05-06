@@ -46,6 +46,8 @@ void freeMusiciansGroup(Musician** MusiciansGroup, int size) //Frees MusiciansGr
 		free(MusiciansGroup[i]->name);
 		freeMPIList(MusiciansGroup[i]->instruments);
 	}
+
+	free(MusiciansGroup);
 }
 
 void freeMPIList(MPIList lst) //Frees MPIList.
