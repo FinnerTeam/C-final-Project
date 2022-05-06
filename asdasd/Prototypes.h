@@ -8,7 +8,6 @@ int findInsId(InstrumentTree tree, char* instrument);
 void recFindInsId(TreeNode* root, char* instrument, int* res);
 char** DynamicAllocation2(char** ptr_ptr, int NewSize, int Format);
 void CheckMem(void* mem);
-int FileLinesLen(FILE* InstrumentsData);
 char** FileToArr(FILE* InstrumentsData, char** InstrumentsArr, int* sizeOfFile);
 char* DynamicAllocation1(char* Ptr, int NewSize, int Format);
 void CheckFile(FILE* file);
@@ -17,6 +16,7 @@ void maxHeapify(MaxHeap* maxHeap, int index);
 MaxHeap* createAndBuildHeap(char** arr, int size);
 void heapSort(char*** arr, int size);
 void swapStrings(char** stringA, char** stringB);
+<<<<<<< Updated upstream
 void makeEmptyMPIList(MPIList* lst);
 bool isMPIListEmpty(MPIList lst);
 void insertDataToEndOfMPIList(MPIList lst, char* instrumentName, unsigned int insId, float price, MPIListNode* next);
@@ -28,3 +28,9 @@ void recFreeInstrumentsTree(TreeNode* root);
 void freeMusiciansGroup(Musician** MusiciansGroup, int size);
 void freeMPIList(MPIList lst);
 void recFreeMPIList(MPIListNode* head);
+=======
+int FileLinesLen(FILE* FileData, char* FileName);
+Musician** FileToArr_Musicians(FILE* MusiciansData, int* sizeOfFile);
+bool CheckValid(char ch);
+void MallocArrguments(Musician* MusicianGroup, int Name_Size);
+>>>>>>> Stashed changes

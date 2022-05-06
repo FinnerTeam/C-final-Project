@@ -1,6 +1,5 @@
 Accordion   
 Bagpipes
-Harp
 Harmonica
 Drums
 Cello
@@ -9,5 +8,3 @@ Cymbals
 Harp
 Clarinet
 Flute
-Guitar
-Guitar

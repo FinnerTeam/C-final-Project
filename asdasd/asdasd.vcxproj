@@ -22,6 +22,7 @@
     <ClCompile Include="Allocations.c" />
     <ClCompile Include="FilesFunctions.c" />
     <ClCompile Include="FreeFunctions.c" />
+    <ClCompile Include="Helpers.c" />
     <ClCompile Include="ListFunctions.c" />
     <ClCompile Include="SortFunctions.c" />
     <ClCompile Include="TreeFunctions.c" />

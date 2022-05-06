@@ -1,4 +1,4 @@
-#include "ProjectHeader.h"
+//#include "ProjectHeader.h"
 
 void DeleteDuplication(char** InstrumentsArr, int* size)
 {
