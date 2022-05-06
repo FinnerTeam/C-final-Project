@@ -5,7 +5,7 @@ void main()
 	FILE* InstrumentsData = NULL;
 	char** InstrumentsArr = NULL;
 	InstrumentsArr = FileToArr(InstrumentsData, InstrumentsArr, &arrSize);
-	heapSort(&InstrumentsArr, arrSize);
-	DeleteDuplication(InstrumentsArr, &arrSize);
-	InstrumentTree insTree = BuildTreeFromArray(InstrumentsArr, arrSize);
+	DeleteDuplication(InstrumentsArr, &arrSize); //Irrelevant.
+	InstrumentTree insTree = buildBinaryTreeFromArray(InstrumentsArr, arrSize);
+	findInsId(insTree, "Guitar"); //testing;
 }

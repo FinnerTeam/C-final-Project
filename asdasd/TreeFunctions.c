@@ -1,6 +1,6 @@
 #include "ProjectHeader.h"
 
-TreeNode* createNewTreeNode(char* instrument, unsigned short insId, TreeNode* left, TreeNode* right)
+TreeNode* createNewTreeNode(char* instrument, unsigned short insId, TreeNode* left, TreeNode* right) //Creates a new TreeNode.
 {
     TreeNode* node = (TreeNode*)malloc(sizeof(TreeNode));
     CheckMem(node);
@@ -17,77 +17,76 @@ TreeNode* createNewTreeNode(char* instrument, unsigned short insId, TreeNode* le
     node->right = right;
 }
 
-InstrumentTree BuildTreeFromArray(char** instrumentArr, int size)
-{
-    int i = 0, direction = LEFT;
-    return RecBuildTreeFromArray(instrumentArr + size / 2, size, &i, &direction);
-}
-
-InstrumentTree RecBuildTreeFromArray(char** instrumentArr, int size, int* insId, int* dir)
+InstrumentTree buildBinaryTreeFromArray(char** arrOfInstruments, int size) //Build a binary search tree from arrOfInstruments.
 {
     InstrumentTree output;
+    int i, insId = 1;
+    output.root = createNewTreeNode(*arrOfInstruments, 0, NULL, NULL);
+    TreeNode* currNode = output.root;
 
-    if (size == 0)
+    for (i = 1; i < size; i++, insId++)
     {
-        output.root = NULL;
-        return output;
+        TreeNode* node = createNewTreeNode(arrOfInstruments[i], insId, NULL, NULL);
+        insertNodeToTree(output.root, node);
     }
 
-    else if (size <= 3)
+    return output;
+}
+
+void insertNodeToTree(TreeNode* root, TreeNode* node) //Inserts a node to a tree lexicographically.
+{
+    if (root == NULL)
     {
-        TreeNode* root = NULL, * leftNode = NULL, * rightNode = NULL;
-        root = createNewTreeNode(*instrumentArr, *insId, NULL, NULL);
-        *insId = (*insId) + 1;
-
-        output.root = root;
-        
-        if (size == 2)
-        {
-            if (!(*dir))
-            {
-                leftNode = createNewTreeNode(*(instrumentArr - 1), *insId, NULL, NULL);
-                output.root->left = leftNode;
-            }
-
-            else if (*dir)
-            {
-                rightNode = createNewTreeNode(*(instrumentArr + 1), *insId, NULL, NULL);
-                output.root->right = rightNode;
-            }
-
-            *insId = (*insId) + 1;
-        }
-
-        else if (size == 3)
-        {
-            leftNode = createNewTreeNode(*(instrumentArr - 1), *insId, NULL, NULL);
-            rightNode = createNewTreeNode(*(instrumentArr + 1), *insId, NULL, NULL);
-
-            output.root->left = leftNode;
-            output.root->right = rightNode;
-
-            *insId = (*insId) + 2;
-        }
-
-        return output;
+        root = node;
+        return;
     }
+
+    else if (strcmp(root->instrument, node->instrument) < 0)
+    {
+        if (root->right == NULL)
+            root->right = node;
+
+        else
+            insertNodeToTree(root->right, node);
+    }
+
+    else if (strcmp(root->instrument, node->instrument) > 0)
+    {
+        if (root->left == NULL)
+            root->left = node;
+
+        else
+            insertNodeToTree(root->left, node);
+    }
+
+    return;
+}
+
+int findInsId(InstrumentTree tree, char* instrument) //Finds instrument's insId.
+{
+    int res = -1;
+    
+    recFindInsId(tree.root, instrument, &res);
+
+    return res;
+}
+
+void recFindInsId(TreeNode* root, char* instrument, int* res) //Recursively finds instrument's insId.
+{
+    if (root == NULL)
+        return;
+
+    else if (strcmp(root->instrument, instrument) == 0)
+    {
+        *res = root->insId;
+        return;
+    }
+
+    else if (strcmp(root->instrument, instrument) < 0)
+        recFindInsId(root->right, instrument, res);
 
     else
-    {
-        InstrumentTree leftTree, rightTree, output;
-        output.root = createNewTreeNode(*instrumentArr, *insId, NULL, NULL);
+        recFindInsId(root->left, instrument, res);
 
-        *insId = *insId + 1;
-
-        *dir = LEFT;
-        leftTree = RecBuildTreeFromArray(instrumentArr - size / 3, size / 2, insId, dir);
-
-        *dir = RIGHT;
-        rightTree = RecBuildTreeFromArray(instrumentArr + size / 3, (size - 1) / 2, insId, dir);
-
-        output.root->left = leftTree.root;
-        output.root->right = rightTree.root;
-
-        return output;
-    }
+    return;
 }

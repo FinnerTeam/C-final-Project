@@ -2,9 +2,10 @@
 #include "ProjectHeader.h"
 //*********************PROTOTYPES***************************************************
 TreeNode* createNewTreeNode(char* instrument, unsigned short insId, TreeNode* left, TreeNode* right);
-InstrumentTree BuildTreeFromArray(char** instrumentArr, int size);
-InstrumentTree RecBuildTreeFromArray(char** instrumentArr, int size, int* insId, int* dir);
+InstrumentTree buildBinaryTreeFromArray(char** arrOfInstruments, int size);
+void insertNodeToTree(TreeNode* root, TreeNode* node);
 int findInsId(InstrumentTree tree, char* instrument);
+void recFindInsId(TreeNode* root, char* instrument, int* res);
 char** DynamicAllocation2(char** ptr_ptr, int NewSize, int Format);
 void CheckMem(void* mem);
 int FileLinesLen(FILE* InstrumentsData);
