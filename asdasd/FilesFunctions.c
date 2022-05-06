@@ -1,4 +1,5 @@
 #include "ProjectHeader.h"
+
 int FileLinesLen(FILE* FileData, char* FileName)
 {
     char ch;
@@ -9,7 +10,7 @@ int FileLinesLen(FILE* FileData, char* FileName)
         if (ch == '\n')
             count_lines++;
     fclose(FileData);
-    return count_lines;
+    return count_lines + 1;
 }
 char** FileToArr(FILE* InstrumentsData, char** InstrumentsArr, int* sizeOfFile)
 {
@@ -31,7 +32,6 @@ char** FileToArr(FILE* InstrumentsData, char** InstrumentsArr, int* sizeOfFile)
     return InstrumentsArr;
 
 }
-
 Musician** FileToArr_Musicians(InstrumentTree insTree, FILE* MusiciansData, int* sizeOfFile)
 {
     int i = 0, Logicsize = 0, PhyiscalSize = 1;
@@ -41,118 +41,118 @@ Musician** FileToArr_Musicians(InstrumentTree insTree, FILE* MusiciansData, int*
     MusiciansData = fopen(MUSICIANSFILE, "r");
     CheckFile(MusiciansData);
 
-    Musician** MusicianGroup = DynamicAllocation2(MusicianGroup, *sizeOfFile, MALLOC);
+    Musician** MusicianGroup = (Musician**)malloc(sizeof(Musician*) * (*sizeOfFile));
     CheckMem(MusicianGroup);
 
-    char* Line = DynamicAllocation1(Line, DEFAULT_BUFFER, MALLOC);
-    while (fscanf(MusiciansData, "%s", Line) && i < lines_in_file)
+    char* Line = NULL;
+    Line = DynamicAllocation1(Line, DEFAULT_BUFFER, MALLOC);
+    while (fgets(Line , DEFAULT_BUFFER, MusiciansData) && i < lines_in_file )
     {
-        Line = DynamicAllocation1(Line, strlen(Line) + 1, REALLOC);
+        Line = DynamicAllocation1(Line, strlen(Line)+1 , REALLOC);
+        MusicianGroup[i] = (Musician*)malloc(sizeof(Musician));
+        CheckMem(MusicianGroup[i]);
         InsertDataToMusicianGroup(insTree,MusicianGroup[i], Line);
         i++;
         Line = DynamicAllocation1(Line, DEFAULT_BUFFER, MALLOC);
     }
+    free(Line);
     fclose(MusiciansData);
     return MusicianGroup;
-    
-    
-    
-    /* MallocArrguments(MusicianGroup[0],);*/
-
-
 }
-
 void InsertDataToMusicianGroup(InstrumentTree insTree,Musician* MusicianGroup, char* FreshData)
 {
     char ch;
     bool next_word = false;
+    bool InstrumentRead = false;
+    bool PriceRead = false;
+    int insId = -1;
     int  DataCol = 0,Data_LogicSize = 0,Data_PhyisicalSize = 1, Position = NAME;
     int FullName_LogicSize = 0,FullName_PhisicalSize = 1;
-    char** data, ** name;
-    FirstAllocation(data, name);
+    char** data = NULL, ** name = NULL;
+    FirstAllocation(&data, &name);
     MPIList MusicianKit;
-   
-    for (ch = getchar(FreshData); ch != '\n'; ch = getchar(FreshData))
+    makeEmptyMPIList(&MusicianKit);
+    int i = 0;
+    while(FreshData[i] != '\n' && FreshData[i] !='\0')
     {
-        if (!CheckValid(ch))
+        ch = FreshData[i++];
+        if (CheckValid(ch))
         {
-            Check_Physic_To_Logic(Data_LogicSize, &Data_PhyisicalSize, data);
             data[Data_LogicSize][DataCol++] = ch;
           
             if (next_word == true)
             {
-                if (findInsId(insTree, data[Data_LogicSize - 1]) != -1)
+                if (PriceRead == false)
                 {
-                    Position = INSTRUMENT;
+                    insId = findInsId(insTree, data[Data_LogicSize - 1]);
+                    if (insId != -1)
+                    {
+                        InstrumentRead = true;
+                        Position = INSTRUMENT;
+                    }
+                }
+                else
+                {
+                    Position = PRICE;
                 }
                 switch (Position)
                 {
-                case NAME:
-                    Check_Physic_To_Logic(FullName_LogicSize, &FullName_PhisicalSize, name);
-                    name[FullName_LogicSize] = DynamicAllocation1(name[FullName_LogicSize], strlen(data[Data_LogicSize - 1]) + 1, REALLOC);
-                    strcpy(name[FullName_LogicSize++], data[Data_LogicSize - 1]);
-                    break;
-                case INSTRUMENT:
-
-
-                    break;
-                case PRICE:
-
-
-                    break;
-
-                default:
-                    break;
+                    case NAME:
+                    {
+                        Check_Physic_To_Logic(FullName_LogicSize, &FullName_PhisicalSize, &name);
+                        name[FullName_LogicSize] = DynamicAllocation1(name[FullName_LogicSize], strlen(data[Data_LogicSize - 1]) + 1, MALLOC);
+                        strcpy(name[FullName_LogicSize++], data[Data_LogicSize - 1]);
+                        break;
+                    }
+                    case INSTRUMENT:
+                    {
+                        insertDataToEndOfMPIList(&MusicianKit, data[Data_LogicSize - 1], insId, 0, NULL);
+                        InstrumentRead = false;
+                        PriceRead = true;
+                        break;
+                    }
+                    case PRICE:
+                    {                                   //Needs to check about the float.. if there is really float inputs from the user.
+                        MusicianKit.tail->Data.price = (float)atoi(data[Data_LogicSize - 1]);
+                        InstrumentRead = true;
+                        PriceRead = false;
+                        break;
+                    }
+                    default:
+                        break;
                 }
-                next_word == false;
+                next_word = false;
             }
         }
-        else if (next_word == false)
+        else 
         {
-            data[Data_LogicSize][DataCol] = '\0';
-            DataCol = 0;
-            Data_LogicSize++;
-            next_word = true;
+            if (next_word == false)
+            {
+                data[Data_LogicSize] = DynamicAllocation1(data[Data_LogicSize], DataCol + 1, REALLOC);
+                data[Data_LogicSize][DataCol] = '\0';
+                DataCol = 0;
+                Data_LogicSize++;
+                Check_Physic_To_Logic(Data_LogicSize, &Data_PhyisicalSize, &data);
+                data[Data_LogicSize] = DynamicAllocation1(data[Data_LogicSize], FIRST_NAME, MALLOC);
+                next_word = true;
+            } 
         }
-  
     }
-   
-}
-
-bool CheckValid(char ch)
-{
-    return(ch != ' '
-        || ch != ',' || ch != '.'
-        || ch != ';' || ch != '?'
-        || ch != '!' || ch != '-'
-        || ch != '\t'|| ch != "'"
-        || ch != '(' || ch != ')'
-        || ch != '[' || ch != ']'
-        || ch != '{' || ch != '}'
-        || ch != '<' || ch != '>'
-        || ch != '~' || ch != '_');
-}
-
-void Check_Physic_To_Logic(int logicSize, int* PhyisicSize, void** Data_to_check)
-{
-    if (logicSize == *PhyisicSize)
+    if (PriceRead == true)
     {
-        (*PhyisicSize) *= 2;
-        Data_to_check = DynamicAllocation2(Data_to_check, PhyisicSize, REALLOC);
+        MusicianKit.tail->Data.price = (float)atoi(data[Data_LogicSize - 1]);
     }
-}
-void FirstAllocation(char** data, char** name)
-{
-    char** name = DynamicAllocation2(name, 1, MALLOC);
-    CheckMem(name);
-    char** data = DynamicAllocation2(data, 1, MALLOC);
-    CheckMem(data);
-    data[0] = DynamicAllocation1(data[0], FIRST_NAME, MALLOC);
-    CheckMem(data[0]);
-    name[0] = DynamicAllocation1(name[0], FIRST_NAME, MALLOC);
-    CheckMem(name[0]);
-}
-void MallocArrguments(Musician* MusicianGroup,int Name_Size)
-{
-    MusicianGroup->name = DynamicAllocation2(MusicianGroup->name, Name_Size, MALLOC); 
+    if (FullName_LogicSize < FullName_PhisicalSize)
+    {
+        name = DynamicAllocation2(name, FullName_LogicSize, REALLOC);
+    }
+    free(data);
+    MusicianGroup->name = DynamicAllocation2(MusicianGroup->name, FullName_LogicSize, MALLOC);
+    for (int i = 0; i < FullName_LogicSize; i++)
+    {
+        (MusicianGroup->name)[i] = DynamicAllocation1((MusicianGroup->name)[i], strlen(name[i]) + 1, MALLOC);
+        strcpy((MusicianGroup->name)[i], name[i]);
+    }
+    free(name);
+    MusicianGroup->instruments = MusicianKit;
 }

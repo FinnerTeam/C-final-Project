@@ -7,14 +7,17 @@ TreeNode* createNewTreeNode(char* instrument, unsigned short insId, TreeNode* le
 
     int len = strlen(instrument);
 
-    node->instrument = (char*)malloc(sizeof(char) * len);
-    CheckMem(node->instrument);
-
-    strcpy(node->instrument, instrument);
+    node->instrument = NULL;
+    node->instrument = DynamicAllocation1(node->instrument, len, MALLOC);
+    if (instrument != '\0')
+    {
+        strcpy(node->instrument, instrument);
+    }
 
     node->insId = insId;
     node->left = left;
     node->right = right;
+    return node;
 }
 
 InstrumentTree buildBinaryTreeFromArray(char** arrOfInstruments, int size) //Build a binary search tree from arrOfInstruments.

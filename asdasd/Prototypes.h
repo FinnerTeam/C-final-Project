@@ -11,26 +11,30 @@ void CheckMem(void* mem);
 char** FileToArr(FILE* InstrumentsData, char** InstrumentsArr, int* sizeOfFile);
 char* DynamicAllocation1(char* Ptr, int NewSize, int Format);
 void CheckFile(FILE* file);
-void DeleteDuplication(char** InstrumentsArr, int* size);
-void maxHeapify(MaxHeap* maxHeap, int index);
-MaxHeap* createAndBuildHeap(char** arr, int size);
-void heapSort(char*** arr, int size);
-void swapStrings(char** stringA, char** stringB);
-<<<<<<< Updated upstream
+//void DeleteDuplication(char** InstrumentsArr, int* size);
+//void maxHeapify(MaxHeap* maxHeap, int index);
+//MaxHeap* createAndBuildHeap(char** arr, int size);
+//void heapSort(char*** arr, int size);
+//void swapStrings(char** stringA, char** stringB);
+//<<<<<<< Updated upstream
 void makeEmptyMPIList(MPIList* lst);
 bool isMPIListEmpty(MPIList lst);
-void insertDataToEndOfMPIList(MPIList lst, char* instrumentName, unsigned int insId, float price, MPIListNode* next);
+void insertDataToEndOfMPIList(MPIList* lst, char* instrumentName, unsigned int insId, float price, MPIListNode* next);
 MPIListNode* createNewMPIListNode(char* instrumentName, unsigned int insId, float price, MPIListNode* next);
-void insertMPIListNodeToEndOfList(MPIList lst, MPIListNode* node);
+void insertMPIListNodeToEndOfList(MPIList* lst, MPIListNode* node);
 void freeArrOfInstruments(char** instrumentsArr, int size);
 void freeInstrumentsTree(InstrumentTree tr);
 void recFreeInstrumentsTree(TreeNode* root);
 void freeMusiciansGroup(Musician** MusiciansGroup, int size);
 void freeMPIList(MPIList lst);
 void recFreeMPIList(MPIListNode* head);
-=======
+void InsertDataToMusicianGroup(InstrumentTree insTree, Musician* MusicianGroup, char* FreshData);
+//=======
 int FileLinesLen(FILE* FileData, char* FileName);
-Musician** FileToArr_Musicians(FILE* MusiciansData, int* sizeOfFile);
+Musician** FileToArr_Musicians(InstrumentTree insTree, FILE* MusiciansData, int* sizeOfFile);
+void InsertDataToMusicianGroup(InstrumentTree insTree, Musician* MusicianGroup, char* FreshData);
 bool CheckValid(char ch);
 void MallocArrguments(Musician* MusicianGroup, int Name_Size);
->>>>>>> Stashed changes
+void FirstAllocation(char*** data, char*** name);
+void Check_Physic_To_Logic(int logicSize, int* PhyisicSize, char*** Data_to_check);
+//>>>>>>> Stashed changes

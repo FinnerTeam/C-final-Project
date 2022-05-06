@@ -9,9 +9,6 @@ void main()
 	FILE* MusiciansData = NULL;
 	char** InstrumentsArr = NULL;
 	InstrumentsArr = FileToArr(InstrumentsData, InstrumentsArr, &NO_instruments);
-	
-	/*MusiciansGroup = (Musician*)malloc(sizeof(Musician*) * );*/
 	InstrumentTree insTree = buildBinaryTreeFromArray(InstrumentsArr, NO_instruments);
-	MusiciansGroup = FileToArr_Musicians(insTree,MusiciansData, &NO_musicians);
-	int ins = findInsId(insTree, "Guitar"); //testing;
-}
+	MusiciansGroup = FileToArr_Musicians(insTree,MusiciansData, &NO_musicians);// Tested Already, working .
+	

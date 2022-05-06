@@ -12,7 +12,7 @@
 #define MALLOC 1
 #define REALLOC 2
 #define DEFAULT_LINE 50
-#define FIRST_NAME 10
+#define FIRST_NAME 21
 #define DEFAULT_BUFFER 150
 #define DEFAULT_FULL_NAME 3
 #define NAME 0
