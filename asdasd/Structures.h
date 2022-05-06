@@ -23,8 +23,7 @@ typedef struct MPIlistNode
 {
 	struct MPIlistNode* next;
 	char* instrument;
-	unsigned short insId;
-	float price;
+	MusicianPriceInstrument Data;
 } MPIListNode;
 
 typedef struct
