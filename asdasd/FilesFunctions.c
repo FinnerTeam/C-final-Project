@@ -104,7 +104,7 @@ void InsertDataToMusicianGroup(InstrumentTree insTree,Musician* MusicianGroup, c
     EndOfReadOperation(MusicianGroup,PriceRead, &MusicianKit, &data, &name);    
 }
 
-Musician*** createMusiciansCollection(int numOfInstruments, Musician** MusiciansGroup, int numOfMusicians) //Creates the MusiciansCollection array.
+void createMusiciansCollection(Musician**** Collection,int numOfInstruments, Musician** MusiciansGroup, int numOfMusicians) //Creates the MusiciansCollection array.
 {
     Musician*** output = NULL;
     output = (Musician***)malloc(sizeof(Musician**) * numOfInstruments);
@@ -136,7 +136,8 @@ Musician*** createMusiciansCollection(int numOfInstruments, Musician** Musicians
             }
         }
     }
-    return output;
+    *Collection = output;
+
 }
 //=======
 //>>>>>>> Stashed changes

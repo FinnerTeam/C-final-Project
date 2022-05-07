@@ -38,7 +38,7 @@ void FirstAllocation(char*** data, char*** name);
 void Check_Physic_To_Logic(int logicSize, int* PhyisicSize, char*** Data_to_check);
 bool MPIListBinarySearch(MPIList* lst, int insId);
 MPIListNode* findMidElem(MPIList* lst);
-Musician*** createMusiciansCollection(int numOfInstruments, Musician** MusiciansGroup, int numOfMusicians);
+void createMusiciansCollection(Musician**** Collection, int numOfInstruments, Musician** MusiciansGroup, int numOfMusicians); //Creates the MusiciansCollection array.
 void InstallizeFirst(DATATYPE* data, DATATYPE* name);
 void CheckExistInTree(int* insId, int* Position, bool* InstrumentRead, InstrumentTree insTree, DATATYPE data);
 void Selector(int Position, DATATYPE* data, DATATYPE* name, MPIList* MusicianKit, bool* InstrumentRead,

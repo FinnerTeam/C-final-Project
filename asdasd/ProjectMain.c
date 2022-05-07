@@ -12,5 +12,5 @@ void main()
 	InstrumentTree insTree = buildBinaryTreeFromArray(InstrumentsArr, NO_instruments);
 	MusiciansGroup = FileToArr_Musicians(insTree, MusiciansData, &NO_musicians);
 	Musician*** MusiciansCollection = NULL;
-	MusiciansCollection = createMusiciansCollection(NO_instruments, MusiciansGroup, NO_musicians);
+	createMusiciansCollection(&MusiciansCollection,NO_instruments, MusiciansGroup, NO_musicians);
 }

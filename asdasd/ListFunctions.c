@@ -50,19 +50,27 @@ void insertMPIListNodeToEndOfList(MPIList* lst, MPIListNode* node) //Inserts nod
 bool MPIListBinarySearch(MPIList* lst, int insId) //Searches for insId in lst. Returns true/false.
 {
 	bool output = false;
-
+	bool right=false, left = false;
 	MPIListNode* currN = findMidElem(lst);
 
-	while (currN != NULL)
+	while (currN != NULL&& !output && !(right && left))
 	{
 		if (currN->Data.insId == insId)
 			output = true;
 
 		else if (currN->Data.insId < insId)
+		{
+			right = true;
 			currN = currN->next;
+		}
 
 		else
+		{
 			currN = currN->prev;
+			left = true;
+		}
+			
+			
 	}
 
 	return output;
@@ -84,7 +92,6 @@ MPIListNode* findMidElem(MPIList* lst) //Finds mid element in lst.
 			currO = currS;
 	}
 
-	currO = currS;
 	return currO;
 }
 
