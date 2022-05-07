@@ -143,7 +143,7 @@ void swapMPIListNodes(MPIListNode* nodeA, MPIListNode* nodeB) //Swaps nodeA&node
 	if (nodeA->next != nodeB)
 	{
 		nodeA->next->prev = tempB; nodeB->prev->next = tempA;
-		nodeA->next = nextB; nodeA->prev = prevB;;
+		nodeA->next = nextB; nodeA->prev = prevB;
 		nodeB->next = nextA; nodeB->prev = prevA;
 	}
 

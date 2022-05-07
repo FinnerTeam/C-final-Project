@@ -54,6 +54,9 @@
     <ClCompile Include="Helpers.c">
       <Filter>Controllers</Filter>
     </ClCompile>
+    <ClCompile Include="GeneralFunctions.c">
+      <Filter>Utilities Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Instruments.txt">
