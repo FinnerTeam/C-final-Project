@@ -36,11 +36,11 @@ bool CheckValid(char ch);
 void freeDATATYPE(DATATYPE* data);
 void FirstAllocation(char*** data, char*** name);
 void Check_Physic_To_Logic(int logicSize, int* PhyisicSize, char*** Data_to_check);
-<<<<<<< Updated upstream
+//<<<<<<< Updated upstream
 bool MPIListBinarySearch(MPIList* lst, int insId);
 MPIListNode* findMidElem(MPIList* lst);
 Musician*** createMusiciansCollection(int numOfInstruments, Musician** MusiciansGroup, int numOfMusicians);
-=======
+//=======
 void InstallizeFirst(DATATYPE* data, DATATYPE* name);
 void CheckExistInTree(int* insId, int* Position, bool* InstrumentRead, InstrumentTree insTree, DATATYPE data);
 void Selector(int Position, DATATYPE* data, DATATYPE* name, MPIList* MusicianKit, bool* InstrumentRead,
@@ -51,4 +51,4 @@ void EndOfReadOperation(Musician* MusicianGroup, bool PriceRead, MPIList* Musici
 
 
 //>>>>>>> Stashed changes
->>>>>>> Stashed changes
+//>>>>>>> Stashed changes

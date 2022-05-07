@@ -89,36 +89,8 @@ void InsertDataToMusicianGroup(InstrumentTree insTree,Musician* MusicianGroup, c
                 {
                     Position = PRICE;
                 }
-<<<<<<< Updated upstream
-                switch (Position)
-                {
-                    case NAME:
-                    {
-                        Check_Physic_To_Logic(FullName_LogicSize, &FullName_PhisicalSize, &name);
-                        name[FullName_LogicSize] = DynamicAllocation1(name[FullName_LogicSize], strlen(data[Data_LogicSize - 1]) + 1, MALLOC);
-                        strcpy(name[FullName_LogicSize++], data[Data_LogicSize - 1]);
-                        break;
-                    }
-                    case INSTRUMENT:
-                    {
-                        insertDataToEndOfMPIList(&MusicianKit, data[Data_LogicSize - 1], insId, 0, NULL, NULL);
-                        InstrumentRead = false;
-                        PriceRead = true;
-                        break;
-                    }
-                    case PRICE:
-                    {                                   //Needs to check about the float.. if there is really float inputs from the user.
-                        MusicianKit.tail->Data.price = (float)atoi(data[Data_LogicSize - 1]);
-                        InstrumentRead = true;
-                        PriceRead = false;
-                        break;
-                    }
-                    default:
-                        break;
-                }
-=======
                 Selector(Position, &data, &name, &MusicianKit, &InstrumentRead, &PriceRead, insId);
->>>>>>> Stashed changes
+//>>>>>>> Stashed changes
                 next_word = false;
             }
         }
@@ -134,7 +106,7 @@ void InsertDataToMusicianGroup(InstrumentTree insTree,Musician* MusicianGroup, c
     
 }
 
-<<<<<<< Updated upstream
+///<<<<<<< Updated upstream
 Musician*** createMusiciansCollection(int numOfInstruments, Musician** MusiciansGroup, int numOfMusicians) //Creates the MusiciansCollection array.
 {
     Musician*** output = NULL;
@@ -169,5 +141,5 @@ Musician*** createMusiciansCollection(int numOfInstruments, Musician** Musicians
     }
     return output;
 }
-=======
->>>>>>> Stashed changes
+//=======
+//>>>>>>> Stashed changes
