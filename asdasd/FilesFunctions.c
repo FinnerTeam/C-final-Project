@@ -90,7 +90,6 @@ void InsertDataToMusicianGroup(InstrumentTree insTree,Musician* MusicianGroup, c
                     Position = PRICE;
                 }
                 Selector(Position, &data, &name, &MusicianKit, &InstrumentRead, &PriceRead, insId);
-//>>>>>>> Stashed changes
                 next_word = false;
             }
         }
@@ -102,11 +101,9 @@ void InsertDataToMusicianGroup(InstrumentTree insTree,Musician* MusicianGroup, c
             } 
         }
     }
-    EndOfReadOperation(MusicianGroup,PriceRead, &MusicianKit, &data, &name);
-    
+    EndOfReadOperation(MusicianGroup,PriceRead, &MusicianKit, &data, &name);    
 }
 
-///<<<<<<< Updated upstream
 Musician*** createMusiciansCollection(int numOfInstruments, Musician** MusiciansGroup, int numOfMusicians) //Creates the MusiciansCollection array.
 {
     Musician*** output = NULL;

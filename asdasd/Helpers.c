@@ -45,6 +45,7 @@ void EndOfReadOperation(Musician* MusicianGroup, bool PriceRead, MPIList* Musici
     {
         MusicianKit->tail->Data.price = (float)atoi(data->data[*(data->logicsize) - 1]);
     }
+    sortMPIList(MusicianKit);
     if (*(name->logicsize) < *(name->physicalSize))
     {
         name->data = DynamicAllocation2(name->data, *(name->logicsize), REALLOC);
@@ -89,10 +90,10 @@ void CheckExistInTree(int* insId, int* Position, bool* InstrumentRead, Instrumen
         *Position = INSTRUMENT;
     }
 }
+
 void Selector(int Position, DATATYPE* data, DATATYPE* name, MPIList* MusicianKit, bool* InstrumentRead,
     bool* PriceRead, int insId)
 {
-
     switch (Position)
     {
     case NAME:
@@ -108,7 +109,7 @@ void Selector(int Position, DATATYPE* data, DATATYPE* name, MPIList* MusicianKit
     }
     case INSTRUMENT:
     {
-        insertDataToEndOfMPIList(MusicianKit, data->data[*(data->logicsize) - 1], insId, 0, NULL);
+        insertDataToEndOfMPIList(MusicianKit, data->data[*(data->logicsize) - 1], insId, 0, NULL, NULL);
         *InstrumentRead = false;
         *PriceRead = true;
         break;

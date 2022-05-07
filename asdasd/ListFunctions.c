@@ -87,4 +87,112 @@ MPIListNode* findMidElem(MPIList* lst) //Finds mid element in lst.
 	currO = currS;
 	return currO;
 }
+
+void sortMPIList(MPIList* lst) //Sorts MPIList
+{
+	MPIListNode* start = lst->head, * end = start->next, * prevStart = start->prev, * nextStart = start->next, * prevEnd = NULL, * nextEnd = NULL;
+
+	if (end != NULL)
+	{
+		prevEnd = end->prev;
+		nextEnd = end->next;
+	}
+
+	while (start != NULL)
+	{
+		if (end == NULL)
+		{
+			start = start->next;
+			if (start != NULL)
+				end = start->next;
+		}
+
+		else if (start->Data.insId >= end->Data.insId && start->next != end)
+		{
+			if (start != lst->head && end != lst->tail)
+			{
+				start->next = nextEnd; start->prev = prevEnd;
+				end->next = nextStart; end->prev = prevStart;
+
+				prevStart->next = nextStart->prev = end;
+				prevEnd->next = nextEnd->prev = start;
+			}
+
+			else if (start == lst->head && end != lst->tail)
+			{
+				start->next = nextEnd; start->prev = prevEnd;
+				end->prev = NULL; end->next = nextStart;
+
+				nextStart->prev = end;
+				prevEnd->next = nextEnd->prev = start;
+
+				lst->head = end;
+			}
+
+			else if (start != lst->head && end == lst->tail)
+			{
+				start->next = NULL; start->prev = prevEnd;
+				end->next = nextStart; end->prev = prevStart;
+
+				prevEnd->next = start;
+				prevStart->next = nextStart->prev = end;
+
+				lst->tail = start;
+			}
+
+			else if (start == lst->head && end == lst->tail)
+			{
+				start->next = NULL; start->prev = prevEnd;
+				end->prev = NULL; end->next = nextStart;
+
+				prevEnd->next = start;
+				nextStart->prev = end;
+
+				lst->head = end;
+				lst->tail = start;
+			}
+		}
+
+		else if (start->Data.insId >= end->Data.insId && start->next == end)
+		{
+			start->next = nextEnd;
+			if(nextEnd != NULL)
+				nextEnd->prev = start;
+			if (nextEnd == NULL)
+				lst->tail = start;
+			start->prev = end;
+
+			end->prev = prevStart;
+			if(prevStart != NULL)
+				prevStart->next = end;
+			if (prevStart == NULL)
+				lst->head = end;
+			end->next = start;
+		}
+		
+		else
+		{
+			end = end->next;
+			if (end != NULL)
+			{
+				prevEnd = end->prev;
+				nextEnd = end->next;
+			}
+		}
+
+		start = nextStart;
+		if (start != NULL)
+		{
+			prevStart = start->prev;
+			nextStart = start->next;
+		}
+
+		end = nextEnd;
+		if (end != NULL)
+		{
+			prevEnd = end->prev;
+			nextEnd = end->next;
+		}
+	}
+}
 		
