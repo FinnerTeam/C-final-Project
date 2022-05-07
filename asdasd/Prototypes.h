@@ -46,3 +46,7 @@ void Selector(int Position, DATATYPE* data, DATATYPE* name, MPIList* MusicianKit
 void NextWordOperation(DATATYPE* data, int* DataCol, bool* next_word);
 void EndOfReadOperation(Musician* MusicianGroup, bool PriceRead, MPIList* MusicianKit, DATATYPE* data, DATATYPE* name);
 void sortMPIList(MPIList* lst);
+void updateBooleanVariables(MPIList* lst, MPIListNode* start, MPIListNode* end, bool* isHead, bool* isTail);
+void swapMPIListNodes(MPIListNode* nodeA, MPIListNode* nodeB);
+void updateMPIListHeadAndTail(MPIList* lst, MPIListNode* newHead, MPIListNode* newTail,
+	bool isHead, bool isTail);

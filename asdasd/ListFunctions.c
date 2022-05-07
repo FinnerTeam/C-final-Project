@@ -78,7 +78,7 @@ bool MPIListBinarySearch(MPIList* lst, int insId) //Searches for insId in lst. R
 
 MPIListNode* findMidElem(MPIList* lst) //Finds mid element in lst.
 {
-	MPIListNode* currS = lst->head, * currO = NULL, * currE = lst->tail;
+	MPIListNode* currS = lst->head, * currO = currS, * currE = lst->tail;
 
 	while (currS != currE && !currO)
 	{
@@ -97,109 +97,69 @@ MPIListNode* findMidElem(MPIList* lst) //Finds mid element in lst.
 
 void sortMPIList(MPIList* lst) //Sorts MPIList
 {
-	MPIListNode* start = lst->head, * end = start->next, * prevStart = start->prev, * nextStart = start->next, * prevEnd = NULL, * nextEnd = NULL;
+	MPIListNode* start = lst->head, * end = start->next;
 
-	if (end != NULL)
-	{
-		prevEnd = end->prev;
-		nextEnd = end->next;
-	}
+	bool isHead = false, isTail = false;
 
 	while (start != NULL)
 	{
 		if (end == NULL)
 		{
 			start = start->next;
+
 			if (start != NULL)
 				end = start->next;
+
+			continue;
 		}
 
-		else if (start->Data.insId >= end->Data.insId && start->next != end)
+		updateBooleanVariables(lst, start, end, &isHead, &isTail);
+
+		MPIListNode* tempStart = start->next, * tempEnd = end->next, * tempGen = NULL;
+
+		if (start->Data.insId >= end->Data.insId)
 		{
-			if (start != lst->head && end != lst->tail)
-			{
-				start->next = nextEnd; start->prev = prevEnd;
-				end->next = nextStart; end->prev = prevStart;
-
-				prevStart->next = nextStart->prev = end;
-				prevEnd->next = nextEnd->prev = start;
-			}
-
-			else if (start == lst->head && end != lst->tail)
-			{
-				start->next = nextEnd; start->prev = prevEnd;
-				end->prev = NULL; end->next = nextStart;
-
-				nextStart->prev = end;
-				prevEnd->next = nextEnd->prev = start;
-
-				lst->head = end;
-			}
-
-			else if (start != lst->head && end == lst->tail)
-			{
-				start->next = NULL; start->prev = prevEnd;
-				end->next = nextStart; end->prev = prevStart;
-
-				prevEnd->next = start;
-				prevStart->next = nextStart->prev = end;
-
-				lst->tail = start;
-			}
-
-			else if (start == lst->head && end == lst->tail)
-			{
-				start->next = NULL; start->prev = prevEnd;
-				end->prev = NULL; end->next = nextStart;
-
-				prevEnd->next = start;
-				nextStart->prev = end;
-
-				lst->head = end;
-				lst->tail = start;
-			}
+			swapMPIListNodes(start, end);
+			updateMPIListHeadAndTail(lst, end, start, isHead, isTail);
+			tempGen = start; start = end; end = tempGen;
 		}
 
-		else if (start->Data.insId >= end->Data.insId && start->next == end)
-		{
-			start->next = nextEnd;
-			if(nextEnd != NULL)
-				nextEnd->prev = start;
-			if (nextEnd == NULL)
-				lst->tail = start;
-			start->prev = end;
-
-			end->prev = prevStart;
-			if(prevStart != NULL)
-				prevStart->next = end;
-			if (prevStart == NULL)
-				lst->head = end;
-			end->next = start;
-		}
-		
 		else
-		{
 			end = end->next;
-			if (end != NULL)
-			{
-				prevEnd = end->prev;
-				nextEnd = end->next;
-			}
-		}
-
-		start = nextStart;
-		if (start != NULL)
-		{
-			prevStart = start->prev;
-			nextStart = start->next;
-		}
-
-		end = nextEnd;
-		if (end != NULL)
-		{
-			prevEnd = end->prev;
-			nextEnd = end->next;
-		}
+		
 	}
 }
-		
+
+void swapMPIListNodes(MPIListNode* nodeA, MPIListNode* nodeB) //Swaps nodeA&nodeB.
+{
+	MPIListNode* tempA = nodeA, * tempB = nodeB, * prevA = nodeA->prev, * nextB = nodeB->next, * nextA = nodeA->next, * prevB = nodeB->prev;
+
+	if (nodeA->prev != NULL)
+		nodeA->prev->next = tempB;
+
+	if (nodeB->next != NULL)
+		nodeB->next->prev = tempA;
+
+	if (nodeA->next != nodeB)
+	{
+		nodeA->next->prev = tempB; nodeB->prev->next = tempA;
+		nodeA->next = nextB; nodeA->prev = prevB;;
+		nodeB->next = nextA; nodeB->prev = prevA;
+	}
+
+	else if (nodeA->next == nodeB)
+	{
+		nodeA->prev = tempB; nodeA->next = nextB;
+		nodeB->next = tempA; nodeB->prev = prevA;
+	}
+}
+
+void updateMPIListHeadAndTail(MPIList* lst, MPIListNode* newHead, MPIListNode* newTail,
+	bool isHead, bool isTail) //Updates lst's head&tail in sortMPIList function. 
+{
+	if (isHead)
+		lst->head = newHead;
+
+	if (isTail)
+		lst->tail = newTail;
+}

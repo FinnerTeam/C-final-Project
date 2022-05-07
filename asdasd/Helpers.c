@@ -125,3 +125,18 @@ void Selector(int Position, DATATYPE* data, DATATYPE* name, MPIList* MusicianKit
         break;
     }
 }
+
+void updateBooleanVariables(MPIList* lst, MPIListNode* start, MPIListNode* end, bool* isHead, bool* isTail) //Updates booleans for sortMPIList function.
+{
+    if (start == lst->head)
+        *isHead = true;
+
+    else
+        *isHead = false;
+
+    if (end == lst->tail)
+        *isTail = true;
+
+    else
+        *isTail = false;
+}

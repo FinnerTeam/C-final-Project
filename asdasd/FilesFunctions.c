@@ -113,6 +113,7 @@ void createMusiciansCollection(Musician**** Collection,int numOfInstruments, Mus
 
     for (i = 0; i < numOfInstruments; i++)
     {
+        subArrayPhySize = 1;
         output[i] = (Musician**)malloc(sizeof(Musician*) * subArrayPhySize);
         CheckMem(output[i]);
         subArrayLogSize = 0;
