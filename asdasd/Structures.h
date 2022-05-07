@@ -22,6 +22,7 @@ typedef struct
 typedef struct MPIlistNode
 {
 	struct MPIlistNode* next;
+	struct MPIlistNode* prev;
 	char* instrument;
 	MusicianPriceInstrument Data;
 } MPIListNode;

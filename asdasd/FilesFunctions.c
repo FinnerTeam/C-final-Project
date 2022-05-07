@@ -106,7 +106,7 @@ void InsertDataToMusicianGroup(InstrumentTree insTree,Musician* MusicianGroup, c
                     }
                     case INSTRUMENT:
                     {
-                        insertDataToEndOfMPIList(&MusicianKit, data[Data_LogicSize - 1], insId, 0, NULL);
+                        insertDataToEndOfMPIList(&MusicianKit, data[Data_LogicSize - 1], insId, 0, NULL, NULL);
                         InstrumentRead = false;
                         PriceRead = true;
                         break;
@@ -155,4 +155,39 @@ void InsertDataToMusicianGroup(InstrumentTree insTree,Musician* MusicianGroup, c
     }
     freeArr(name,FullName_LogicSize);
     MusicianGroup->instruments = MusicianKit;
+}
+
+Musician*** createMusiciansCollection(int numOfInstruments, Musician** MusiciansGroup, int numOfMusicians) //Creates the MusiciansCollection array.
+{
+    Musician*** output = NULL;
+    output = (Musician***)malloc(sizeof(Musician**) * numOfInstruments);
+    CheckMem(output);
+    int i, j, k, subArrayLogSize, subArrayPhySize = 1;
+
+    for (i = 0; i < numOfInstruments; i++)
+    {
+        output[i] = (Musician**)malloc(sizeof(Musician*) * subArrayPhySize);
+        CheckMem(output[i]);
+        subArrayLogSize = 0;
+        for (j = 0; j < numOfMusicians; j++)
+        {
+            if (MPIListBinarySearch(&(MusiciansGroup[j]->instruments), i))
+            {
+                if (subArrayLogSize == subArrayPhySize)
+                {
+                    subArrayPhySize *= 2;
+                    output[i] = (Musician**)realloc(output[i], sizeof(Musician*) * subArrayPhySize);
+                    CheckMem(output[i]);
+                }
+                output[i][subArrayLogSize] = MusiciansGroup[j];
+                subArrayLogSize++;
+                if (j == numOfMusicians - 1 && subArrayPhySize > subArrayLogSize)
+                {
+                    output[i] = (Musician**)realloc(output[i], sizeof(Musician*) * subArrayLogSize);
+                    CheckMem(output[i]);
+                }
+            }
+        }
+    }
+    return output;
 }
