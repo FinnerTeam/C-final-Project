@@ -66,10 +66,10 @@ void InsertDataToMusicianGroup(InstrumentTree insTree,Musician* MusicianGroup, c
     bool InstrumentRead = false;
     bool PriceRead = false;
     int insId = -1;
-    int  DataCol = 0,Data_LogicSize = 0,Data_PhyisicalSize = 1, Position = NAME;
-    int FullName_LogicSize = 0,FullName_PhisicalSize = 1;
-    char** data = NULL, ** name = NULL;
-    FirstAllocation(&data, &name);
+    int  DataCol = 0, Position = NAME;
+    DATATYPE name;
+    DATATYPE data;
+    InstallizeFirst( &data, &name);
     MPIList MusicianKit;
     makeEmptyMPIList(&MusicianKit);
     int i = 0;
@@ -78,23 +78,18 @@ void InsertDataToMusicianGroup(InstrumentTree insTree,Musician* MusicianGroup, c
         ch = FreshData[i++];
         if (CheckValid(ch))
         {
-            data[Data_LogicSize][DataCol++] = ch;
-          
+            data.data[*(data.logicsize)][DataCol++] = ch;
             if (next_word == true)
             {
                 if (PriceRead == false)
                 {
-                    insId = findInsId(insTree, data[Data_LogicSize - 1]);
-                    if (insId != -1)
-                    {
-                        InstrumentRead = true;
-                        Position = INSTRUMENT;
-                    }
+                    CheckExistInTree(&insId, &Position, &InstrumentRead,insTree,data);
                 }
                 else
                 {
                     Position = PRICE;
                 }
+<<<<<<< Updated upstream
                 switch (Position)
                 {
                     case NAME:
@@ -121,6 +116,9 @@ void InsertDataToMusicianGroup(InstrumentTree insTree,Musician* MusicianGroup, c
                     default:
                         break;
                 }
+=======
+                Selector(Position, &data, &name, &MusicianKit, &InstrumentRead, &PriceRead, insId);
+>>>>>>> Stashed changes
                 next_word = false;
             }
         }
@@ -128,35 +126,15 @@ void InsertDataToMusicianGroup(InstrumentTree insTree,Musician* MusicianGroup, c
         {
             if (next_word == false)
             {
-                data[Data_LogicSize] = DynamicAllocation1(data[Data_LogicSize], DataCol + 1, REALLOC);
-                data[Data_LogicSize][DataCol] = '\0';
-                DataCol = 0;
-                Data_LogicSize++;
-                Check_Physic_To_Logic(Data_LogicSize, &Data_PhyisicalSize, &data);
-                data[Data_LogicSize] = DynamicAllocation1(data[Data_LogicSize], FIRST_NAME, MALLOC);
-                next_word = true;
+                NextWordOperation(&data, &DataCol, &next_word);
             } 
         }
     }
-    if (PriceRead == true)
-    {
-        MusicianKit.tail->Data.price = (float)atoi(data[Data_LogicSize - 1]);
-    }
-    if (FullName_LogicSize < FullName_PhisicalSize)
-    {
-        name = DynamicAllocation2(name, FullName_LogicSize, REALLOC);
-    }
-    freeArr(data,Data_LogicSize);
-    MusicianGroup->name = DynamicAllocation2(MusicianGroup->name, FullName_LogicSize, MALLOC);
-    for (int i = 0; i < FullName_LogicSize; i++)
-    {
-        (MusicianGroup->name)[i] = DynamicAllocation1((MusicianGroup->name)[i], strlen(name[i]) + 1, MALLOC);
-        strcpy((MusicianGroup->name)[i], name[i]);
-    }
-    freeArr(name,FullName_LogicSize);
-    MusicianGroup->instruments = MusicianKit;
+    EndOfReadOperation(MusicianGroup,PriceRead, &MusicianKit, &data, &name);
+    
 }
 
+<<<<<<< Updated upstream
 Musician*** createMusiciansCollection(int numOfInstruments, Musician** MusiciansGroup, int numOfMusicians) //Creates the MusiciansCollection array.
 {
     Musician*** output = NULL;
@@ -191,3 +169,5 @@ Musician*** createMusiciansCollection(int numOfInstruments, Musician** Musicians
     }
     return output;
 }
+=======
+>>>>>>> Stashed changes

@@ -9,6 +9,12 @@ void freeArr(char** instrumentsArr, int size) //Frees instrumentsArr.
 
 	free(instrumentsArr);
 }
+void freeDATATYPE(DATATYPE* data)
+{
+	freeArr(data->data, *(data->logicsize));
+	free(data->logicsize);
+	free(data->physicalSize);
+}
 
 void freeInstrumentsTree(InstrumentTree tr) //Frees the instruments tree.
 {

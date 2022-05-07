@@ -33,9 +33,22 @@ int FileLinesLen(FILE* FileData, char* FileName);
 Musician** FileToArr_Musicians(InstrumentTree insTree, FILE* MusiciansData, int* sizeOfFile);
 void InsertDataToMusicianGroup(InstrumentTree insTree, Musician* MusicianGroup, char* FreshData);
 bool CheckValid(char ch);
-void MallocArrguments(Musician* MusicianGroup, int Name_Size);
+void freeDATATYPE(DATATYPE* data);
 void FirstAllocation(char*** data, char*** name);
 void Check_Physic_To_Logic(int logicSize, int* PhyisicSize, char*** Data_to_check);
+<<<<<<< Updated upstream
 bool MPIListBinarySearch(MPIList* lst, int insId);
 MPIListNode* findMidElem(MPIList* lst);
 Musician*** createMusiciansCollection(int numOfInstruments, Musician** MusiciansGroup, int numOfMusicians);
+=======
+void InstallizeFirst(DATATYPE* data, DATATYPE* name);
+void CheckExistInTree(int* insId, int* Position, bool* InstrumentRead, InstrumentTree insTree, DATATYPE data);
+void Selector(int Position, DATATYPE* data, DATATYPE* name, MPIList* MusicianKit, bool* InstrumentRead,
+    bool* PriceRead, int insId);
+void NextWordOperation(DATATYPE* data, int* DataCol, bool* next_word);
+void EndOfReadOperation(Musician* MusicianGroup, bool PriceRead, MPIList* MusicianKit, DATATYPE* data, DATATYPE* name);
+
+
+
+//>>>>>>> Stashed changes
+>>>>>>> Stashed changes

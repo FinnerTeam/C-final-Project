@@ -15,6 +15,12 @@ typedef struct tree
 
 typedef struct
 {
+	int* logicsize;
+	int* physicalSize;
+	char** data;
+}DATATYPE;
+typedef struct
+{
 	unsigned short insId;
 	float price;
 } MusicianPriceInstrument;
