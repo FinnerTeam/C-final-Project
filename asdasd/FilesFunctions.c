@@ -146,13 +146,13 @@ void InsertDataToMusicianGroup(InstrumentTree insTree,Musician* MusicianGroup, c
     {
         name = DynamicAllocation2(name, FullName_LogicSize, REALLOC);
     }
-    free(data);
+    freeArr(data,Data_LogicSize);
     MusicianGroup->name = DynamicAllocation2(MusicianGroup->name, FullName_LogicSize, MALLOC);
     for (int i = 0; i < FullName_LogicSize; i++)
     {
         (MusicianGroup->name)[i] = DynamicAllocation1((MusicianGroup->name)[i], strlen(name[i]) + 1, MALLOC);
         strcpy((MusicianGroup->name)[i], name[i]);
     }
-    free(name);
+    freeArr(name,FullName_LogicSize);
     MusicianGroup->instruments = MusicianKit;
 }

@@ -22,7 +22,7 @@ bool isMPIListEmpty(MPIList lst);
 void insertDataToEndOfMPIList(MPIList* lst, char* instrumentName, unsigned int insId, float price, MPIListNode* next);
 MPIListNode* createNewMPIListNode(char* instrumentName, unsigned int insId, float price, MPIListNode* next);
 void insertMPIListNodeToEndOfList(MPIList* lst, MPIListNode* node);
-void freeArrOfInstruments(char** instrumentsArr, int size);
+void freeArr(char** instrumentsArr, int size);
 void freeInstrumentsTree(InstrumentTree tr);
 void recFreeInstrumentsTree(TreeNode* root);
 void freeMusiciansGroup(Musician** MusiciansGroup, int size);

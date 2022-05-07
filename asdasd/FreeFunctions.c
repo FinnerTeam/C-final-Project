@@ -1,6 +1,6 @@
 #include "ProjectHeader.h"
 
-void freeArrOfInstruments(char** instrumentsArr, int size) //Frees instrumentsArr.
+void freeArr(char** instrumentsArr, int size) //Frees instrumentsArr.
 {
 	int i;
 
