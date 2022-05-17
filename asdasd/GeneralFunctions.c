@@ -1,4 +1,5 @@
 #include "ProjectHeader.h"
+
 void createMusiciansCollection(Musician**** Collection, int numOfInstruments, Musician** MusiciansGroup, int numOfMusicians) //Creates the MusiciansCollection array.
 {
     Musician*** output = NULL;
@@ -33,5 +34,9 @@ void createMusiciansCollection(Musician**** Collection, int numOfInstruments, Mu
         }
     }
     *Collection = output;
+}
 
+void getConcertsInformationAndMatchMusicians(Musician*** MusiciansCollection, InstrumentTree insTree)
+{
+    int newLine = 0, insNameLogSize = 0;
 }

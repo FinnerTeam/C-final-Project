@@ -69,8 +69,6 @@ bool MPIListBinarySearch(MPIList* lst, int insId) //Searches for insId in lst. R
 			currN = currN->prev;
 			left = true;
 		}
-			
-			
 	}
 
 	return output;
@@ -162,4 +160,45 @@ void updateMPIListHeadAndTail(MPIList* lst, MPIListNode* newHead, MPIListNode* n
 
 	if (isTail)
 		lst->tail = newTail;
+}
+
+void insertDataToEndOfCIList(CIList* lst, int num, int insId, char importance, CIListNode* next) //Inserts new data to a CI list.
+{
+	CIListNode* node = createNewCIListNode(num, insId, importance, NULL);
+	insertCIListNodeToEndList(lst, node);
+}
+
+CIListNode* createNewCIListNode(int num, int insId, char importance, CIListNode* next) //Creates a new CIListNode.
+{
+	CIListNode* output = (CIListNode*)malloc(sizeof(CIListNode));
+	CheckMem(output);
+
+	output->data.importance = importance;
+	output->data.inst = insId;
+	output->data.num = num;
+	output->next = next;
+
+	return output;
+}
+
+void insertCIListNodeToEndList(CIList* lst, CIListNode* node) //Inserts a node to the end of a CI list.
+{
+	if (isEmptyCIList(lst))
+		lst->head = lst->tail = node;
+
+	else
+	{
+		lst->tail->next = node;
+		lst->tail = node;
+	}
+}
+
+bool isEmptyCIList(CIList* lst) //Checks whether lst is empty.
+{
+	return lst->head == NULL;
+}
+
+void makeEmptyCIList(CIList* lst) //Makes lst an empty list.
+{
+	lst->head = lst->tail = NULL;
 }

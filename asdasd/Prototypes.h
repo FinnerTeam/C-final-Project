@@ -50,3 +50,9 @@ void updateBooleanVariables(MPIList* lst, MPIListNode* start, MPIListNode* end, 
 void swapMPIListNodes(MPIListNode* nodeA, MPIListNode* nodeB);
 void updateMPIListHeadAndTail(MPIList* lst, MPIListNode* newHead, MPIListNode* newTail,
 	bool isHead, bool isTail);
+void makeEmptyCIList(CIList* lst);
+bool isEmptyCIList(CIList* lst);
+void insertCIListNodeToEndList(CIList* lst, CIListNode* node);
+CIListNode* createNewCIListNode(int num, int insId, char importance, CIListNode* next);
+void insertDataToEndOfCIList(CIList* lst, int num, int insId, char importance, CIListNode* next);
+void getConcertsInformationAndMatchMusicians(Musician*** MusiciansCollection, InstrumentTree insTree);

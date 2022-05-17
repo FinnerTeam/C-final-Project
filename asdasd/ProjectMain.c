@@ -13,4 +13,5 @@ void main()
 	MusiciansGroup = FileToArr_Musicians(insTree, MusiciansData, &NO_musicians);
 	Musician*** MusiciansCollection = NULL;
 	createMusiciansCollection(&MusiciansCollection,NO_instruments, MusiciansGroup, NO_musicians);
+	getConcertsInformationAndMatchMusicians(MusiciansCollection, insTree);
 }

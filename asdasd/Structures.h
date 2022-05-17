@@ -1,4 +1,5 @@
 #pragma once
+
 //*********************Data Structures*****************************
 typedef struct treeNode
 {
@@ -19,6 +20,7 @@ typedef struct
 	int* physicalSize;
 	char** data;
 }DATATYPE;
+
 typedef struct
 {
 	unsigned short insId;
@@ -61,9 +63,7 @@ typedef struct
 typedef struct CIlistNode
 {
 	struct CIlistNode* next;
-	int num;
-	int inst;
-	char importance;
+	ConcertInstrument data;
 } CIListNode;
 
 typedef struct
