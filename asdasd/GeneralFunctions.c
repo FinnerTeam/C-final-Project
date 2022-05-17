@@ -39,4 +39,38 @@ void createMusiciansCollection(Musician**** Collection, int numOfInstruments, Mu
 void getConcertsInformationAndMatchMusicians(Musician*** MusiciansCollection, InstrumentTree insTree)
 {
     int newLine = 0, insNameLogSize = 0;
+    char input;
+
+    while (newLine < 2)
+    {
+        char* concertName = getConcertName();
+    }
+}
+
+char* getConcertName()
+{
+    char* output = NULL;
+    int stringLogSize = 0, stringPhySize = 1;
+    output = (char*)malloc(sizeof(char) * stringPhySize);
+    CheckMem(output);
+    char input = getchar();
+
+    while (input != ' ')
+    {
+        if (stringLogSize < stringPhySize)
+        {
+            stringPhySize *= 2;
+            output = (char*)realloc(sizeof(char) * stringPhySize);
+        }
+
+        output[stringLogSize] = input;
+        stringLogSize++;
+    }
+
+    return output;
+}
+
+Date getConcertDate()
+{
+
 }

@@ -56,3 +56,5 @@ void insertCIListNodeToEndList(CIList* lst, CIListNode* node);
 CIListNode* createNewCIListNode(int num, int insId, char importance, CIListNode* next);
 void insertDataToEndOfCIList(CIList* lst, int num, int insId, char importance, CIListNode* next);
 void getConcertsInformationAndMatchMusicians(Musician*** MusiciansCollection, InstrumentTree insTree);
+char* getConcertName();
+Date getConcertDate();
