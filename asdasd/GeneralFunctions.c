@@ -36,14 +36,17 @@ void createMusiciansCollection(Musician**** Collection, int numOfInstruments, Mu
     *Collection = output;
 }
 
-void getConcertsInformationAndMatchMusicians(Musician*** MusiciansCollection, InstrumentTree insTree)
+Concert* createConcertsArr()
 {
-    int newLine = 0, insNameLogSize = 0;
+    int newLine = 0, arrLogSize = 0, arrPhySize = 1;
     char input;
+    Concert* output = (Concert*)malloc(sizeof(Concert) * arrPhySize);
+    CheckMem(output);
 
     while (newLine < 2)
     {
         char* concertName = getConcertName();
+        Date date = getConcertDate();
     }
 }
 
@@ -57,20 +60,28 @@ char* getConcertName()
 
     while (input != ' ')
     {
-        if (stringLogSize < stringPhySize)
+        if (stringLogSize == stringPhySize)
         {
             stringPhySize *= 2;
-            output = (char*)realloc(sizeof(char) * stringPhySize);
+            output = (char*)realloc(output, sizeof(char) * stringPhySize);
+            CheckMem(output);
         }
 
         output[stringLogSize] = input;
         stringLogSize++;
+        input = getchar();
     }
+
+    output = (char*)realloc(output, sizeof(char) * (stringLogSize + 1));
+    CheckMem(output);
+    output[stringLogSize + 1] = '\0';
 
     return output;
 }
 
 Date getConcertDate()
 {
+    Date output;
 
+    return output;
 }

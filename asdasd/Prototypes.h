@@ -55,6 +55,6 @@ bool isEmptyCIList(CIList* lst);
 void insertCIListNodeToEndList(CIList* lst, CIListNode* node);
 CIListNode* createNewCIListNode(int num, int insId, char importance, CIListNode* next);
 void insertDataToEndOfCIList(CIList* lst, int num, int insId, char importance, CIListNode* next);
-void getConcertsInformationAndMatchMusicians(Musician*** MusiciansCollection, InstrumentTree insTree);
+Concert* createConcertsArr();
 char* getConcertName();
 Date getConcertDate();

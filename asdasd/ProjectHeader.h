@@ -20,3 +20,4 @@
 #define PRICE 2
 #define INSTRUMENTSFILE "Instruments.txt"
 #define MUSICIANSFILE "Musicians.txt"
+#define LEN_OF_DATE 16
