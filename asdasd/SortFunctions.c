@@ -1,5 +1,5 @@
-//#include "ProjectHeader.h"
-//
+#include "ProjectHeader.h"
+
 //void DeleteDuplication(char** InstrumentsArr, int* size)
 //{
 //    int i, j = 1, k = 1;
@@ -20,6 +20,7 @@
 //    InstrumentsArr = DynamicAllocation2(InstrumentsArr, *size, REALLOC);
 //  
 //}
+
 //void swapStrings(char** stringA, char** stringB) //Swaps stringA & stringB.
 //{
 //    char* temp = NULL;
@@ -29,7 +30,7 @@
 //    strcpy(*stringB, temp);
 //    free(temp);
 //}
-//
+
 //void maxHeapify(MaxHeap* maxHeap, int index)
 //{
 //    int largest = index;
@@ -48,7 +49,7 @@
 //        maxHeapify(maxHeap, largest);
 //    }
 //}
-//
+
 //MaxHeap* createAndBuildHeap(char** arr, int size)
 //{
 //    int i;
@@ -63,7 +64,7 @@
 //
 //    return maxHeap;
 //}
-//
+
 //void heapSort(char*** arr, int size)
 //{
 //    MaxHeap* maxHeap = createAndBuildHeap(*arr, size);

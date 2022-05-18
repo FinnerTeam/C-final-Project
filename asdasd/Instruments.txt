@@ -1,10 +1,8 @@
-Accordion   
-Bagpipes
-Harmonica
-Drums
-Cello
+Viola
+Metallophone
 Guitar
-Cymbals
-Harp
+Violin
+Accordion
 Clarinet
-Flute
+Drums
+Piano

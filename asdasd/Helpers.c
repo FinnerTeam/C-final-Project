@@ -1,11 +1,7 @@
 #include "ProjectHeader.h"
-/// <summary>
+
 /// Utillities Functions for every Data Structure functions
-/// </summary>
-/// <param name="ch"></param>
-/// <returns></returns>
-/// 
-/// 
+
 // check if the chat validate
 bool CheckValid(char ch) 
 {
@@ -20,6 +16,7 @@ bool CheckValid(char ch)
         && ch != '<' && ch != '>'
         && ch != '~' && ch != '_');
 }
+
 // check if  need to realloc  *2 all the time
 void Check_Physic_To_Logic(int logicSize, int* PhyisicSize, char*** Data_to_check)
 {
@@ -29,6 +26,7 @@ void Check_Physic_To_Logic(int logicSize, int* PhyisicSize, char*** Data_to_chec
         *Data_to_check = DynamicAllocation2(*Data_to_check, *PhyisicSize, REALLOC);
     }
 }
+
 // First allocation of the FileToArr_Musician function
 void FirstAllocation(char*** data, char*** name)
 {
@@ -39,18 +37,17 @@ void FirstAllocation(char*** data, char*** name)
     *(data[0]) = DynamicAllocation1(*(data[0]), FIRST_NAME, MALLOC);
     CheckMem(*(data[0]));
 }
+
 void EndOfReadOperation(Musician* MusicianGroup, bool PriceRead, MPIList* MusicianKit, DATATYPE* data, DATATYPE* name)
 {
     if (PriceRead == true)
-    {
         MusicianKit->tail->Data.price = (float)atoi(data->data[*(data->logicsize) - 1]);
-    }
-    sortMPIList(MusicianKit);
+
     if (*(name->logicsize) < *(name->physicalSize))
-    {
         name->data = DynamicAllocation2(name->data, *(name->logicsize), REALLOC);
-    }
+
     freeDATATYPE(data);
+
     MusicianGroup->name = DynamicAllocation2(MusicianGroup->name, *(name->logicsize), MALLOC);
     for (int i = 0; i < *(name->logicsize); i++)
     {
@@ -60,6 +57,7 @@ void EndOfReadOperation(Musician* MusicianGroup, bool PriceRead, MPIList* Musici
     freeDATATYPE(name);
     MusicianGroup->instruments = *MusicianKit;
 }
+
 void NextWordOperation(DATATYPE* data, int* DataCol, bool* next_word)
 {
     data->data[*(data->logicsize)] = DynamicAllocation1(data->data[*(data->logicsize)], (*DataCol) + 1, REALLOC);
@@ -70,6 +68,7 @@ void NextWordOperation(DATATYPE* data, int* DataCol, bool* next_word)
     data->data[*(data->logicsize)] = DynamicAllocation1(data->data[*(data->logicsize)], FIRST_NAME, MALLOC);
     *next_word = true;
 }
+
 void InstallizeFirst(DATATYPE* data, DATATYPE* name)
 {
     data->logicsize = (int*)calloc(1, sizeof(int));
@@ -81,6 +80,7 @@ void InstallizeFirst(DATATYPE* data, DATATYPE* name)
     FirstAllocation(&(data->data), &(name->data));
 
 }
+
 void CheckExistInTree(int* insId, int* Position, bool* InstrumentRead, InstrumentTree insTree, DATATYPE data)
 {
     *insId = findInsId(insTree, data.data[*(data.logicsize) - 1]);
@@ -109,13 +109,13 @@ void Selector(int Position, DATATYPE* data, DATATYPE* name, MPIList* MusicianKit
     }
     case INSTRUMENT:
     {
-        insertDataToEndOfMPIList(MusicianKit, data->data[*(data->logicsize) - 1], insId, 0, NULL, NULL);
+        insertDataToEndOfMPIList(MusicianKit, data->data[*(data->logicsize) - 1], insId, 0, false, NULL);
         *InstrumentRead = false;
         *PriceRead = true;
         break;
     }
     case PRICE:
-    {                                   //Needs to check about the float.. if there is really float inputs from the user.
+    {                                   //Needs to check about the float.. if there is really float inputs from the user. //Checked.
         MusicianKit->tail->Data.price = (float)atoi(data->data[*(data->logicsize) - 1]);
         *InstrumentRead = true;
         *PriceRead = false;
@@ -126,17 +126,80 @@ void Selector(int Position, DATATYPE* data, DATATYPE* name, MPIList* MusicianKit
     }
 }
 
-void updateBooleanVariables(MPIList* lst, MPIListNode* start, MPIListNode* end, bool* isHead, bool* isTail) //Updates booleans for sortMPIList function.
+//void updateBooleanVariables(MPIList* lst, MPIListNode* start, MPIListNode* end, bool* isHead, bool* isTail) //Updates booleans for sortMPIList function.
+//{
+//    if (start == lst->head)
+//        *isHead = true;
+//
+//    else
+//        *isHead = false;
+//
+//    if (end == lst->tail)
+//        *isTail = true;
+//
+//    else
+//        *isTail = false;
+//}
+
+int recPow(int base, int exp) //Raises base by exp.
 {
-    if (start == lst->head)
-        *isHead = true;
+    if (exp == 0)
+        return 1;
 
-    else
-        *isHead = false;
+    else if (exp == 1)
+        return base;
 
-    if (end == lst->tail)
-        *isTail = true;
+    return base * recPow(base, exp - 1);
+}
 
-    else
-        *isTail = false;
+int buildDate(int type) //Returns a partial date by type.
+{
+    int output;
+    char input = getchar();
+
+    switch (type)
+    {
+
+    case DAY: //same for case MONTH.
+        output = (input - '0') * 10;
+        input = getchar();
+        output += (input - '0');
+        break;
+
+    case YEAR:
+        output = (input - '0') * 1000;
+        for (int i = 2; i >= 0; i--)
+        {
+            input = getchar();
+            output += (input - '0') * recPow(10, i);
+        }
+    }
+
+    input = getchar(); //flush ' '.
+
+    return output;
+}
+
+float buildHour() //Returns an hour by user's input.
+{
+    float hour = 0, minutes = 0, output;
+    char input;
+
+    for (int i = 1; i >= 0; i--)
+    {
+        input = getchar();
+        hour += (input - '0') * recPow(10, i);
+    }
+
+    input = getchar(); //flush ':'.
+
+    for (int j = 1; j >= 0; j--)
+    {
+        input = getchar();
+        minutes += (input - '0') * recPow(10, j);
+    }
+
+    input = getchar(); //flush ' '.
+    output = hour + (minutes / HOUR);
+    return output;
 }

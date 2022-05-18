@@ -5,6 +5,7 @@ typedef struct treeNode
 {
 	char* instrument;
 	unsigned short insId;
+	int numOfMusicians;
 	struct treeNode* left;
 	struct treeNode* right;
 } TreeNode;
@@ -30,8 +31,8 @@ typedef struct
 typedef struct MPIlistNode
 {
 	struct MPIlistNode* next;
-	struct MPIlistNode* prev;
 	char* instrument;
+	bool isBooked;
 	MusicianPriceInstrument Data;
 } MPIListNode;
 

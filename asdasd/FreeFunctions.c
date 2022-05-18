@@ -9,6 +9,7 @@ void freeArr(char** instrumentsArr, int size) //Frees instrumentsArr.
 
 	free(instrumentsArr);
 }
+
 void freeDATATYPE(DATATYPE* data)
 {
 	freeArr(data->data, *(data->logicsize));
@@ -70,6 +71,23 @@ void recFreeMPIList(MPIListNode* head) //Recursively frees MPIList.
 	{
 		recFreeMPIList(head->next);
 		free(head->instrument);
+		free(head);
+	}
+}
+
+void freeCIList(CIList* lst) //Frees a CI List.
+{
+	recFreeCIList(lst->head);
+}
+
+void recFreeCIList(CIListNode* head) //Recursively frees a CI list.
+{
+	if (head == NULL)
+		return;
+
+	else
+	{
+		recFreeCIList(head->next);
 		free(head);
 	}
 }

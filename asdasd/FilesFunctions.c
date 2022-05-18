@@ -12,6 +12,7 @@ int FileLinesLen(FILE* FileData, char* FileName)
     fclose(FileData);
     return count_lines + 1;
 }
+
 char** FileToArr(FILE* InstrumentsData, char** InstrumentsArr, int* sizeOfFile)
 {
     int i = 0;
@@ -30,8 +31,8 @@ char** FileToArr(FILE* InstrumentsData, char** InstrumentsArr, int* sizeOfFile)
     }
     fclose(InstrumentsData);
     return InstrumentsArr;
-
 }
+
 Musician** FileToArr_Musicians(InstrumentTree insTree, FILE* MusiciansData, int* sizeOfFile)
 {
     int i = 0, Logicsize = 0, PhyiscalSize = 1;
@@ -59,20 +60,17 @@ Musician** FileToArr_Musicians(InstrumentTree insTree, FILE* MusiciansData, int*
     fclose(MusiciansData);
     return MusicianGroup;
 }
-void InsertDataToMusicianGroup(InstrumentTree insTree,Musician* MusicianGroup, char* FreshData)
+
+void InsertDataToMusicianGroup(InstrumentTree insTree, Musician* MusicianGroup, char* FreshData)
 {
     char ch;
-    bool next_word = false;
-    bool InstrumentRead = false;
-    bool PriceRead = false;
-    int insId = -1;
-    int  DataCol = 0, Position = NAME;
-    DATATYPE name;
-    DATATYPE data;
-    InstallizeFirst( &data, &name);
+    bool next_word = false, InstrumentRead = false, PriceRead = false;
+    int insId = -1, DataCol = 0, Position = NAME, i = 0;
+    DATATYPE name, data;
+    InstallizeFirst(&data, &name);
     MPIList MusicianKit;
     makeEmptyMPIList(&MusicianKit);
-    int i = 0;
+
     while(FreshData[i] != '\n' && FreshData[i] !='\0')
     {
         ch = FreshData[i++];
@@ -82,27 +80,18 @@ void InsertDataToMusicianGroup(InstrumentTree insTree,Musician* MusicianGroup, c
             if (next_word == true)
             {
                 if (PriceRead == false)
-                {
                     CheckExistInTree(&insId, &Position, &InstrumentRead,insTree,data);
-                }
+
                 else
-                {
                     Position = PRICE;
-                }
+
                 Selector(Position, &data, &name, &MusicianKit, &InstrumentRead, &PriceRead, insId);
                 next_word = false;
             }
         }
         else 
-        {
             if (next_word == false)
-            {
                 NextWordOperation(&data, &DataCol, &next_word);
-            } 
-        }
     }
     EndOfReadOperation(MusicianGroup,PriceRead, &MusicianKit, &data, &name);    
 }
-
-//=======
-//>>>>>>> Stashed changes

@@ -2,7 +2,7 @@
 #include "ProjectHeader.h"
 
 //*********************PROTOTYPES***************************************************
-TreeNode* createNewTreeNode(char* instrument, unsigned short insId, TreeNode* left, TreeNode* right);
+TreeNode* createNewTreeNode(char* instrument, unsigned short insId, int numOfMusicians, TreeNode* left, TreeNode* right);
 InstrumentTree buildBinaryTreeFromArray(char** arrOfInstruments, int size);
 void insertNodeToTree(TreeNode* root, TreeNode* node);
 int findInsId(InstrumentTree tree, char* instrument);
@@ -19,8 +19,8 @@ void CheckFile(FILE* file);
 //void swapStrings(char** stringA, char** stringB);
 void makeEmptyMPIList(MPIList* lst);
 bool isMPIListEmpty(MPIList lst);
-void insertDataToEndOfMPIList(MPIList* lst, char* instrumentName, unsigned int insId, float price, MPIListNode* next, MPIListNode* prev);
-MPIListNode* createNewMPIListNode(char* instrumentName, unsigned int insId, float price, MPIListNode* next, MPIListNode* prev);
+void insertDataToEndOfMPIList(MPIList* lst, char* instrumentName, unsigned int insId, float price, bool isBooked, MPIListNode* next);
+MPIListNode* createNewMPIListNode(char* instrumentName, unsigned int insId, float price, bool isBooked, MPIListNode* next);
 void insertMPIListNodeToEndOfList(MPIList* lst, MPIListNode* node);
 void freeArr(char** instrumentsArr, int size);
 void freeInstrumentsTree(InstrumentTree tr);
@@ -36,8 +36,8 @@ bool CheckValid(char ch);
 void freeDATATYPE(DATATYPE* data);
 void FirstAllocation(char*** data, char*** name);
 void Check_Physic_To_Logic(int logicSize, int* PhyisicSize, char*** Data_to_check);
-bool MPIListBinarySearch(MPIList* lst, int insId);
-MPIListNode* findMidElem(MPIList* lst);
+//bool MPIListBinarySearch(MPIList* lst, int insId);
+//MPIListNode* findMidElem(MPIList* lst);
 void createMusiciansCollection(Musician**** Collection, int numOfInstruments, Musician** MusiciansGroup, int numOfMusicians); //Creates the MusiciansCollection array.
 void InstallizeFirst(DATATYPE* data, DATATYPE* name);
 void CheckExistInTree(int* insId, int* Position, bool* InstrumentRead, InstrumentTree insTree, DATATYPE data);
@@ -45,16 +45,22 @@ void Selector(int Position, DATATYPE* data, DATATYPE* name, MPIList* MusicianKit
     bool* PriceRead, int insId);
 void NextWordOperation(DATATYPE* data, int* DataCol, bool* next_word);
 void EndOfReadOperation(Musician* MusicianGroup, bool PriceRead, MPIList* MusicianKit, DATATYPE* data, DATATYPE* name);
-void sortMPIList(MPIList* lst);
-void updateBooleanVariables(MPIList* lst, MPIListNode* start, MPIListNode* end, bool* isHead, bool* isTail);
-void swapMPIListNodes(MPIListNode* nodeA, MPIListNode* nodeB);
-void updateMPIListHeadAndTail(MPIList* lst, MPIListNode* newHead, MPIListNode* newTail,
-	bool isHead, bool isTail);
+//void sortMPIList(MPIList* lst);
+//void updateBooleanVariables(MPIList* lst, MPIListNode* start, MPIListNode* end, bool* isHead, bool* isTail);
+//void swapMPIListNodes(MPIListNode* nodeA, MPIListNode* nodeB);
+//void updateMPIListHeadAndTail(MPIList* lst, MPIListNode* newHead, MPIListNode* newTail, bool isHead, bool isTail);
 void makeEmptyCIList(CIList* lst);
 bool isEmptyCIList(CIList* lst);
 void insertCIListNodeToEndList(CIList* lst, CIListNode* node);
 CIListNode* createNewCIListNode(int num, int insId, char importance, CIListNode* next);
 void insertDataToEndOfCIList(CIList* lst, int num, int insId, char importance, CIListNode* next);
-Concert* createConcertsArr();
-char* getConcertName();
+void arrangeConcert(Musician*** MusicianCollection, InstrumentTree insTree);
+char* getName(char firstLetter);
 Date getConcertDate();
+int recPow(int base, int exp);
+int buildDate(int type);
+float buildHour();
+bool searchInMPIList(MPIList* lst, int insId);
+CIList createConcertInstrumentsList(InstrumentTree insTree);
+void freeCIList(CIList* lst);
+void recFreeCIList(CIListNode* head);

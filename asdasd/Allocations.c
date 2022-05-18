@@ -9,13 +9,16 @@ char* DynamicAllocation1(char* Ptr, int NewSize, int Format)
         CheckMem(Ptr);
         return Ptr;
     }
+
     if (Format == MALLOC)
     {
         Ptr = (char*)malloc(NewSize * sizeof(char));
         CheckMem(Ptr);
         return Ptr;
 
+    
     }
+
     return NULL;
 }
 

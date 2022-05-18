@@ -1,6 +1,6 @@
 #include "ProjectHeader.h"
 
-TreeNode* createNewTreeNode(char* instrument, unsigned short insId, TreeNode* left, TreeNode* right) //Creates a new TreeNode.
+TreeNode* createNewTreeNode(char* instrument, unsigned short insId, int numOfMusicians, TreeNode* left, TreeNode* right) //Creates a new TreeNode.
 {
     TreeNode* node = (TreeNode*)malloc(sizeof(TreeNode));
     CheckMem(node);
@@ -17,6 +17,7 @@ TreeNode* createNewTreeNode(char* instrument, unsigned short insId, TreeNode* le
     node->insId = insId;
     node->left = left;
     node->right = right;
+    node->numOfMusicians = 0;
     return node;
 }
 
@@ -24,12 +25,12 @@ InstrumentTree buildBinaryTreeFromArray(char** arrOfInstruments, int size) //Bui
 {
     InstrumentTree output;
     int i, insId = 1;
-    output.root = createNewTreeNode(*arrOfInstruments, 0, NULL, NULL);
+    output.root = createNewTreeNode(*arrOfInstruments, 0, 0, NULL, NULL);
     //TreeNode* currNode = output.root;
 
     for (i = 1; i < size; i++, insId++)
     {
-        TreeNode* node = createNewTreeNode(arrOfInstruments[i], insId, NULL, NULL);
+        TreeNode* node = createNewTreeNode(arrOfInstruments[i], insId, 0, NULL, NULL);
         insertNodeToTree(output.root, node);
     }
 
