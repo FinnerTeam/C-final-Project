@@ -8,7 +8,7 @@ void main()
 	char** InstrumentsArr = NULL;
 	Musician** MusiciansGroup = NULL;
 	Musician*** MusiciansCollection = NULL;
-
+	
 	InstrumentsArr = FileToArr(InstrumentsData, InstrumentsArr, &NO_instruments);
 	InstrumentTree insTree = buildBinaryTreeFromArray(InstrumentsArr, NO_instruments);
 	MusiciansGroup = FileToArr_Musicians(insTree, MusiciansData, &NO_musicians);

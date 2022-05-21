@@ -17,6 +17,11 @@ void CheckFile(FILE* file);
 //MaxHeap* createAndBuildHeap(char** arr, int size);
 //void heapSort(char*** arr, int size);
 //void swapStrings(char** stringA, char** stringB);
+int findInsId_Counter(InstrumentTree tree, int insId);
+int RECfindInsId_Counter(TreeNode* root, int insId);
+void recUpdateNumOfMusicians(TreeNode* root, int numOfMusicians, int insId);
+void updateNumOfMusicians(InstrumentTree tree, int numOfMusicians, int insId);
+void priceAtend(DATATYPE* data, int dataCol, MPIList* MusicianKit);
 void makeEmptyMPIList(MPIList* lst);
 bool isMPIListEmpty(MPIList lst);
 void insertDataToEndOfMPIList(MPIList* lst, char* instrumentName, unsigned int insId, float price, bool isBooked, MPIListNode* next);
@@ -38,7 +43,7 @@ void FirstAllocation(char*** data, char*** name);
 void Check_Physic_To_Logic(int logicSize, int* PhyisicSize, char*** Data_to_check);
 //bool MPIListBinarySearch(MPIList* lst, int insId);
 //MPIListNode* findMidElem(MPIList* lst);
-void createMusiciansCollection(Musician**** Collection, int numOfInstruments, Musician** MusiciansGroup, int numOfMusicians); //Creates the MusiciansCollection array.
+void createMusiciansCollection(Musician**** Collection, int numOfInstruments, Musician** MusiciansGroup, int numOfMusicians,InstrumentTree tree); //Creates the MusiciansCollection array.
 void InstallizeFirst(DATATYPE* data, DATATYPE* name);
 void CheckExistInTree(int* insId, int* Position, bool* InstrumentRead, InstrumentTree insTree, DATATYPE data);
 void Selector(int Position, DATATYPE* data, DATATYPE* name, MPIList* MusicianKit, bool* InstrumentRead,
@@ -61,6 +66,7 @@ int recPow(int base, int exp);
 int buildDate(int type);
 float buildHour();
 bool searchInMPIList(MPIList* lst, int insId);
+int getNumOfInstruments();
 CIList createConcertInstrumentsList(InstrumentTree insTree);
 void freeCIList(CIList* lst);
 void recFreeCIList(CIListNode* head);

@@ -75,6 +75,48 @@ int findInsId(InstrumentTree tree, char* instrument) //Finds instrument's insId.
     return res;
 }
 
+int findInsId_Counter(InstrumentTree tree, int insId)
+{
+    return RECfindInsId_Counter(tree.root, insId);
+
+}
+int RECfindInsId_Counter(TreeNode* root, int insId)
+{
+    if (root == NULL)
+    {
+        return 0;
+    }
+    else if (root->insId == insId)
+    {
+        return root->numOfMusicians;
+    }
+    else
+    {
+        int left = RECfindInsId_Counter(root->left, insId);
+        int right = RECfindInsId_Counter(root->right, insId);
+        return (left != 0) ? left : right;
+    }
+
+}
+void updateNumOfMusicians(InstrumentTree tree, int numOfMusicians, int insId)
+{
+    recUpdateNumOfMusicians(tree.root, numOfMusicians, insId);
+}
+
+void recUpdateNumOfMusicians(TreeNode* root, int numOfMusicians, int insId)
+{
+    if (root == NULL)
+        return;
+
+    else if (root->insId == insId)
+        root->numOfMusicians = numOfMusicians;
+
+    else
+    {
+        recUpdateNumOfMusicians(root->left, numOfMusicians, insId);
+        recUpdateNumOfMusicians(root->right, numOfMusicians, insId);
+    }
+}
 void recFindInsId(TreeNode* root, char* instrument, int* res) //Recursively finds instrument's insId.
 {
     if (root == NULL)

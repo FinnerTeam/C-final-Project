@@ -1,13 +1,13 @@
 #include "ProjectHeader.h"
 
-void createMusiciansCollection(Musician**** Collection, int numOfInstruments, Musician** MusiciansGroup, int numOfMusicians) //Creates the MusiciansCollection array.
+void createMusiciansCollection(Musician**** Collection, int numOfInstruments, Musician** MusiciansGroup, int numOfMusicians,InstrumentTree tree) //Creates the MusiciansCollection array.
 {
     Musician*** output = (Musician***)malloc(sizeof(Musician**) * numOfInstruments);
     CheckMem(output);
 
     for (int i = 0; i < numOfInstruments; i++)
     {
-        int j, k, subArrayLogSize = 0, subArrayPhySize = 1;
+        int j, k = 0, subArrayLogSize = 0, subArrayPhySize = 1;
         output[i] = (Musician**)malloc(sizeof(Musician*) * subArrayPhySize);
         CheckMem(output[i]);
         for (j = 0; j < numOfMusicians; j++)
@@ -29,21 +29,43 @@ void createMusiciansCollection(Musician**** Collection, int numOfInstruments, Mu
                 }
             }
         }
+        updateNumOfMusicians(tree, subArrayLogSize, i);
     }
     *Collection = output;
 }
 
+//int ComparePrices(void* first,void* second) 
+//{
+//    MPIListNode nodeA = *((MPIListNode*)first);
+//    MPIListNode nodeB = *((MPIListNode*)second);
+//    return nodeA.Data.price - nodeB.Data.price;
+//}
 void arrangeConcert(Musician*** MusicianCollection, InstrumentTree insTree) //Scans concerts's info from user and matches musicians to them.
 {
     char input = getchar();
     Concert currConcert;
-
+    MPIListNode* curr;
+    CIListNode* curr_concert;
     while (input != '\n')
     {
         currConcert.name = getName(input);
         currConcert.date_of_concert = getConcertDate();
         currConcert.instruments = createConcertInstrumentsList(insTree);
-        
+        curr_concert = currConcert.instruments.head;
+        while (curr_concert != NULL)
+        {
+            curr = (*MusicianCollection)[curr_concert->data.inst]->instruments.head;
+            while (curr != NULL)
+            {
+                int num_of_musicians = findInsId_Counter(insTree, curr_concert->data.inst);
+                /*qsort(&(*MusicianCollection[curr_concert->data.inst]), num_of_musicians, sizeof(Musician*), ComparePrices);*/
+                curr = curr->next;
+            }
+
+
+            curr_concert = curr_concert->next;
+        }
+   
         //qsort
         //match musicians
         //print
@@ -103,7 +125,7 @@ CIList createConcertInstrumentsList(InstrumentTree insTree) //Creates a CI list 
     
     while (input != '\n')
     {
-        char* insName = getConcertName(input);
+        char* insName = getName(input);
         numOfInstruments = getNumOfInstruments();
         importance = getchar();
 

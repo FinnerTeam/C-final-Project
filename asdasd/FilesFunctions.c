@@ -64,18 +64,26 @@ Musician** FileToArr_Musicians(InstrumentTree insTree, FILE* MusiciansData, int*
 void InsertDataToMusicianGroup(InstrumentTree insTree, Musician* MusicianGroup, char* FreshData)
 {
     char ch;
-    bool next_word = false, InstrumentRead = false, PriceRead = false;
+    bool next_word = false, InstrumentRead = false, PriceRead = false, First = true,End = false;
     int insId = -1, DataCol = 0, Position = NAME, i = 0;
     DATATYPE name, data;
     InstallizeFirst(&data, &name);
     MPIList MusicianKit;
     makeEmptyMPIList(&MusicianKit);
-
-    while(FreshData[i] != '\n' && FreshData[i] !='\0')
+    while(FreshData[i] !='\0' )
     {
         ch = FreshData[i++];
+        if (FreshData[i] == '\0')
+        {
+            priceAtend(&data, DataCol, &MusicianKit);
+            PriceRead = false;
+            End = true;
+        }
+      
         if (CheckValid(ch))
         {
+               
+            First = false;
             data.data[*(data.logicsize)][DataCol++] = ch;
             if (next_word == true)
             {
@@ -87,11 +95,14 @@ void InsertDataToMusicianGroup(InstrumentTree insTree, Musician* MusicianGroup, 
 
                 Selector(Position, &data, &name, &MusicianKit, &InstrumentRead, &PriceRead, insId);
                 next_word = false;
-            }
+            }   
+           
         }
         else 
-            if (next_word == false)
+            if (next_word == false && First ==false && End == false)
                 NextWordOperation(&data, &DataCol, &next_word);
+        
+      
     }
     EndOfReadOperation(MusicianGroup,PriceRead, &MusicianKit, &data, &name);    
 }

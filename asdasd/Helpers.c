@@ -14,7 +14,8 @@ bool CheckValid(char ch)
         && ch != '[' && ch != ']'
         && ch != '{' && ch != '}'
         && ch != '<' && ch != '>'
-        && ch != '~' && ch != '_');
+        && ch != '~' && ch != '_'
+        && ch !='\n');
 }
 
 // check if  need to realloc  *2 all the time
@@ -80,7 +81,12 @@ void InstallizeFirst(DATATYPE* data, DATATYPE* name)
     FirstAllocation(&(data->data), &(name->data));
 
 }
-
+void priceAtend(DATATYPE* data, int dataCol, MPIList* MusicianKit)
+{
+    data->data[*(data->logicsize)] = DynamicAllocation1(data->data[*(data->logicsize)], dataCol + 1, REALLOC);
+    data->data[*(data->logicsize)][dataCol] = '\0';
+    MusicianKit->tail->Data.price = (float)atoi(data->data[*(data->logicsize)]);
+}
 void CheckExistInTree(int* insId, int* Position, bool* InstrumentRead, InstrumentTree insTree, DATATYPE data)
 {
     *insId = findInsId(insTree, data.data[*(data.logicsize) - 1]);
