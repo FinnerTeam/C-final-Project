@@ -26,7 +26,6 @@ InstrumentTree buildBinaryTreeFromArray(char** arrOfInstruments, int size) //Bui
     InstrumentTree output;
     int i, insId = 1;
     output.root = createNewTreeNode(*arrOfInstruments, 0, 0, NULL, NULL);
-    //TreeNode* currNode = output.root;
 
     for (i = 1; i < size; i++, insId++)
     {
@@ -117,6 +116,7 @@ void recUpdateNumOfMusicians(TreeNode* root, int numOfMusicians, int insId)
         recUpdateNumOfMusicians(root->right, numOfMusicians, insId);
     }
 }
+
 void recFindInsId(TreeNode* root, char* instrument, int* res) //Recursively finds instrument's insId.
 {
     if (root == NULL)

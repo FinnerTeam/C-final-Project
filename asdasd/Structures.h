@@ -46,6 +46,9 @@ typedef struct
 {
 	char** name;
 	MPIList instruments;
+	int currInst;
+	char currInsImportance;
+	float currInstPrice;
 } Musician;
 
 typedef struct
@@ -79,9 +82,3 @@ typedef struct
 	char* name;
 	CIList instruments;
 } Concert;
-
-typedef struct
-{
-	int size;
-	char** arr;
-} MaxHeap;

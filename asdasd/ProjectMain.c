@@ -1,5 +1,4 @@
 #include "ProjectHeader.h"
-//DeleteDuplication(InstrumentsArr, &arrSize); //Irrelevant.
 
 void main()
 {
@@ -11,7 +10,7 @@ void main()
 	
 	InstrumentsArr = FileToArr(InstrumentsData, InstrumentsArr, &NO_instruments);
 	InstrumentTree insTree = buildBinaryTreeFromArray(InstrumentsArr, NO_instruments);
-	MusiciansGroup = FileToArr_Musicians(insTree, MusiciansData, &NO_musicians);
-	createMusiciansCollection(&MusiciansCollection,NO_instruments, MusiciansGroup, NO_musicians);
+	MusiciansGroup = createMusiciansGroup(insTree, MusiciansData, &NO_musicians);
+	createMusiciansCollection(&MusiciansCollection,NO_instruments, MusiciansGroup, NO_musicians, insTree);
 	arrangeConcert(MusiciansCollection, insTree);
 }

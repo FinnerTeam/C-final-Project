@@ -9,13 +9,13 @@ bool CheckValid(char ch)
         && ch != ',' && ch != '.'
         && ch != ';' && ch != '?'
         && ch != '!' && ch != '-'
-        && ch != '\t' && ch != 39
+        && ch != '\t' && ch != '\''
         && ch != '(' && ch != ')'
         && ch != '[' && ch != ']'
         && ch != '{' && ch != '}'
         && ch != '<' && ch != '>'
         && ch != '~' && ch != '_'
-        && ch !='\n');
+        && ch != '\n' && ch != ':');
 }
 
 // check if  need to realloc  *2 all the time
@@ -81,12 +81,12 @@ void InstallizeFirst(DATATYPE* data, DATATYPE* name)
     FirstAllocation(&(data->data), &(name->data));
 
 }
+
 void priceAtend(DATATYPE* data, int dataCol, MPIList* MusicianKit)
 {
-    data->data[*(data->logicsize)] = DynamicAllocation1(data->data[*(data->logicsize)], dataCol + 1, REALLOC);
-    data->data[*(data->logicsize)][dataCol] = '\0';
-    MusicianKit->tail->Data.price = (float)atoi(data->data[*(data->logicsize)]);
+    MusicianKit->tail->Data.price = (float)atoi(data->data[*(data->logicsize) - 1]);
 }
+
 void CheckExistInTree(int* insId, int* Position, bool* InstrumentRead, InstrumentTree insTree, DATATYPE data)
 {
     *insId = findInsId(insTree, data.data[*(data.logicsize) - 1]);
@@ -131,21 +131,6 @@ void Selector(int Position, DATATYPE* data, DATATYPE* name, MPIList* MusicianKit
         break;
     }
 }
-
-//void updateBooleanVariables(MPIList* lst, MPIListNode* start, MPIListNode* end, bool* isHead, bool* isTail) //Updates booleans for sortMPIList function.
-//{
-//    if (start == lst->head)
-//        *isHead = true;
-//
-//    else
-//        *isHead = false;
-//
-//    if (end == lst->tail)
-//        *isTail = true;
-//
-//    else
-//        *isTail = false;
-//}
 
 int recPow(int base, int exp) //Raises base by exp.
 {
@@ -207,5 +192,65 @@ float buildHour() //Returns an hour by user's input.
 
     input = getchar(); //flush ' '.
     output = hour + (minutes / HOUR);
+    return output;
+}
+
+void updateCurrentInsIDAndImportance(Musician** musiciansArr, int arrSize,
+    int insID, char importance) //Updates insID, importance & price for each musician.
+{
+    for (int i = 0; i < arrSize; i++)
+    {
+        musiciansArr[i]->currInsImportance = importance;
+        musiciansArr[i]->currInst = insID;
+        musiciansArr[i]->currInstPrice = findInstPrice(musiciansArr[i]->instruments, insID);
+    }
+}
+
+float findInstPrice(MPIList lst, int insID) //Finds instruments insID's price at lst.
+{
+    MPIListNode* curr = lst.head;
+    float output;
+
+    while (curr != NULL)
+    {
+        if (curr->Data.insId == insID)
+            output = curr->Data.price;
+
+        curr = curr->next;
+    }
+
+    return output;
+}
+
+int compareMusicians(void* musicianA, void* musicianB) //Compares musicianA&musicianB's prices for the current instrument.
+{
+    int output;
+    Musician* firstMusician = *(Musician**)musicianA;
+    Musician* secondMusician = *(Musician**)musicianB;
+
+    if (firstMusician->currInsImportance == '1')
+    {
+        if (firstMusician->currInstPrice > secondMusician->currInstPrice)
+            output = -1;
+
+        else if (firstMusician->currInstPrice == secondMusician->currInstPrice)
+            output = 0;
+
+        else
+            output = 1;
+    }
+
+    else if (firstMusician->currInsImportance == '0')
+    {
+        if (firstMusician->currInstPrice >= secondMusician->currInstPrice)
+            output = 1;
+
+        else if (firstMusician->currInstPrice == secondMusician->currInstPrice)
+            output = 0;
+
+        else
+            output = -1;
+    }
+
     return output;
 }
