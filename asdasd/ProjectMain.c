@@ -1,6 +1,6 @@
 #include "ProjectHeader.h"
 
-void main()
+void main(int argc, char* argv[])
 {
 	int NO_instruments, NO_musicians;
 	FILE* InstrumentsData = NULL, * MusiciansData = NULL;
