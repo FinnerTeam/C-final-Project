@@ -199,6 +199,7 @@ char** getMusicianName(int* index, InstrumentTree insTree) //Generates musician'
 
     fclose(musiciansFile);
     output = (char**)realloc(output, sizeof(char*) * arrLogSize);
+    CheckMem(output);
     return output;
 }
 
