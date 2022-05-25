@@ -3,14 +3,10 @@
 void main(int argc, char* argv[])
 {
 	int NO_instruments, NO_musicians;
-	FILE* InstrumentsData = NULL, * MusiciansData = NULL;
-	char** InstrumentsArr = NULL;
-	Musician** MusiciansGroup = NULL;
-	Musician*** MusiciansCollection = NULL;
 	
-	InstrumentsArr = FileToArr(InstrumentsData, InstrumentsArr, &NO_instruments);
+	char** InstrumentsArr = FileToArr(argv[1], &NO_instruments);
 	InstrumentTree insTree = buildBinaryTreeFromArray(InstrumentsArr, NO_instruments);
-	MusiciansGroup = createMusiciansGroup(insTree, MusiciansData, &NO_musicians);
-	createMusiciansCollection(&MusiciansCollection,NO_instruments, MusiciansGroup, NO_musicians, insTree);
-	arrangeConcert(MusiciansCollection, insTree);
+	Musician** MusiciansGroup = createMusiciansGroup(insTree, &NO_musicians, argv[2]);
+	Musician*** MusiciansCollection = createMusiciansCollection(NO_instruments, MusiciansGroup, NO_musicians, insTree);
+	arrangeConcert(MusiciansCollection, insTree, MusiciansGroup, NO_musicians);
 }

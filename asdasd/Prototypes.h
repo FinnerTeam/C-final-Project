@@ -16,8 +16,8 @@ void updateNumOfMusicians(InstrumentTree tree, int numOfMusicians, int insId);
 //List Functions
 void makeEmptyMPIList(MPIList* lst);
 bool isMPIListEmpty(MPIList lst);
-void insertDataToEndOfMPIList(MPIList* lst, char* instrumentName, unsigned int insId, float price, bool isBooked, MPIListNode* next);
-MPIListNode* createNewMPIListNode(char* instrumentName, unsigned int insId, float price, bool isBooked, MPIListNode* next);
+void insertDataToEndOfMPIList(MPIList* lst, char* instrumentName, unsigned int insId, float price, MPIListNode* next);
+MPIListNode* createNewMPIListNode(char* instrumentName, unsigned int insId, float price, MPIListNode* next);
 void insertMPIListNodeToEndOfList(MPIList* lst, MPIListNode* node);
 void makeEmptyCIList(CIList* lst);
 bool isEmptyCIList(CIList* lst);
@@ -36,12 +36,12 @@ void CheckMem(void* mem);
 void CheckFile(FILE* file);
 
 //Instruments Tree Helpers (Q1)
-char** FileToArr(FILE* InstrumentsData, char** InstrumentsArr, int* sizeOfFile);
+char** FileToArr(char* fileName, int* sizeOfFile);
 
 //Musician Group Helpers (Q3)
 void priceAtend(DATATYPE* data, int dataCol, MPIList* MusicianKit);
 void InsertDataToMusicianGroup(InstrumentTree insTree, Musician* MusicianGroup, char* FreshData);
-int FileLinesLen(FILE* FileData, char* FileName);
+int FileLinesLen(FILE* FileData);
 Musician** FileToArr_Musicians(InstrumentTree insTree, FILE* MusiciansData, int* sizeOfFile);
 void InsertDataToMusicianGroup(InstrumentTree insTree, Musician* MusicianGroup, char* FreshData);
 bool CheckValid(char ch);
@@ -52,17 +52,17 @@ void Selector(int Position, DATATYPE* data, DATATYPE* name, MPIList* MusicianKit
 void NextWordOperation(DATATYPE* data, int* DataCol, bool* next_word);
 void EndOfReadOperation(Musician* MusicianGroup, bool PriceRead, MPIList* MusicianKit, DATATYPE* data, DATATYPE* name);
 
-Musician** createMusiciansGroup(InstrumentTree insTree, FILE* MusiciansData, int* sizeOfFile);
-Musician* createMusician(InstrumentTree insTree, int* index);
-char** getMusicianName(int* index, InstrumentTree insTree);
-MPIList createMusicianMPIList(InstrumentTree insTree, int* index);
+Musician** createMusiciansGroup(InstrumentTree insTree, int* sizeOfFile, char* fileName);
+Musician* createMusician(InstrumentTree insTree, int* fileIndex, FILE* musiciansFile);
+char** getMusicianName(int* index, InstrumentTree insTree, FILE* musiciansFile);
+MPIList createMusicianMPIList(InstrumentTree insTree, int* index, FILE* musiciansFile);
 
 //Musician Collection Helpers (Q4)
-void createMusiciansCollection(Musician**** Collection, int numOfInstruments, Musician** MusiciansGroup, int numOfMusicians, InstrumentTree tree);
+Musician*** createMusiciansCollection(int numOfInstruments, Musician** MusiciansGroup, int numOfMusicians, InstrumentTree tree);
 bool searchInMPIList(MPIList* lst, int insId);
 
 //Concert Helpers (Q5)
-void arrangeConcert(Musician*** MusicianCollection, InstrumentTree insTree);
+void arrangeConcert(Musician*** MusicianCollection, InstrumentTree insTree, Musician** MusiciansGroup, int numOfMusicians);
 char* getName(char firstLetter);
 Date getConcertDate();
 int recPow(int base, int exp);
@@ -74,6 +74,7 @@ void updateCurrentInsIDAndImportance(Musician** musiciansArr, int arrSize,
     int insID, char importance);
 float findInstPrice(MPIList lst, int insID);
 int compareMusicians(void* musicianA, void* musicianB);
+void resetBookingInfo(Musician** musiciansGroup, int numOfMusicians);
 
 //Free Functions
 void freeArr(char** instrumentsArr, int size);

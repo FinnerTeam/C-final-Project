@@ -1,7 +1,6 @@
 #include "ProjectHeader.h"
 
-void createMusiciansCollection(Musician**** Collection, int numOfInstruments, Musician** MusiciansGroup,
-    int numOfMusicians,InstrumentTree tree) //Creates the MusiciansCollection array.
+Musician*** createMusiciansCollection(int numOfInstruments, Musician** MusiciansGroup, int numOfMusicians,InstrumentTree tree) //Creates the MusiciansCollection array.
 {
     Musician*** output = (Musician***)malloc(sizeof(Musician**) * numOfInstruments);
     CheckMem(output);
@@ -32,10 +31,12 @@ void createMusiciansCollection(Musician**** Collection, int numOfInstruments, Mu
         }
         updateNumOfMusicians(tree, subArrayLogSize, i);
     }
-    *Collection = output;
+
+    return output;
 }
 
-void arrangeConcert(Musician*** MusicianCollection, InstrumentTree insTree) //Scans concerts's info from user and matches musicians to them.
+void arrangeConcert(Musician*** MusicianCollection, InstrumentTree insTree,
+    Musician** MusiciansGroup, int numOfMusicians) //Scans concerts's info from user and matches musicians to them.
 {
     char input = getchar(), currImportance;
     Concert currConcert;
@@ -60,6 +61,7 @@ void arrangeConcert(Musician*** MusicianCollection, InstrumentTree insTree) //Sc
             currInstrument = currInstrument->next;
         }
 
+        resetBookingInfo(MusiciansGroup, numOfMusicians);
         freeCIList(&currConcert.instruments);
         input = getchar();
     }
@@ -144,4 +146,10 @@ int getNumOfInstruments() //Returns num of instrument for a concert.
     }
 
     return output;
+}
+
+void resetBookingInfo(Musician** musiciansGroup, int numOfMusicians) //Resets booking info after each concert.
+{
+    for (int i = 0; i < numOfMusicians; i++)
+        musiciansGroup[i]->isBooked = false;
 }

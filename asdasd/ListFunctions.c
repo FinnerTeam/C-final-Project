@@ -10,14 +10,14 @@ bool isMPIListEmpty(MPIList lst) //Check whether lst is empty.
 	return lst.head == NULL;
 }
 
-void insertDataToEndOfMPIList(MPIList* lst, char* instrumentName, unsigned int insId, float price, bool isBooked, MPIListNode* next) //Inserts new data to the end of lst.
+void insertDataToEndOfMPIList(MPIList* lst, char* instrumentName, unsigned int insId, float price, MPIListNode* next) //Inserts new data to the end of lst.
 {
 	MPIListNode* node = NULL;
-	node = createNewMPIListNode(instrumentName, insId, price, isBooked, next);
+	node = createNewMPIListNode(instrumentName, insId, price, next);
 	insertMPIListNodeToEndOfList(lst, node);
 }
 
-MPIListNode* createNewMPIListNode(char* instrumentName, unsigned int insId, float price, bool isBooked, MPIListNode* next) //Creates a new MPIListNode.
+MPIListNode* createNewMPIListNode(char* instrumentName, unsigned int insId, float price, MPIListNode* next) //Creates a new MPIListNode.
 {
 	MPIListNode* output = (MPIListNode*)malloc(sizeof(MPIListNode));
 	CheckMem(output);
@@ -29,7 +29,7 @@ MPIListNode* createNewMPIListNode(char* instrumentName, unsigned int insId, floa
 	{
 		strcpy(output->instrument, instrumentName);
 	}
-	output->Data.insId = insId; output->Data.price = price; output->next = next; output->isBooked = isBooked;
+	output->Data.insId = insId; output->Data.price = price; output->next = next;
 
 	return output;
 }

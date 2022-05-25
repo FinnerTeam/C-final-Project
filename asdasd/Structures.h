@@ -20,7 +20,7 @@ typedef struct
 	int* logicsize;
 	int* physicalSize;
 	char** data;
-}DATATYPE;
+} DATATYPE;
 
 typedef struct
 {
@@ -32,7 +32,6 @@ typedef struct MPIlistNode
 {
 	struct MPIlistNode* next;
 	char* instrument;
-	bool isBooked;
 	MusicianPriceInstrument Data;
 } MPIListNode;
 
@@ -49,6 +48,7 @@ typedef struct
 	int currInst;
 	char currInsImportance;
 	float currInstPrice;
+	bool isBooked;
 } Musician;
 
 typedef struct

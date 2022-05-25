@@ -1,35 +1,35 @@
 #include "ProjectHeader.h"
 
-int FileLinesLen(FILE* FileData, char* FileName) //Counts number of rows in a file.
+int FileLinesLen(FILE* FileData) //Counts number of rows in a file.
 {
     char ch;
     int count_lines = 0;
-    FileData = fopen(FileName, "r");
-    CheckFile(FileData);
     for (ch = getc(FileData); ch != EOF; ch = getc(FileData))
         if (ch == '\n')
             count_lines++;
-    fclose(FileData);
     return count_lines + 1;
 }
 
-char** FileToArr(FILE* InstrumentsData, char** InstrumentsArr, int* sizeOfFile) //Creates an array of strings from instruments's file.
+char** FileToArr(char* fileName, int* sizeOfFile) //Creates an array of strings from instruments's file.
 {
     int i = 0;
-    int lines_in_file = FileLinesLen(InstrumentsData, INSTRUMENTSFILE);
+    FILE* instrumentsFile = fopen(fileName, "r");
+    CheckFile(instrumentsFile);
+    int lines_in_file = FileLinesLen(instrumentsFile);
     *sizeOfFile = lines_in_file;
-    InstrumentsData = fopen(INSTRUMENTSFILE, "r");
-    CheckFile(InstrumentsData);
+    fseek(instrumentsFile, 0, SEEK_SET);
+
+    char** InstrumentsArr = NULL;
     InstrumentsArr = DynamicAllocation2(InstrumentsArr, lines_in_file, MALLOC);
     InstrumentsArr[0] = DynamicAllocation1(InstrumentsArr[0], DEFAULT_BUFFER, MALLOC);
 
-    while (fscanf(InstrumentsData, "%s", InstrumentsArr[i]) && i < lines_in_file)
+    while (fscanf(instrumentsFile, "%s", InstrumentsArr[i]) && i < lines_in_file)
     {
         InstrumentsArr[i] = DynamicAllocation1(InstrumentsArr[i], strlen(InstrumentsArr[i]) + 1, REALLOC);
         i++;
         InstrumentsArr[i] = DynamicAllocation1(InstrumentsArr[i], DEFAULT_BUFFER, MALLOC);
     }
-    fclose(InstrumentsData);
+    fclose(instrumentsFile);
     return InstrumentsArr;
 }
 
@@ -112,39 +112,44 @@ void InsertDataToMusicianGroup(InstrumentTree insTree, Musician* MusicianGroup, 
     EndOfReadOperation(MusicianGroup,PriceRead, &MusicianKit, &data, &name);    
 }
 
-Musician** createMusiciansGroup(InstrumentTree insTree, FILE* MusiciansData, int* sizeOfFile) //Creates the Musicians Group array.
+Musician** createMusiciansGroup(InstrumentTree insTree, int* sizeOfFile, char* fileName) //Creates the Musicians Group array.
 {
-    *sizeOfFile = FileLinesLen(MusiciansData, MUSICIANSFILE);
+    FILE* musiciansFile = fopen(fileName, "r");
+    CheckFile(musiciansFile);
+    *sizeOfFile = FileLinesLen(musiciansFile);
     Musician** output = (Musician**)malloc(sizeof(Musician*) * (*sizeOfFile));
     CheckMem(output);
     int fileIndex = 0;
+    fseek(musiciansFile, 0, SEEK_SET);
 
     for (int i = 0; i < *sizeOfFile; i++)
-        output[i] = createMusician(insTree, &fileIndex);
+        output[i] = createMusician(insTree, &fileIndex, musiciansFile);
 
+    fclose(musiciansFile);
     return output;
 }
 
-Musician* createMusician(InstrumentTree insTree, int* fileIndex) //Creates a new Musician.
+Musician* createMusician(InstrumentTree insTree, int* fileIndex, FILE* musiciansFile) //Creates a new Musician.
 {
     Musician* output = (Musician*)malloc(sizeof(Musician));
     CheckMem(output);
     int index = *fileIndex;
 
-    output->name = getMusicianName(&index, insTree);
-    output->instruments = createMusicianMPIList(insTree, &index);
+    output->name = getMusicianName(&index, insTree, musiciansFile);
+    output->instruments = createMusicianMPIList(insTree, &index, musiciansFile);
     output->currInst = output->currInstPrice = output->currInsImportance = 0;
+    output->isBooked = false;
 
     *fileIndex = index;
 
     return output;
 }
 
-char** getMusicianName(int* index, InstrumentTree insTree) //Generates musician's name.
+char** getMusicianName(int* index, InstrumentTree insTree, FILE* musiciansFile) //Generates musician's name.
 {
-    char** output = (char**)malloc(sizeof(char*) * DEFAULT_BUFFER); CheckMem(output);
+    char** output = (char**)malloc(sizeof(char*) * DEFAULT_BUFFER); CheckMem(output); //Row len is max 150.
     int arrLogSize = 0, stringLogSize = 0, indexCounter = *index, beginningOfString;
-    FILE* musiciansFile = fopen(MUSICIANSFILE, "r"); CheckFile(musiciansFile); fseek(musiciansFile, *index, SEEK_SET);
+    fseek(musiciansFile, *index, SEEK_SET);
     char input; fscanf(musiciansFile, "%c", &input);
     bool foundInstrument = false;
 
@@ -154,60 +159,47 @@ char** getMusicianName(int* index, InstrumentTree insTree) //Generates musician'
         {
             if (arrLogSize == 0 && stringLogSize == 0)
             {
-                fscanf(musiciansFile, "%c", &input);
-                indexCounter++;
-                continue;
+                fscanf(musiciansFile, "%c", &input); indexCounter++; continue;
             }
-                
             else if (arrLogSize >= 0 && stringLogSize != 0)
             {
-                output[arrLogSize] = (char*)realloc(output[arrLogSize], sizeof(char) * (stringLogSize + 1));
-                CheckMem(output[arrLogSize]);
+                output[arrLogSize] = (char*)realloc(output[arrLogSize], sizeof(char) * (stringLogSize + 1)); CheckMem(output[arrLogSize]);
                 output[arrLogSize][stringLogSize] = '\0';
-
                 if (findInsId(insTree, output[arrLogSize]) != -1)
                 {
-                    foundInstrument = true;
-                    *index = beginningOfString;
-                    free(output[arrLogSize]);
+                    foundInstrument = true; *index = beginningOfString; free(output[arrLogSize]);
                 }
-
                 else
                 {
-                    arrLogSize++;
-                    stringLogSize = 0;
+                    arrLogSize++; stringLogSize = 0;
                 }
             }
         }
-
-        else
+        else //Valid character.
         {
             if (stringLogSize == 0)
             {
-                output[arrLogSize] = (char*)malloc(sizeof(char) * DEFAULT_BUFFER);
-                CheckMem(output[arrLogSize]);
-                beginningOfString = indexCounter;
+                output[arrLogSize] = (char*)malloc(sizeof(char) * DEFAULT_BUFFER); //Row len is max 150.
+                CheckMem(output[arrLogSize]); beginningOfString = indexCounter;
             }
-
             output[arrLogSize][stringLogSize] = input;
             stringLogSize++;
         }
-
         fscanf(musiciansFile, "%c", &input);
         indexCounter++;
     }
 
-    fclose(musiciansFile);
     output = (char**)realloc(output, sizeof(char*) * arrLogSize);
     CheckMem(output);
     return output;
 }
 
-MPIList createMusicianMPIList(InstrumentTree insTree, int* index) //Creates a musician's MPI list.
+MPIList createMusicianMPIList(InstrumentTree insTree, int* index, FILE* musiciansFile) //Creates a musician's MPI list.
 {
     MPIList output; makeEmptyMPIList(&output);
-    FILE* musiciansFile = fopen(MUSICIANSFILE, "r"); CheckFile(musiciansFile); fseek(musiciansFile, 0, SEEK_END);
-    long fileSize = ftell(musiciansFile); fseek(musiciansFile, *index, SEEK_SET);
+    fseek(musiciansFile, 0, SEEK_END);
+    long fileSize = ftell(musiciansFile);
+    fseek(musiciansFile, *index, SEEK_SET);
     char input; fscanf(musiciansFile, "%c", &input);
     int stringLogSize = 0, counter = 0;
     char* protector = (char*)malloc(sizeof(char) * DEFAULT_BUFFER); char* inputString = NULL; CheckMem(protector);
@@ -235,7 +227,7 @@ MPIList createMusicianMPIList(InstrumentTree insTree, int* index) //Creates a mu
             counter++;
 
             if (counter % 2 == 0)
-                insertDataToEndOfMPIList(&output, protector, findInsId(insTree, protector), (float)((atoi)(inputString)), false, NULL);
+                insertDataToEndOfMPIList(&output, protector, findInsId(insTree, protector), (float)((atoi)(inputString)), NULL);
                 
             else
                 strcpy(protector, inputString);
@@ -249,7 +241,7 @@ MPIList createMusicianMPIList(InstrumentTree insTree, int* index) //Creates a mu
 
     if ((input == '\0' || input == '\n') && inputString != NULL)
     {
-        insertDataToEndOfMPIList(&output, protector, findInsId(insTree, protector), (float)((atoi)(inputString)), false, NULL);
+        insertDataToEndOfMPIList(&output, protector, findInsId(insTree, protector), (float)((atoi)(inputString)), NULL);
         free(inputString);
         free(protector);
     }
@@ -258,6 +250,5 @@ MPIList createMusicianMPIList(InstrumentTree insTree, int* index) //Creates a mu
         free(protector);
 
     (*index) = (*index) + 2; //Move to next line.
-    fclose(musiciansFile);
     return output;
 }
