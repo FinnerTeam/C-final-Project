@@ -23,7 +23,7 @@ MPIListNode* createNewMPIListNode(char* instrumentName, unsigned int insId, floa
 	CheckMem(output);
 	
 	output->instrument = NULL;
-	output->instrument = DynamicAllocation1(output->instrument, strlen(instrumentName) + 1, MALLOC);
+	output->instrument = (char*)DynamicAllocation(output->instrument,sizeof(char), strlen(instrumentName) + 1, MALLOC);
 	CheckMem(output->instrument);
 	if (instrumentName != '\0')
 	{

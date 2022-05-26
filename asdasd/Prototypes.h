@@ -26,8 +26,7 @@ CIListNode* createNewCIListNode(int num, int insId, char importance, CIListNode*
 void insertDataToEndOfCIList(CIList* lst, int num, int insId, char importance, CIListNode* next);
 
 //Memory Allocation Functions
-char* DynamicAllocation1(char* Ptr, int NewSize, int Format);
-char** DynamicAllocation2(char** ptr_ptr, int NewSize, int Format);
+void* DynamicAllocation(void* ptr_ptr, size_t elemSize, size_t num_Of_elements, int Format);
 void FirstAllocation(char*** data, char*** name);
 void Check_Physic_To_Logic(int logicSize, int* PhyisicSize, char*** Data_to_check);
 

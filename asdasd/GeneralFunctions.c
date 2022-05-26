@@ -43,11 +43,11 @@ void arrangeConcert(Musician*** MusicianCollection, InstrumentTree insTree,
     CIListNode* currInstrument = NULL;
     int currInsID, currInsNumOfMusicians;
 
-    while (input != '\n')
+    while (input != '\n') /*Change to scanf*/
     {
-        currConcert.name = getName(input);
-        currConcert.date_of_concert = getConcertDate();
-        currConcert.instruments = createConcertInstrumentsList(insTree);
+        currConcert.name = getName(input); /*Change to scanf*/     
+        currConcert.date_of_concert = getConcertDate();/*Change to scanf*/
+        currConcert.instruments = createConcertInstrumentsList(insTree);/*Change to scanf*/
         currInstrument = currConcert.instruments.head;
 
         while (currInstrument != NULL)
@@ -60,9 +60,11 @@ void arrangeConcert(Musician*** MusicianCollection, InstrumentTree insTree,
 
             currInstrument = currInstrument->next;
         }
-
+        //maybe flag
+        //add print concert
         resetBookingInfo(MusiciansGroup, numOfMusicians);
         freeCIList(&currConcert.instruments);
+
         input = getchar();
     }
 }
@@ -100,16 +102,16 @@ Date getConcertDate() //Generates concert's date.
 {
     Date output;
 
-    output.day = buildDate(DAY);
+    output.day = buildDate(DAY); // scanf with everything.
     output.month = buildDate(MONTH);
     output.year = buildDate(YEAR);
     output.hour = buildHour();
 
     return output;
 }
-
+/*Change to scanf*/
 CIList createConcertInstrumentsList(InstrumentTree insTree) //Creates a CI list for a concert.
-{
+{ 
     CIList output;
     makeEmptyCIList(&output);
     char input = getchar(), importance;
@@ -132,7 +134,7 @@ CIList createConcertInstrumentsList(InstrumentTree insTree) //Creates a CI list 
 
     return output;
 }
-
+/*Change to scanf*/
 int getNumOfInstruments() //Returns num of instrument for a concert.
 {
     int output = 0, iteration = 0;
