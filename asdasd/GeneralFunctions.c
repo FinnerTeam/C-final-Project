@@ -59,58 +59,26 @@ void printMusicianName(char** MusicianName, int nameLen)
         printf("%s ", MusicianName[i]);
     }
 }
-void printMusicianDetails(Musician** musicians,int logSize)
+void printMusicianDetails(Musician** musicians, int logSize)
 {
     float sum = 0;
     for (int i = 0; i < logSize; i++)
     {
         printMusicianName(musicians[i]->name, musicians[i]->nameLen);
         sum += musicians[i]->currInstPrice;
-        if (i == logSize - 1)
-        {
-            printf("- %s (%d)", musicians[i]->currInstName, (int)musicians[i]->currInstPrice);
-        }
-        else
-        {
-            printf("- %s (%d), ", musicians[i]->currInstName, (int)musicians[i]->currInstPrice);
-        }
-       
+        CONDITION(i, logSize - 1, musicians[i]->currInstName, (int)musicians[i]->currInstPrice);
     }
-    printf(". Total cost: %d.", (int)sum);
+    printf("Total cost: %d.", (int)sum);
 }
 void printDate(Date date_of_concert)
 {
     int first = 0, last = 0;
-    (date_of_concert.day > 10)
-        ?
-        printf("%d ", date_of_concert.day)
-        :
-        printf("0%d ", date_of_concert.day);
-    
-    (date_of_concert.month > 10)
-        ?
-        printf("%d ", date_of_concert.month)
-        :
-        printf("0%d ", date_of_concert.month);
-  
+    PRINTDATE(date_of_concert.day);
+    PRINTDATE(date_of_concert.month);
     printf("%d ", date_of_concert.year);
-
     first = (int)date_of_concert.hour;
     last = (int)((date_of_concert.hour - first) * 60);
-
-    (last > 10 && first > 10)
-        ?
-        printf("%d:%d: ", first, last)
-        :
-        (last > 10 && first < 10)
-        ?
-        printf("0%d:%d: ", first, last)
-        :
-        (last < 10 && first > 10)
-        ?
-        printf("%d:0%d: ", first, last)
-        :
-        printf("0%d:0%d: ", first, last);
+    PRINT(last, first);
 }
 void printDetails(Concert* currConcert)
 {
@@ -118,7 +86,7 @@ void printDetails(Concert* currConcert)
     printDate(currConcert->date_of_concert);
     printMusicianDetails(currConcert->musicians, currConcert->No_OfMusicians);
 }
-void printConcert(int Succeed,Concert* currConcert)
+void printConcert(int Succeed, Concert* currConcert)
 {
     int res = RESULT(Succeed);
     switch (res)
@@ -134,6 +102,7 @@ void printConcert(int Succeed,Concert* currConcert)
 }
 
 
+
 void arrangeConcert(Musician*** MusicianCollection, InstrumentTree insTree,
     Musician** MusiciansGroup, int numOfMusicians) //Scans concerts's info from user and matches musicians to them.
 {
@@ -146,11 +115,6 @@ void arrangeConcert(Musician*** MusicianCollection, InstrumentTree insTree,
         CIListNode* currInstrument = NULL;
         int currInsID, currInsNumOfMusicians, Succeed = 0;
         unsigned short No_of_musicians = 0;
-
-       /* int some = FileLinesLenSTDIN();
-        
-        currConcert.name = (char*)DynamicAllocation(currConcert.name, sizeof(char), some, MALLOC);
-        fscanf(stdin,"%s", currConcert.name);*/
         scanForConcertInfo(&currConcert, input, insTree);
         currInstrument = currConcert.instruments.head;
         currConcert.musicians = (Musician**)DynamicAllocation(currConcert.musicians, sizeof(Musician*), currConcert.No_OfMusicians ,MALLOC);
