@@ -65,14 +65,13 @@ bool searchInMPIList(MPIList* lst, int insId);
 void arrangeConcert(Musician*** MusicianCollection, InstrumentTree insTree, Musician** MusiciansGroup, int numOfMusicians);
 char* getName(char firstLetter);
 Date getConcertDate();
-CIList createConcertInstrumentsList(InstrumentTree insTree);
+CIList createConcertInstrumentsList(InstrumentTree insTree, unsigned short* numOfInsts);
 void updateCurrentInsIDAndImportance(Musician** musiciansArr, int arrSize,
     int insID, char importance);
 float findInstPrice(MPIList lst, int insID);
 int compareMusicians(void* musicianA, void* musicianB);
 void resetBookingInfo(Musician** musiciansGroup, int numOfMusicians);
-void scanForConcertInfo(char** concertName, char firstLetter, Date* concertDate,
-    CIList* concertCIList, InstrumentTree insTree);
+void scanForConcertInfo(Concert* concert, char firstLetter, InstrumentTree insTree);
 
 //Free Functions
 void freeAll(char*** InstrumentsArr, int sizeOfInsArr, InstrumentTree* insTree,

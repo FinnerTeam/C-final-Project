@@ -1,6 +1,5 @@
 #pragma once
 
-//*********************Data Structures*****************************
 typedef struct treeNode
 {
 	char* instrument;
@@ -81,4 +80,6 @@ typedef struct
 	Date date_of_concert;
 	char* name;
 	CIList instruments;
+	unsigned short No_OfMusicians;
+	Musician** musicians;
 } Concert;

@@ -43,7 +43,7 @@ void arrangeConcert(Musician*** MusicianCollection, InstrumentTree insTree,
 
     while (input != '\n')
     {
-        scanForConcertInfo(&currConcert.name, input, &currConcert.date_of_concert, &currConcert.instruments, insTree);
+        scanForConcertInfo(&currConcert, input, insTree);
         currInstrument = currConcert.instruments.head;
 
         while (currInstrument != NULL)
@@ -56,7 +56,6 @@ void arrangeConcert(Musician*** MusicianCollection, InstrumentTree insTree,
 
             currInstrument = currInstrument->next;
         }
-        //maybe flag
         //add print concert
         resetBookingInfo(MusiciansGroup, numOfMusicians);
         freeCIList(&currConcert.instruments);

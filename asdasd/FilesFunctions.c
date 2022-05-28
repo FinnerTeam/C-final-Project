@@ -136,7 +136,9 @@ Musician* createMusician(InstrumentTree insTree, int* fileIndex, FILE* musicians
 
     output->name = getMusicianName(&index, insTree, musiciansFile, &line);
     output->instruments = createMusicianMPIList(insTree, &index, musiciansFile, &line);
-    output->currInst = output->currInstPrice = output->currInsImportance = 0;
+    output->currInst = 0;
+    output->currInstPrice = (float)0;
+    output->currInsImportance = '0';
     output->isBooked = false;
 
     *fileIndex = index;

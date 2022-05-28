@@ -146,7 +146,7 @@ void updateCurrentInsIDAndImportance(Musician** musiciansArr, int arrSize,
 float findInstPrice(MPIList lst, int insID) //Finds instruments insID's price at lst.
 {
     MPIListNode* curr = lst.head;
-    float output;
+    float output = 0.0;
 
     while (curr != NULL)
     {
@@ -161,7 +161,7 @@ float findInstPrice(MPIList lst, int insID) //Finds instruments insID's price at
 
 int compareMusicians(void* musicianA, void* musicianB) //Compares musicianA&musicianB's prices for the current instrument.
 {
-    int output;
+    int output = 0;
     Musician* firstMusician = *(Musician**)musicianA;
     Musician* secondMusician = *(Musician**)musicianB;
 
@@ -195,7 +195,7 @@ int compareMusicians(void* musicianA, void* musicianB) //Compares musicianA&musi
 void extractCharacters(char** destinationString, char* line, int* lineIndex) //Extracts valid characters from musicians's file.
 {
     *destinationString = (char*)DynamicAllocation(*destinationString, sizeof(char), strlen(line) + 1, MALLOC);
-    int destLogSize = 0;
+    size_t destLogSize = 0;
     bool foundInvalid = false, foundFirstLetter = false;
 
     for (int i = *lineIndex; i < strlen(line) && !foundInvalid; i++)
@@ -218,18 +218,18 @@ void extractCharacters(char** destinationString, char* line, int* lineIndex) //E
     (*destinationString)[destLogSize] = '\0';
 }
 
-void scanForConcertInfo(char** concertName, char firstLetter, Date* concertDate,
-    CIList* concertCIList, InstrumentTree insTree) //Scans for concert info.
+void scanForConcertInfo(Concert* concert, char firstLetter, InstrumentTree insTree) //Scans for concert info.
 {
-    *concertName = getName(firstLetter);
-    *concertDate = getConcertDate();
-    *concertCIList = createConcertInstrumentsList(insTree);
+    concert->No_OfMusicians = 0;
+    concert->name = getName(firstLetter);
+    concert->date_of_concert = getConcertDate();
+    concert->instruments = createConcertInstrumentsList(insTree, &concert->No_OfMusicians);
 }
 
 char* getName(char firstLetter) //Scans for user's input name.
 {
     char* output = NULL;
-    int stringLogSize = 0, stringPhySize = 1;
+    size_t stringLogSize = 0, stringPhySize = 1;
     output = (char*)DynamicAllocation(output, sizeof(char), stringPhySize, MALLOC);
     char input = firstLetter;
 
@@ -258,18 +258,18 @@ Date getConcertDate() //Generates concert's date.
     int hour, minutes;
     char colon;
 
-    scanf("%d", &output.day);
-    scanf("%d", &output.month);
-    scanf("%d", &output.year);
-    scanf("%d", &hour);
-    scanf("%c", &colon);
-    scanf("%d", &minutes);
+    (void)scanf("%d", &output.day);
+    (void)scanf("%d", &output.month);
+    (void)scanf("%d", &output.year);
+    (void)scanf("%d", &hour);
+    (void)scanf("%c", &colon);
+    (void)scanf("%d", &minutes);
     output.hour = (float)(hour + (minutes / HOUR));
 
     return output;
 }
 
-CIList createConcertInstrumentsList(InstrumentTree insTree) //Creates a CI list for a concert.
+CIList createConcertInstrumentsList(InstrumentTree insTree, unsigned short* numOfInsts) //Creates a CI list for a concert.
 {
     CIList output;
     makeEmptyCIList(&output);
@@ -282,13 +282,15 @@ CIList createConcertInstrumentsList(InstrumentTree insTree) //Creates a CI list 
     while (input != '\n')
     {
         char* insName = getName(input);
-        scanf("%d", &numOfInstruments);
-        scanf("%d", &digImportance);
+        (void)scanf("%d", &numOfInstruments);
+        (void)scanf("%d", &digImportance);
 
         importance = digImportance + '0';
 
         insertDataToEndOfCIList(&output, numOfInstruments, findInsId(insTree, insName), importance, NULL);
         free(insName);
+
+        (*numOfInsts) = *numOfInsts + numOfInstruments;
 
         input = getchar();
 
