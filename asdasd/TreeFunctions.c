@@ -1,5 +1,6 @@
 #include "ProjectHeader.h"
 
+
 TreeNode* createNewTreeNode(char* instrument, unsigned short insId, int numOfMusicians, TreeNode* left, TreeNode* right) //Creates a new TreeNode.
 {
     TreeNode* node = NULL;
