@@ -46,11 +46,9 @@ typedef struct
 	int nameLen;
 	MPIList instruments;
 	int currInst;
-	char* currInstName;
 	char currInsImportance;
 	float currInstPrice;
 	bool isBooked;
-	int nameLen;
 	char* currInstName;
 } Musician;
 
@@ -86,8 +84,4 @@ typedef struct
 	CIList instruments;
 	unsigned short No_OfMusicians;
 	Musician** musicians;
-<<<<<<< Updated upstream
-=======
-	
->>>>>>> Stashed changes
 } Concert;

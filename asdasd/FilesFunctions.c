@@ -142,7 +142,6 @@ Musician* createMusician(InstrumentTree insTree, int* fileIndex, FILE* musicians
     Musician* output = NULL;
     output = (Musician*)DynamicAllocation(output, sizeof(Musician), 1, MALLOC);
     char* line = NULL;
-<<<<<<< Updated upstream
     int index = *fileIndex;
 
     output->name = getMusicianName(&index, insTree, musiciansFile, &line, &output);
@@ -150,12 +149,6 @@ Musician* createMusician(InstrumentTree insTree, int* fileIndex, FILE* musicians
     output->currInst = 0;
     output->currInstPrice = (float)0;
     output->currInsImportance = '0';
-=======
-    
-    output->name = getMusicianName(fileIndex, insTree, musiciansFile, &line);
-    output->instruments = createMusicianMPIList(insTree, fileIndex, musiciansFile, &line);
-    output->currInst = output->currInstPrice = output->currInsImportance = 0;
->>>>>>> Stashed changes
     output->isBooked = false;
 
     return output;

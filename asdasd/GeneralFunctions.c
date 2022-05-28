@@ -112,15 +112,11 @@ void arrangeConcert(Musician*** MusicianCollection, InstrumentTree insTree,
     int index = 0;
     while (input != '\n')
     {
-<<<<<<< Updated upstream
-        scanForConcertInfo(&currConcert, input, insTree);
-=======
        /* int some = FileLinesLenSTDIN();
         
         currConcert.name = (char*)DynamicAllocation(currConcert.name, sizeof(char), some, MALLOC);
         fscanf(stdin,"%s", currConcert.name);*/
-        scanForConcertInfo(&currConcert.name, input, &currConcert.date_of_concert, &currConcert.instruments, insTree);
->>>>>>> Stashed changes
+        scanForConcertInfo(&currConcert, input, insTree);
         currInstrument = currConcert.instruments.head;
         currConcert.musicians = (Musician**)DynamicAllocation(currConcert.musicians, sizeof(Musician*), currConcert.No_OfMusicians,MALLOC);
         while (currInstrument != NULL && Succeed != FAIL)
@@ -130,14 +126,11 @@ void arrangeConcert(Musician*** MusicianCollection, InstrumentTree insTree,
             currInsNumOfMusicians = findInsId_Counter(insTree, currInsID);
             updateCurrentInsIDAndImportance(MusicianCollection[currInsID], currInsNumOfMusicians, currInsID, currImportance, findInstrumentName(insTree, currInsID));
             qsort(MusicianCollection[currInsID], currInsNumOfMusicians, sizeof(Musician*), compareMusicians);
-            Succeed = arrangeMusicians_for_concert(&currConcert.musicians, MusicianCollection[currInsID], currInsNumOfMusicians,currInstrument->data.num, &index);
+            Succeed = arrangeMusicians_for_concert(&currConcert.musicians, MusicianCollection[currInsID], currInsNumOfMusicians,currInstrument->data.num, &index);  
             currInstrument = currInstrument->next;
         }
-<<<<<<< Updated upstream
-        //add print concert
-=======
+
         printConcert(Succeed, &currConcert);
->>>>>>> Stashed changes
         resetBookingInfo(MusiciansGroup, numOfMusicians);
         free(currConcert.musicians);
         freeCIList(&currConcert.instruments);
