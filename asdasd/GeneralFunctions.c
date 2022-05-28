@@ -56,7 +56,7 @@ void printMusicianName(char** MusicianName, int nameLen)
 {
     for (int i = 0; i < nameLen; i++)
     {
-        printf(" %s ", MusicianName[i]);
+        printf("%s ", MusicianName[i]);
     }
 }
 void printMusicianDetails(Musician** musicians,int logSize)
@@ -66,22 +66,56 @@ void printMusicianDetails(Musician** musicians,int logSize)
     {
         printMusicianName(musicians[i]->name, musicians[i]->nameLen);
         sum += musicians[i]->currInstPrice;
-        printf("- %s (%lf),", musicians[i]->currInstName,musicians[i]->currInstPrice);
+        if (i == logSize - 1)
+        {
+            printf("- %s (%d) ", musicians[i]->currInstName, (int)musicians[i]->currInstPrice);
+        }
+        else
+        {
+            printf("- %s (%d), ", musicians[i]->currInstName, (int)musicians[i]->currInstPrice);
+        }
+       
     }
-    printf(". Totla cost: %lf.", sum);
+    printf(". Total cost: %d.", (int)sum);
+}
+void printDate(Date date_of_concert)
+{
+    int first = 0, last = 0;
+    (date_of_concert.day > 10)
+        ?
+        printf("%d ", date_of_concert.day)
+        :
+        printf("0%d ", date_of_concert.day);
+    
+    (date_of_concert.month > 10)
+        ?
+        printf("%d ", date_of_concert.month)
+        :
+        printf("0%d ", date_of_concert.month);
+  
+    printf("%d ", date_of_concert.year);
+
+    first = (int)date_of_concert.hour;
+    last = (int)((date_of_concert.hour - first) * 60);
+
+    (last > 10 && first > 10)
+        ?
+        printf("%d:%d: ", first, last)
+        :
+        (last > 10 && first < 10)
+        ?
+        printf("0%d:%d: ", first, last)
+        :
+        (last < 10 && first > 10)
+        ?
+        printf("%d:0%d: ", first, last)
+        :
+        printf("0%d:0%d: ", first, last);
 }
 void printDetails(Concert* currConcert)
 {
-    int first = 0, last = 0;
-    
     printf("%s ", currConcert->name);
-    printf("%d ", currConcert->date_of_concert.day);
-    printf("%d ", currConcert->date_of_concert.month);
-    printf("%d ", currConcert->date_of_concert.year);
-
-    first = (int)currConcert->date_of_concert.hour;
-    last = (int)((currConcert->date_of_concert.hour - first) * 60);
-    printf("%d:%d: ", first, last);
+    printDate(currConcert->date_of_concert);
     printMusicianDetails(currConcert->musicians, currConcert->No_OfMusicians);
 }
 void printConcert(int Succeed,Concert* currConcert)
@@ -103,7 +137,7 @@ void printConcert(int Succeed,Concert* currConcert)
 void arrangeConcert(Musician*** MusicianCollection, InstrumentTree insTree,
     Musician** MusiciansGroup, int numOfMusicians) //Scans concerts's info from user and matches musicians to them.
 {
-    char input = 's', currImportance;
+    char input = getchar(), currImportance;
     Concert currConcert = { 0 };
     CIListNode* currInstrument = NULL;
     int currInsID, currInsNumOfMusicians;

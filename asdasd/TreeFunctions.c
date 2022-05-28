@@ -143,7 +143,6 @@ char* findInstrumentName(InstrumentTree insTree, int insID) //Finds instrument's
     return output;
 }
 
-
 char* recFindInstrumentName(TreeNode* root, int insID) //Recursively finds instrument's name by insID.
 {
     if (root == NULL)
@@ -154,7 +153,13 @@ char* recFindInstrumentName(TreeNode* root, int insID) //Recursively finds instr
 
     else
     {
-        return recFindInstrumentName(root->left, insID);
-        return recFindInstrumentName(root->right, insID);
+        char* leftTree = recFindInstrumentName(root->left, insID);
+        char* rightTree = recFindInstrumentName(root->right, insID);
+
+        if (leftTree != NULL)
+            return leftTree;
+
+        else
+            return rightTree;
     }
 }
