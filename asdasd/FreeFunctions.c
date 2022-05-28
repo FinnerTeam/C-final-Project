@@ -1,5 +1,14 @@
 #include "ProjectHeader.h"
 
+void freeAll(char*** InstrumentsArr, int sizeOfInsArr, InstrumentTree* insTree,
+	Musician*** MusiciansGroup, int sizeOfMGroup, Musician**** MusiciansCollection, int sizeOfMCol) //Frees all projects's memrory allocations.
+{
+	freeArr(*InstrumentsArr, sizeOfInsArr);
+	freeInstrumentsTree(*insTree);
+	freeMusiciansGroup(*MusiciansGroup, sizeOfMGroup);
+	freeMusiciansCollection(*MusiciansCollection, sizeOfMCol);
+}
+
 void freeArr(char** instrumentsArr, int size) //Frees instrumentsArr.
 {
 	int i;
@@ -90,4 +99,12 @@ void recFreeCIList(CIListNode* head) //Recursively frees a CI list.
 		recFreeCIList(head->next);
 		free(head);
 	}
+}
+
+void freeMusiciansCollection(Musician*** MusiciansCollection, int size) //Frees MusiciansCollection.
+{
+	for (int i = 0; i < size; i++)
+		free(MusiciansCollection[i]);
+
+	free(MusiciansCollection);
 }

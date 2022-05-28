@@ -2,14 +2,14 @@
 
 Musician*** createMusiciansCollection(int numOfInstruments, Musician** MusiciansGroup, int numOfMusicians,InstrumentTree tree) //Creates the MusiciansCollection array.
 {
-    Musician*** output = (Musician***)malloc(sizeof(Musician**) * numOfInstruments);
-    CheckMem(output);
+    Musician*** output = NULL;
+    output = (Musician***)DynamicAllocation(output, sizeof(Musician**), numOfInstruments, MALLOC);
 
     for (int i = 0; i < numOfInstruments; i++)
     {
         int j, k = 0, subArrayLogSize = 0, subArrayPhySize = 1;
-        output[i] = (Musician**)malloc(sizeof(Musician*) * subArrayPhySize);
-        CheckMem(output[i]);
+        output[i] = NULL;
+        output[i] = (Musician**)DynamicAllocation(output[i], sizeof(Musician*), subArrayPhySize, MALLOC);
         for (j = 0; j < numOfMusicians; j++)
         {
             if (searchInMPIList(&(MusiciansGroup[j]->instruments), i))
@@ -17,16 +17,14 @@ Musician*** createMusiciansCollection(int numOfInstruments, Musician** Musicians
                 if (subArrayLogSize == subArrayPhySize)
                 {
                     subArrayPhySize *= 2;
-                    output[i] = (Musician**)realloc(output[i], sizeof(Musician*) * subArrayPhySize);
-                    CheckMem(output[i]);
+                    output[i] = (Musician**)DynamicAllocation(output[i], sizeof(Musician*), subArrayPhySize, REALLOC);
                 }
+
                 output[i][subArrayLogSize] = MusiciansGroup[j];
                 subArrayLogSize++;
+
                 if (j == numOfMusicians - 1 && subArrayPhySize > subArrayLogSize)
-                {
-                    output[i] = (Musician**)realloc(output[i], sizeof(Musician*) * subArrayLogSize);
-                    CheckMem(output[i]);
-                }
+                    output[i] = (Musician**)DynamicAllocation(output[i], sizeof(Musician*), subArrayLogSize, REALLOC);
             }
         }
         updateNumOfMusicians(tree, subArrayLogSize, i);
@@ -43,11 +41,9 @@ void arrangeConcert(Musician*** MusicianCollection, InstrumentTree insTree,
     CIListNode* currInstrument = NULL;
     int currInsID, currInsNumOfMusicians;
 
-    while (input != '\n') /*Change to scanf*/
+    while (input != '\n')
     {
-        currConcert.name = getName(input); /*Change to scanf*/     
-        currConcert.date_of_concert = getConcertDate();/*Change to scanf*/
-        currConcert.instruments = createConcertInstrumentsList(insTree);/*Change to scanf*/
+        scanForConcertInfo(&currConcert.name, input, &currConcert.date_of_concert, &currConcert.instruments, insTree);
         currInstrument = currConcert.instruments.head;
 
         while (currInstrument != NULL)
@@ -67,91 +63,4 @@ void arrangeConcert(Musician*** MusicianCollection, InstrumentTree insTree,
 
         input = getchar();
     }
-}
-
-char* getName(char firstLetter) //Scans for user's input name.
-{
-    char* output = NULL;
-    int stringLogSize = 0, stringPhySize = 1;
-    output = (char*)malloc(sizeof(char) * stringPhySize);
-    CheckMem(output);
-    char input = firstLetter;
-
-    while (input != ' ')
-    {
-        if (stringLogSize == stringPhySize)
-        {
-            stringPhySize *= 2;
-            output = (char*)realloc(output, sizeof(char) * stringPhySize);
-            CheckMem(output);
-        }
-
-        output[stringLogSize] = input;
-        stringLogSize++;
-        input = getchar();
-    }
-
-    output = (char*)realloc(output, sizeof(char) * (stringLogSize + 1));
-    CheckMem(output);
-    output[stringLogSize] = '\0';
-
-    return output;
-}
-
-Date getConcertDate() //Generates concert's date.
-{
-    Date output;
-
-    output.day = buildDate(DAY); // scanf with everything.
-    output.month = buildDate(MONTH);
-    output.year = buildDate(YEAR);
-    output.hour = buildHour();
-
-    return output;
-}
-/*Change to scanf*/
-CIList createConcertInstrumentsList(InstrumentTree insTree) //Creates a CI list for a concert.
-{ 
-    CIList output;
-    makeEmptyCIList(&output);
-    char input = getchar(), importance;
-    int numOfInstruments;
-    
-    while (input != '\n')
-    {
-        char* insName = getName(input);
-        numOfInstruments = getNumOfInstruments();
-        importance = getchar();
-
-        insertDataToEndOfCIList(&output, numOfInstruments, findInsId(insTree, insName), importance, NULL);
-        free(insName);
-
-        input = getchar();
-
-        if (input == ' ')
-            input = getchar();
-    }
-
-    return output;
-}
-/*Change to scanf*/
-int getNumOfInstruments() //Returns num of instrument for a concert.
-{
-    int output = 0, iteration = 0;
-    char input = getchar();
-
-    while (input != ' ')
-    {
-        output += (input - '0') * recPow(10, iteration);
-        iteration++;
-        input = getchar();
-    }
-
-    return output;
-}
-
-void resetBookingInfo(Musician** musiciansGroup, int numOfMusicians) //Resets booking info after each concert.
-{
-    for (int i = 0; i < numOfMusicians; i++)
-        musiciansGroup[i]->isBooked = false;
 }

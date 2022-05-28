@@ -9,4 +9,5 @@ void main(int argc, char* argv[])
 	Musician** MusiciansGroup = createMusiciansGroup(insTree, &NO_musicians, argv[2]);
 	Musician*** MusiciansCollection = createMusiciansCollection(NO_instruments, MusiciansGroup, NO_musicians, insTree);
 	arrangeConcert(MusiciansCollection, insTree, MusiciansGroup, NO_musicians);
+	freeAll(&InstrumentsArr, NO_instruments, &insTree, &MusiciansGroup, NO_musicians, &MusiciansCollection, NO_instruments);
 }

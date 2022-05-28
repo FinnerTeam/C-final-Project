@@ -132,69 +132,6 @@ bool CheckValid(char ch)
 ////////////////////////    }
 ////////////////////////}
 
-int recPow(int base, int exp) //Raises base by exp.
-{
-    if (exp == 0)
-        return 1;
-
-    else if (exp == 1)
-        return base;
-
-    return base * recPow(base, exp - 1);
-}
-
-int buildDate(int type) //Returns a partial date by type.
-{
-    int output;
-    char input = getchar();
-
-    switch (type)
-    {
-
-    case DAY: //same for case MONTH.
-        output = (input - '0') * 10;
-        input = getchar();
-        output += (input - '0');
-        break;
-
-    case YEAR:
-        output = (input - '0') * 1000;
-        for (int i = 2; i >= 0; i--)
-        {
-            input = getchar();
-            output += (input - '0') * recPow(10, i);
-        }
-    }
-
-    input = getchar(); //flush ' '.
-
-    return output;
-}
-
-float buildHour() //Returns an hour by user's input.
-{
-    float hour = 0, minutes = 0, output;
-    char input;
-
-    for (int i = 1; i >= 0; i--)
-    {
-        input = getchar();
-        hour += (input - '0') * recPow(10, i);
-    }
-
-    input = getchar(); //flush ':'.
-
-    for (int j = 1; j >= 0; j--)
-    {
-        input = getchar();
-        minutes += (input - '0') * recPow(10, j);
-    }
-
-    input = getchar(); //flush ' '.
-    output = hour + (minutes / HOUR);
-    return output;
-}
-
 void updateCurrentInsIDAndImportance(Musician** musiciansArr, int arrSize,
     int insID, char importance) //Updates insID, importance & price for each musician.
 {
@@ -253,4 +190,117 @@ int compareMusicians(void* musicianA, void* musicianB) //Compares musicianA&musi
     }
 
     return output;
+}
+
+void extractCharacters(char** destinationString, char* line, int* lineIndex) //Extracts valid characters from musicians's file.
+{
+    *destinationString = (char*)DynamicAllocation(*destinationString, sizeof(char), strlen(line) + 1, MALLOC);
+    int destLogSize = 0;
+    bool foundInvalid = false, foundFirstLetter = false;
+
+    for (int i = *lineIndex; i < strlen(line) && !foundInvalid; i++)
+    {
+        if (CheckValid(line[i]))
+        {
+            foundFirstLetter = true;
+            (*destinationString)[destLogSize] = line[i];
+            destLogSize++;
+        }
+
+        else if (foundFirstLetter)
+        {
+            foundInvalid = true;
+            *lineIndex = i;
+        }
+    }
+    
+    *destinationString = (char*)DynamicAllocation(*destinationString, sizeof(char), destLogSize + 1, REALLOC);
+    (*destinationString)[destLogSize] = '\0';
+}
+
+void scanForConcertInfo(char** concertName, char firstLetter, Date* concertDate,
+    CIList* concertCIList, InstrumentTree insTree) //Scans for concert info.
+{
+    *concertName = getName(firstLetter);
+    *concertDate = getConcertDate();
+    *concertCIList = createConcertInstrumentsList(insTree);
+}
+
+char* getName(char firstLetter) //Scans for user's input name.
+{
+    char* output = NULL;
+    int stringLogSize = 0, stringPhySize = 1;
+    output = (char*)DynamicAllocation(output, sizeof(char), stringPhySize, MALLOC);
+    char input = firstLetter;
+
+    while (input != ' ')
+    {
+        if (stringLogSize == stringPhySize)
+        {
+            stringPhySize *= 2;
+            output = (char*)DynamicAllocation(output, sizeof(char), stringPhySize, REALLOC);
+        }
+
+        output[stringLogSize] = input;
+        stringLogSize++;
+        input = getchar();
+    }
+
+    output = (char*)DynamicAllocation(output, sizeof(char), stringLogSize + 1, REALLOC);
+    output[stringLogSize] = '\0';
+
+    return output;
+}
+
+Date getConcertDate() //Generates concert's date.
+{
+    Date output;
+    int hour, minutes;
+    char colon;
+
+    scanf("%d", &output.day);
+    scanf("%d", &output.month);
+    scanf("%d", &output.year);
+    scanf("%d", &hour);
+    scanf("%c", &colon);
+    scanf("%d", &minutes);
+    output.hour = (float)(hour + (minutes / HOUR));
+
+    return output;
+}
+
+CIList createConcertInstrumentsList(InstrumentTree insTree) //Creates a CI list for a concert.
+{
+    CIList output;
+    makeEmptyCIList(&output);
+    char input = getchar(), importance;
+    int numOfInstruments, digImportance;
+
+    if (input == ' ')
+        input = getchar();
+
+    while (input != '\n')
+    {
+        char* insName = getName(input);
+        scanf("%d", &numOfInstruments);
+        scanf("%d", &digImportance);
+
+        importance = digImportance + '0';
+
+        insertDataToEndOfCIList(&output, numOfInstruments, findInsId(insTree, insName), importance, NULL);
+        free(insName);
+
+        input = getchar();
+
+        if (input == ' ')
+            input = getchar();
+    }
+
+    return output;
+}
+
+void resetBookingInfo(Musician** musiciansGroup, int numOfMusicians) //Resets booking info after each concert.
+{
+    for (int i = 0; i < numOfMusicians; i++)
+        musiciansGroup[i]->isBooked = false;
 }

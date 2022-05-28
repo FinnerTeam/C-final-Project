@@ -1,19 +1,17 @@
 #include "ProjectHeader.h"
 
 TreeNode* createNewTreeNode(char* instrument, unsigned short insId, int numOfMusicians, TreeNode* left, TreeNode* right) //Creates a new TreeNode.
-{//(TreeNode*)malloc(sizeof(TreeNode));
+{
     TreeNode* node = NULL;
     node = (TreeNode*)DynamicAllocation(node, sizeof(TreeNode), 1, MALLOC);
-    CheckMem(node);
 
     int len = strlen(instrument);
 
     node->instrument = NULL;
     node->instrument = DynamicAllocation(node->instrument,sizeof(char), len, MALLOC);
+
     if (instrument != '\0')
-    {
         strcpy(node->instrument, instrument);
-    }
 
     node->insId = insId;
     node->left = left;
