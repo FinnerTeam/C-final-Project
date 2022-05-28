@@ -51,7 +51,7 @@ void arrangeConcert(Musician*** MusicianCollection, InstrumentTree insTree,
             currInsID = currInstrument->data.inst;
             currImportance = currInstrument->data.importance;
             currInsNumOfMusicians = findInsId_Counter(insTree, currInsID);
-            updateCurrentInsIDAndImportance(MusicianCollection[currInsID], currInsNumOfMusicians, currInsID, currImportance);
+            updateCurrentInsIDAndImportance(MusicianCollection[currInsID], currInsNumOfMusicians, currInsID, currImportance, findInstrumentName(insTree, currInsID));
             qsort(MusicianCollection[currInsID], currInsNumOfMusicians, sizeof(Musician*), compareMusicians);
 
             currInstrument = currInstrument->next;

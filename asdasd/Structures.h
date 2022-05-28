@@ -43,8 +43,10 @@ typedef struct
 typedef struct
 {
 	char** name;
+	int nameLen;
 	MPIList instruments;
 	int currInst;
+	char* currInstName;
 	char currInsImportance;
 	float currInstPrice;
 	bool isBooked;

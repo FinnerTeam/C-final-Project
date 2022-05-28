@@ -135,3 +135,26 @@ void recFindInsId(TreeNode* root, char* instrument, int* res) //Recursively find
 
     return;
 }
+
+char* findInstrumentName(InstrumentTree insTree, int insID) //Finds instrument's name by insID.
+{
+    char* output = NULL;
+    output = recFindInstrumentName(insTree.root, insID);
+    return output;
+}
+
+
+char* recFindInstrumentName(TreeNode* root, int insID) //Recursively finds instrument's name by insID.
+{
+    if (root == NULL)
+        return NULL;
+
+    else if (root->insId == insID)
+        return root->instrument;
+
+    else
+    {
+        return recFindInstrumentName(root->left, insID);
+        return recFindInstrumentName(root->right, insID);
+    }
+}

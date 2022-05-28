@@ -133,13 +133,14 @@ bool CheckValid(char ch)
 ////////////////////////}
 
 void updateCurrentInsIDAndImportance(Musician** musiciansArr, int arrSize,
-    int insID, char importance) //Updates insID, importance & price for each musician.
+    int insID, char importance, char* currInstName) //Updates insID, importance & price for each musician.
 {
     for (int i = 0; i < arrSize; i++)
     {
         musiciansArr[i]->currInsImportance = importance;
         musiciansArr[i]->currInst = insID;
         musiciansArr[i]->currInstPrice = findInstPrice(musiciansArr[i]->instruments, insID);
+        musiciansArr[i]->currInstName = currInstName;
     }
 }
 

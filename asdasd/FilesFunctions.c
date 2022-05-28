@@ -114,7 +114,6 @@ Musician** createMusiciansGroup(InstrumentTree insTree, int* sizeOfFile, char* f
     FILE* musiciansFile = fopen(fileName, "r");
     CheckFile(musiciansFile);
     *sizeOfFile = FileLinesLen(musiciansFile);
-    //(Musician**)malloc(sizeof(Musician*) * (*sizeOfFile));
     Musician** output = NULL;
     output = (Musician**)DynamicAllocation(output, sizeof(Musician*), (*sizeOfFile), MALLOC);
     int fileIndex = 0;
@@ -134,7 +133,7 @@ Musician* createMusician(InstrumentTree insTree, int* fileIndex, FILE* musicians
     char* line = NULL;
     int index = *fileIndex;
 
-    output->name = getMusicianName(&index, insTree, musiciansFile, &line);
+    output->name = getMusicianName(&index, insTree, musiciansFile, &line, &output);
     output->instruments = createMusicianMPIList(insTree, &index, musiciansFile, &line);
     output->currInst = 0;
     output->currInstPrice = (float)0;
@@ -146,7 +145,7 @@ Musician* createMusician(InstrumentTree insTree, int* fileIndex, FILE* musicians
     return output;
 }
 
-char** getMusicianName(int* index, InstrumentTree insTree, FILE* musiciansFile, char** line) //Generates musician's name.
+char** getMusicianName(int* index, InstrumentTree insTree, FILE* musiciansFile, char** line, Musician** currMusician) //Generates musician's name.
 {
     char** output = NULL;
     output = (char**)DynamicAllocation(output, sizeof(char*), DEFAULT_BUFFER, MALLOC); //Row len is max 150.
@@ -165,6 +164,7 @@ char** getMusicianName(int* index, InstrumentTree insTree, FILE* musiciansFile, 
             foundInstrument = true;
             free(output[arrLogSize]);
             *index = backupIndex;
+            (*currMusician)->nameLen = arrLogSize;
         }
 
         else

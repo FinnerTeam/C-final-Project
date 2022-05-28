@@ -12,6 +12,8 @@ int findInsId_Counter(InstrumentTree tree, int insId);
 int RECfindInsId_Counter(TreeNode* root, int insId);
 void recUpdateNumOfMusicians(TreeNode* root, int numOfMusicians, int insId);
 void updateNumOfMusicians(InstrumentTree tree, int numOfMusicians, int insId);
+char* findInstrumentName(InstrumentTree insTree, int insID);
+char* recFindInstrumentName(TreeNode* root, int insID);
 
 //List Functions
 void makeEmptyMPIList(MPIList* lst);
@@ -53,7 +55,7 @@ int FileLinesLen(FILE* FileData);
 
 Musician** createMusiciansGroup(InstrumentTree insTree, int* sizeOfFile, char* fileName);
 Musician* createMusician(InstrumentTree insTree, int* fileIndex, FILE* musiciansFile);
-char** getMusicianName(int* index, InstrumentTree insTree, FILE* musiciansFile, char** line);
+char** getMusicianName(int* index, InstrumentTree insTree, FILE* musiciansFile, char** line, Musician** currMusician);
 MPIList createMusicianMPIList(InstrumentTree insTree, int* index, FILE* musiciansFile, char** line);
 void extractCharacters(char** destinationString, char* line, int* lineIndex);
 
@@ -67,7 +69,7 @@ char* getName(char firstLetter);
 Date getConcertDate();
 CIList createConcertInstrumentsList(InstrumentTree insTree, unsigned short* numOfInsts);
 void updateCurrentInsIDAndImportance(Musician** musiciansArr, int arrSize,
-    int insID, char importance);
+    int insID, char importance, char* currInstName);
 float findInstPrice(MPIList lst, int insID);
 int compareMusicians(void* musicianA, void* musicianB);
 void resetBookingInfo(Musician** musiciansGroup, int numOfMusicians);
