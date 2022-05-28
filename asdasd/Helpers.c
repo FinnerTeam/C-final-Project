@@ -137,10 +137,13 @@ void updateCurrentInsIDAndImportance(Musician** musiciansArr, int arrSize,
 {
     for (int i = 0; i < arrSize; i++)
     {
-        musiciansArr[i]->currInsImportance = importance;
-        musiciansArr[i]->currInst = insID;
-        musiciansArr[i]->currInstPrice = findInstPrice(musiciansArr[i]->instruments, insID);
-        musiciansArr[i]->currInstName = currInstName;
+        if (!musiciansArr[i]->isBooked)
+        {
+            musiciansArr[i]->currInsImportance = importance;
+            musiciansArr[i]->currInst = insID;
+            musiciansArr[i]->currInstPrice = findInstPrice(musiciansArr[i]->instruments, insID);
+            musiciansArr[i]->currInstName = currInstName;
+        }
     }
 }
 

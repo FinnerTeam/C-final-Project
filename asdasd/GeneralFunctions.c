@@ -68,7 +68,7 @@ void printMusicianDetails(Musician** musicians,int logSize)
         sum += musicians[i]->currInstPrice;
         if (i == logSize - 1)
         {
-            printf("- %s (%d) ", musicians[i]->currInstName, (int)musicians[i]->currInstPrice);
+            printf("- %s (%d)", musicians[i]->currInstName, (int)musicians[i]->currInstPrice);
         }
         else
         {
