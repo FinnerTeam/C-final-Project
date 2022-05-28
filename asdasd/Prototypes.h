@@ -8,8 +8,8 @@ InstrumentTree buildBinaryTreeFromArray(char** arrOfInstruments, int size);
 void insertNodeToTree(TreeNode* root, TreeNode* node);
 int findInsId(InstrumentTree tree, char* instrument);
 void recFindInsId(TreeNode* root, char* instrument, int* res);
-int findInsId_Counter(InstrumentTree tree, int insId);
-int RECfindInsId_Counter(TreeNode* root, int insId);
+int findNumOfMusicians(InstrumentTree tree, int insId);
+int recFindNumOfMusicians(TreeNode* root, int insId);
 void recUpdateNumOfMusicians(TreeNode* root, int numOfMusicians, int insId);
 void updateNumOfMusicians(InstrumentTree tree, int numOfMusicians, int insId);
 char* findInstrumentName(InstrumentTree insTree, int insID);
@@ -29,8 +29,6 @@ void insertDataToEndOfCIList(CIList* lst, int num, int insId, char importance, C
 
 //Memory Allocation Functions
 void* DynamicAllocation(void* ptr_ptr, size_t elemSize, size_t num_Of_elements, int Format);
-//void FirstAllocation(char*** data, char*** name);
-//void Check_Physic_To_Logic(int logicSize, int* PhyisicSize, char*** Data_to_check);
 
 //Validators Functions
 void CheckMem(void* mem);
@@ -40,19 +38,7 @@ void CheckFile(FILE* file);
 char** FileToArr(char* fileName, int* sizeOfFile);
 
 //Musician Group Helpers (Q3)
-//void priceAtend(DATATYPE* data, int dataCol, MPIList* MusicianKit);
-//void InsertDataToMusicianGroup(InstrumentTree insTree, Musician* MusicianGroup, char* FreshData);
 int FileLinesLen(FILE* FileData);
-//Musician** FileToArr_Musicians(InstrumentTree insTree, FILE* MusiciansData, int* sizeOfFile);
-//void InsertDataToMusicianGroup(InstrumentTree insTree, Musician* MusicianGroup, char* FreshData);
-//bool CheckValid(char ch);
-//void InstallizeFirst(DATATYPE* data, DATATYPE* name);
-//void CheckExistInTree(int* insId, int* Position, bool* InstrumentRead, InstrumentTree insTree, DATATYPE data);
-//void Selector(int Position, DATATYPE* data, DATATYPE* name, MPIList* MusicianKit, bool* InstrumentRead,
-//    bool* PriceRead, int insId);
-//void NextWordOperation(DATATYPE* data, int* DataCol, bool* next_word);
-//void EndOfReadOperation(Musician* MusicianGroup, bool PriceRead, MPIList* MusicianKit, DATATYPE* data, DATATYPE* name);
-
 Musician** createMusiciansGroup(InstrumentTree insTree, int* sizeOfFile, char* fileName);
 Musician* createMusician(InstrumentTree insTree, int* fileIndex, FILE* musiciansFile);
 char** getMusicianName(int* index, InstrumentTree insTree, FILE* musiciansFile, char** line, Musician** currMusician);
@@ -64,7 +50,6 @@ Musician*** createMusiciansCollection(int numOfInstruments, Musician** Musicians
 bool searchInMPIList(MPIList* lst, int insId);
 
 //Concert Helpers (Q5)
-int FileLinesLenSTDIN();
 void arrangeConcert(Musician*** MusicianCollection, InstrumentTree insTree, Musician** MusiciansGroup, int numOfMusicians);
 char* getName(char firstLetter);
 Date getConcertDate();
@@ -85,7 +70,6 @@ void recFreeInstrumentsTree(TreeNode* root);
 void freeMusiciansGroup(Musician** MusiciansGroup, int size);
 void freeMPIList(MPIList lst);
 void recFreeMPIList(MPIListNode* head);
-void freeDATATYPE(DATATYPE* data);
 void freeCIList(CIList* lst);
 void recFreeCIList(CIListNode* head);
 void freeMusiciansCollection(Musician*** MusiciansCollection, int size);

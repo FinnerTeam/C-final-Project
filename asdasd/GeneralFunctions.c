@@ -33,7 +33,8 @@ Musician*** createMusiciansCollection(int numOfInstruments, Musician** Musicians
     return output;
 }
 
-int arrangeMusicians_for_concert(Musician*** concertMusician,Musician** MusicianCollection,int logSize ,int MusicianNeeded,int* index)
+int arrangeMusicians_for_concert(Musician*** concertMusician, Musician** MusicianCollection,
+    int logSize , int MusicianNeeded, int* index) //Matches musicians to a concert.
 {
     int counter = 0;
     for (int i = 0; i < logSize && counter < MusicianNeeded; i++)
@@ -52,14 +53,14 @@ int arrangeMusicians_for_concert(Musician*** concertMusician,Musician** Musician
     return counter;
 
 }
-void printMusicianName(char** MusicianName, int nameLen)
+
+void printMusicianName(char** MusicianName, int nameLen) //Prints musician's name.
 {
     for (int i = 0; i < nameLen; i++)
-    {
         printf("%s ", MusicianName[i]);
-    }
 }
-void printMusicianDetails(Musician** musicians, int logSize)
+
+void printMusicianDetails(Musician** musicians, int logSize) //Prints musician's details.
 {
     float sum = 0;
     for (int i = 0; i < logSize; i++)
@@ -68,9 +69,10 @@ void printMusicianDetails(Musician** musicians, int logSize)
         sum += musicians[i]->currInstPrice;
         CONDITION(i, logSize - 1, musicians[i]->currInstName, (int)musicians[i]->currInstPrice);
     }
-    printf("Total cost: %d.", (int)sum);
+    printf("Total cost: %d.\n", (int)sum);
 }
-void printDate(Date date_of_concert)
+
+void printDate(Date date_of_concert) //Prints the date of the concert.
 {
     int first = 0, last = 0;
     PRINTDATE(date_of_concert.day);
@@ -80,19 +82,21 @@ void printDate(Date date_of_concert)
     last = (int)((date_of_concert.hour - first) * 60);
     PRINT(last, first);
 }
-void printDetails(Concert* currConcert)
+
+void printDetails(Concert* currConcert) //Prints concert's details.
 {
     printf("%s ", currConcert->name);
     printDate(currConcert->date_of_concert);
     printMusicianDetails(currConcert->musicians, currConcert->No_OfMusicians);
 }
-void printConcert(int Succeed, Concert* currConcert)
+
+void printConcert(int Succeed, Concert* currConcert) //Prints concert's details by failure/success in matching musicians.
 {
     int res = RESULT(Succeed);
     switch (res)
     {
     case FAIL:
-        printf("Could not find musicians for the concert %s", currConcert->name);
+        printf("Could not find musicians for the concert %s\n", currConcert->name);
         break;
     case SUCCEED:
         printDetails(currConcert);
@@ -101,28 +105,25 @@ void printConcert(int Succeed, Concert* currConcert)
     }
 }
 
-
-
 void arrangeConcert(Musician*** MusicianCollection, InstrumentTree insTree,
     Musician** MusiciansGroup, int numOfMusicians) //Scans concerts's info from user and matches musicians to them.
 {
     char input = getchar(), currImportance;
-    
     while (input != '\n')
     {
-        int index = 0;
+        int index = 0, currInsID, currInsNumOfMusicians, Succeed = 0;
         Concert currConcert = { 0 };
         CIListNode* currInstrument = NULL;
-        int currInsID, currInsNumOfMusicians, Succeed = 0;
         unsigned short No_of_musicians = 0;
         scanForConcertInfo(&currConcert, input, insTree);
         currInstrument = currConcert.instruments.head;
         currConcert.musicians = (Musician**)DynamicAllocation(currConcert.musicians, sizeof(Musician*), currConcert.No_OfMusicians ,MALLOC);
+
         while (currInstrument != NULL && Succeed != FAIL)
         {
             currInsID = currInstrument->data.inst;
             currImportance = currInstrument->data.importance;
-            currInsNumOfMusicians = findInsId_Counter(insTree, currInsID);
+            currInsNumOfMusicians = findNumOfMusicians(insTree, currInsID);
             updateCurrentInsIDAndImportance(MusicianCollection[currInsID], currInsNumOfMusicians, currInsID, currImportance, findInstrumentName(insTree, currInsID));
             qsort(MusicianCollection[currInsID], currInsNumOfMusicians, sizeof(Musician*), compareMusicians);
             Succeed = arrangeMusicians_for_concert(&currConcert.musicians, MusicianCollection[currInsID], currInsNumOfMusicians,currInstrument->data.num, &index);  
@@ -131,6 +132,7 @@ void arrangeConcert(Musician*** MusicianCollection, InstrumentTree insTree,
 
         printConcert(Succeed, &currConcert);
         resetBookingInfo(MusiciansGroup, numOfMusicians);
+        free(currConcert.name);
         free(currConcert.musicians);
         freeCIList(&currConcert.instruments);
 

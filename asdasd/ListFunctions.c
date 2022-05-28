@@ -19,16 +19,15 @@ void insertDataToEndOfMPIList(MPIList* lst, char* instrumentName, unsigned int i
 
 MPIListNode* createNewMPIListNode(char* instrumentName, unsigned int insId, float price, MPIListNode* next) //Creates a new MPIListNode.
 {
-	MPIListNode* output = (MPIListNode*)malloc(sizeof(MPIListNode));
-	CheckMem(output);
+	MPIListNode* output = NULL;
+	output = (MPIListNode*)DynamicAllocation(output, sizeof(MPIListNode), 1, MALLOC);
 	
 	output->instrument = NULL;
 	output->instrument = (char*)DynamicAllocation(output->instrument,sizeof(char), strlen(instrumentName) + 1, MALLOC);
-	CheckMem(output->instrument);
+
 	if (instrumentName != '\0')
-	{
 		strcpy(output->instrument, instrumentName);
-	}
+
 	output->Data.insId = insId; output->Data.price = price; output->next = next;
 
 	return output;
@@ -54,8 +53,8 @@ void insertDataToEndOfCIList(CIList* lst, int num, int insId, char importance, C
 
 CIListNode* createNewCIListNode(int num, int insId, char importance, CIListNode* next) //Creates a new CIListNode.
 {
-	CIListNode* output = (CIListNode*)malloc(sizeof(CIListNode));
-	CheckMem(output);
+	CIListNode* output = NULL;
+	output = (CIListNode*)DynamicAllocation(output, sizeof(CIListNode), 1, MALLOC);
 
 	output->data.importance = importance;
 	output->data.inst = insId;

@@ -1,7 +1,7 @@
 #include "ProjectHeader.h"
 
-//Dynamic allocation function for char*
-void* DynamicAllocation(void* ptr_ptr, size_t elemSize,size_t num_Of_elements, int Format)
+//General dynamic allocation function.
+void* DynamicAllocation(void* ptr_ptr, size_t elemSize, size_t num_Of_elements, int Format)
 {
     if (Format == REALLOC)
     {

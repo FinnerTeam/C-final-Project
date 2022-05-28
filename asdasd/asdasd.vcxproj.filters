@@ -39,9 +39,6 @@
     <ClCompile Include="FreeFunctions.c">
       <Filter>Helpers</Filter>
     </ClCompile>
-    <ClCompile Include="SortFunctions.c">
-      <Filter>Controllers</Filter>
-    </ClCompile>
     <ClCompile Include="Allocations.c">
       <Filter>Helpers</Filter>
     </ClCompile>

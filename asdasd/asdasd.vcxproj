@@ -25,7 +25,6 @@
     <ClCompile Include="GeneralFunctions.c" />
     <ClCompile Include="Helpers.c" />
     <ClCompile Include="ListFunctions.c" />
-    <ClCompile Include="SortFunctions.c" />
     <ClCompile Include="TreeFunctions.c" />
     <ClCompile Include="Validatiors.c" />
     <ClCompile Include="ProjectMain.c" />

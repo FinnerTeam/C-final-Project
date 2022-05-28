@@ -9,14 +9,6 @@ int FileLinesLen(FILE* FileData) //Counts number of rows in a file.
             count_lines++;
     return count_lines + 1;
 }
-int FileLinesLenSTDIN() //Counts number of rows in a file.
-{
-    char ch;
-    int count_chars = 0;
-    for (ch = getc(stdin); ch != ' '; ch = getc(stdin))
-        count_chars++;
-    return count_chars + 1;
-}
 
 char** FileToArr(char* fileName, int* sizeOfFile) //Creates an array of strings from instruments's file.
 {
@@ -28,94 +20,21 @@ char** FileToArr(char* fileName, int* sizeOfFile) //Creates an array of strings 
     fseek(instrumentsFile, 0, SEEK_SET);
 
     char** InstrumentsArr = NULL;
-    InstrumentsArr = (char**)DynamicAllocation(InstrumentsArr ,sizeof(char*), lines_in_file, MALLOC);
+    InstrumentsArr = (char**)DynamicAllocation(InstrumentsArr, sizeof(char*), lines_in_file, MALLOC);
     InstrumentsArr[0] = (char*)DynamicAllocation(InstrumentsArr[0], sizeof(char), DEFAULT_BUFFER, MALLOC);
 
-    while (fscanf(instrumentsFile, "%s", InstrumentsArr[i]) && i < lines_in_file)
+    while (i < lines_in_file && fscanf(instrumentsFile, "%s", InstrumentsArr[i]))
     {
         InstrumentsArr[i] = (char*)DynamicAllocation(InstrumentsArr[i], sizeof(char),strlen(InstrumentsArr[i]) + 1, REALLOC);
         i++;
-        InstrumentsArr[i] = (char*)DynamicAllocation(InstrumentsArr[i], sizeof(char),DEFAULT_BUFFER, MALLOC);
+
+        if (i < lines_in_file)
+            InstrumentsArr[i] = (char*)DynamicAllocation(InstrumentsArr[i], sizeof(char), DEFAULT_BUFFER, MALLOC);
     }
+
     fclose(instrumentsFile);
     return InstrumentsArr;
 }
-// check ben
-//////Musician** FileToArr_Musicians(InstrumentTree insTree, FILE* MusiciansData, int* sizeOfFile) //Creates an array of musicians.
-//////{
-//////    int i = 0, Logicsize = 0, PhyiscalSize = 1;
-//////    
-//////    int lines_in_file = FileLinesLen(MusiciansData, MUSICIANSFILE);
-//////    *sizeOfFile = lines_in_file;
-//////    MusiciansData = fopen(MUSICIANSFILE, "r");
-//////    CheckFile(MusiciansData);
-//////    //(Musician**)malloc(sizeof(Musician*) * (*sizeOfFile));
-//////    Musician** MusicianGroup = NULL;
-//////    MusicianGroup = (Musician**)DynamicAllocation(MusicianGroup, sizeof(Musician*), (*sizeOfFile), MALLOC);
-//////    CheckMem(MusicianGroup);
-//////
-//////    char* Line = NULL;
-//////    Line = (char*)DynamicAllocation(Line,sizeof(char), DEFAULT_BUFFER, MALLOC);
-//////    while (fgets(Line , DEFAULT_BUFFER, MusiciansData) && i < lines_in_file )
-//////    {
-//////        Line = (char*)DynamicAllocation(Line,sizeof(char), strlen(Line)+1 , REALLOC);
-//////        MusicianGroup[i] = (Musician*) DynamicAllocation(MusicianGroup[i], sizeof(Musician), 1, MALLOC);;
-//////        CheckMem(MusicianGroup[i]);
-//////        InsertDataToMusicianGroup(insTree, MusicianGroup[i], Line);
-//////        i++;
-//////        Line = (char*)DynamicAllocation(Line,sizeof(char), DEFAULT_BUFFER, MALLOC);
-//////    }
-//////    free(Line);
-//////    fclose(MusiciansData);
-//////    return MusicianGroup;
-//////}
-// check ben
-//void InsertDataToMusicianGroup(InstrumentTree insTree, Musician* MusicianGroup, char* FreshData) //Inserts new data to musicians array.
-//{
-//    char ch;
-//    bool next_word = false, InstrumentRead = false, PriceRead = false, First = true, End = false;
-//    int insId = -1, DataCol = 0, Position = NAME, i = 0;
-//    DATATYPE name, data;
-//    InstallizeFirst(&data, &name);
-//    MPIList MusicianKit;
-//    makeEmptyMPIList(&MusicianKit);
-//
-//    while(FreshData[i] != '\0')
-//    {
-//        ch = FreshData[i];
-//        if (FreshData[i + 1] == '\n' && !End && !CheckValid(ch))
-//        {
-//            priceAtend(&data, DataCol, &MusicianKit);
-//            PriceRead = false;
-//            End = true;
-//        }
-//
-//        if (CheckValid(ch))
-//        {
-//            First = false;
-//            data.data[*(data.logicsize)][DataCol++] = ch;
-//            if (next_word == true)
-//            {
-//                if (PriceRead == false)
-//                    CheckExistInTree(&insId, &Position, &InstrumentRead,insTree,data);
-//
-//                else
-//                    Position = PRICE;
-//
-//                Selector(Position, &data, &name, &MusicianKit, &InstrumentRead, &PriceRead, insId);
-//                next_word = false;
-//            }   
-//           
-//        }
-//        else 
-//            if (next_word == false && First == false && End == false)
-//                NextWordOperation(&data, &DataCol, &next_word);
-//
-//        i++;
-//    }
-//
-//    EndOfReadOperation(MusicianGroup,PriceRead, &MusicianKit, &data, &name);    
-//}
 
 Musician** createMusiciansGroup(InstrumentTree insTree, int* sizeOfFile, char* fileName) //Creates the Musicians Group array.
 {

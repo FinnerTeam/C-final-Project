@@ -9,6 +9,7 @@ void CheckMem(void* mem) //Checks memory allocation.
     }
 
 }
+
 void CheckFile(FILE* file) //Checks if file was opened currectly.
 {
     if (file == NULL)
