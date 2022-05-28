@@ -9,6 +9,14 @@ int FileLinesLen(FILE* FileData) //Counts number of rows in a file.
             count_lines++;
     return count_lines + 1;
 }
+int FileLinesLenSTDIN() //Counts number of rows in a file.
+{
+    char ch;
+    int count_chars = 0;
+    for (ch = getc(stdin); ch != ' '; ch = getc(stdin))
+        count_chars++;
+    return count_chars + 1;
+}
 
 char** FileToArr(char* fileName, int* sizeOfFile) //Creates an array of strings from instruments's file.
 {
@@ -120,7 +128,10 @@ Musician** createMusiciansGroup(InstrumentTree insTree, int* sizeOfFile, char* f
     fseek(musiciansFile, 0, SEEK_SET);
 
     for (int i = 0; i < *sizeOfFile; i++)
+    {
         output[i] = createMusician(insTree, &fileIndex, musiciansFile);
+        fileIndex = 0;
+    }
 
     fclose(musiciansFile);
     return output;
@@ -131,6 +142,7 @@ Musician* createMusician(InstrumentTree insTree, int* fileIndex, FILE* musicians
     Musician* output = NULL;
     output = (Musician*)DynamicAllocation(output, sizeof(Musician), 1, MALLOC);
     char* line = NULL;
+<<<<<<< Updated upstream
     int index = *fileIndex;
 
     output->name = getMusicianName(&index, insTree, musiciansFile, &line, &output);
@@ -138,9 +150,13 @@ Musician* createMusician(InstrumentTree insTree, int* fileIndex, FILE* musicians
     output->currInst = 0;
     output->currInstPrice = (float)0;
     output->currInsImportance = '0';
+=======
+    
+    output->name = getMusicianName(fileIndex, insTree, musiciansFile, &line);
+    output->instruments = createMusicianMPIList(insTree, fileIndex, musiciansFile, &line);
+    output->currInst = output->currInstPrice = output->currInsImportance = 0;
+>>>>>>> Stashed changes
     output->isBooked = false;
-
-    *fileIndex = index;
 
     return output;
 }

@@ -23,3 +23,7 @@
 #define MONTH 1
 #define YEAR 2
 #define HOUR 60
+#define FAIL -1
+#define SUCCEED 1
+#define IS ==
+#define RESULT(y) y > 0 ? SUCCEED : FAIL

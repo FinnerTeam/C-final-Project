@@ -50,6 +50,8 @@ typedef struct
 	char currInsImportance;
 	float currInstPrice;
 	bool isBooked;
+	int nameLen;
+	char* currInstName;
 } Musician;
 
 typedef struct
@@ -84,4 +86,8 @@ typedef struct
 	CIList instruments;
 	unsigned short No_OfMusicians;
 	Musician** musicians;
+<<<<<<< Updated upstream
+=======
+	
+>>>>>>> Stashed changes
 } Concert;

@@ -64,6 +64,7 @@ Musician*** createMusiciansCollection(int numOfInstruments, Musician** Musicians
 bool searchInMPIList(MPIList* lst, int insId);
 
 //Concert Helpers (Q5)
+int FileLinesLenSTDIN();
 void arrangeConcert(Musician*** MusicianCollection, InstrumentTree insTree, Musician** MusiciansGroup, int numOfMusicians);
 char* getName(char firstLetter);
 Date getConcertDate();
