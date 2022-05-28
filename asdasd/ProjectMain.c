@@ -1,5 +1,6 @@
 #include "ProjectHeader.h"
 
+//GitHub repository we work as a team with https://github.com/FinnerTeam/C-final-Project/tree/development/asdasd
 void main(int argc, char* argv[])
 {
 	int NO_instruments, NO_musicians;
