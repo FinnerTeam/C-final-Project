@@ -11,9 +11,7 @@ void freeAll(char*** InstrumentsArr, int sizeOfInsArr, InstrumentTree* insTree,
 
 void freeArr(char** instrumentsArr, int size) //Frees instrumentsArr.
 {
-	int i;
-
-	for (i = 0; i < size; i++)
+	for (int i = 0; i < size; i++)
 		free(instrumentsArr[i]);
 
 	free(instrumentsArr);
@@ -59,7 +57,7 @@ void freeMusiciansGroup(Musician** MusiciansGroup, int size) //Frees MusiciansGr
 
 	for (i = 0; i < size; i++)
 	{
-		free(MusiciansGroup[i]->name);
+		freeArr(MusiciansGroup[i]->name, MusiciansGroup[i]->nameLen);
 		freeMPIList(MusiciansGroup[i]->instruments);
 	}
 

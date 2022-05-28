@@ -28,7 +28,7 @@ char** FileToArr(char* fileName, int* sizeOfFile) //Creates an array of strings 
     fseek(instrumentsFile, 0, SEEK_SET);
 
     char** InstrumentsArr = NULL;
-    InstrumentsArr =(char**)DynamicAllocation(InstrumentsArr,sizeof(char*), lines_in_file, MALLOC);
+    InstrumentsArr = (char**)DynamicAllocation(InstrumentsArr ,sizeof(char*), lines_in_file, MALLOC);
     InstrumentsArr[0] = (char*)DynamicAllocation(InstrumentsArr[0], sizeof(char), DEFAULT_BUFFER, MALLOC);
 
     while (fscanf(instrumentsFile, "%s", InstrumentsArr[i]) && i < lines_in_file)

@@ -8,7 +8,7 @@ TreeNode* createNewTreeNode(char* instrument, unsigned short insId, int numOfMus
     size_t len = strlen(instrument);
 
     node->instrument = NULL;
-    node->instrument = DynamicAllocation(node->instrument,sizeof(char), len, MALLOC);
+    node->instrument = DynamicAllocation(node->instrument,sizeof(char), len + 1, MALLOC);
 
     if (instrument != '\0')
         strcpy(node->instrument, instrument);

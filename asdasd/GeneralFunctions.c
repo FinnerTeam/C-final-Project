@@ -138,21 +138,22 @@ void arrangeConcert(Musician*** MusicianCollection, InstrumentTree insTree,
     Musician** MusiciansGroup, int numOfMusicians) //Scans concerts's info from user and matches musicians to them.
 {
     char input = getchar(), currImportance;
-    Concert currConcert = { 0 };
-    CIListNode* currInstrument = NULL;
-    int currInsID, currInsNumOfMusicians;
-    unsigned short No_of_musicians = 0;
-    int Succeed = 0;
-    int index = 0;
+    
     while (input != '\n')
     {
+        int index = 0;
+        Concert currConcert = { 0 };
+        CIListNode* currInstrument = NULL;
+        int currInsID, currInsNumOfMusicians, Succeed = 0;
+        unsigned short No_of_musicians = 0;
+
        /* int some = FileLinesLenSTDIN();
         
         currConcert.name = (char*)DynamicAllocation(currConcert.name, sizeof(char), some, MALLOC);
         fscanf(stdin,"%s", currConcert.name);*/
         scanForConcertInfo(&currConcert, input, insTree);
         currInstrument = currConcert.instruments.head;
-        currConcert.musicians = (Musician**)DynamicAllocation(currConcert.musicians, sizeof(Musician*), currConcert.No_OfMusicians,MALLOC);
+        currConcert.musicians = (Musician**)DynamicAllocation(currConcert.musicians, sizeof(Musician*), currConcert.No_OfMusicians ,MALLOC);
         while (currInstrument != NULL && Succeed != FAIL)
         {
             currInsID = currInstrument->data.inst;
