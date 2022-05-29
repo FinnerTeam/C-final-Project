@@ -1,6 +1,9 @@
 #include "ProjectHeader.h"
 
+//Advanced Programming in C Course: Project
+//Submittion by: Ben Cohen (209174549), Elior Migdal (313455321). 
 //GitHub repository we work as a team with https://github.com/FinnerTeam/C-final-Project/tree/development/asdasd
+
 void main(int argc, char* argv[])
 {
 	int NO_instruments, NO_musicians;
